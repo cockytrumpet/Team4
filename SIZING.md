@@ -110,7 +110,7 @@ Acceptance Criteria
 
 * *As a*   busy shopper
 * *I want*   I want to check out just one item
-* *So that*   
+* *So that*  I can quickly make small purchases without the need of re-entering my information 
 
 <hr>
 
