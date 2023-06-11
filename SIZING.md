@@ -32,7 +32,7 @@ Acceptance Criteria
 
 * *As a*   administrator
 * *I want*  I want to introduce an anti-plagiarism tool.
-* *So that*  
+* *So that*  I can check completed assignments for plagiarism and assign a grade accordingly.
 
 <hr>
 
