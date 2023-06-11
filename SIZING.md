@@ -84,7 +84,7 @@ Acceptance Criteria
 
 * *As a*   user
 * *I want*   I want to compare the costs and reviews of products
-* *So that*   
+* *So that*   I can make sure that I am getting the best deal for the best product. 
 
 <hr>
 
