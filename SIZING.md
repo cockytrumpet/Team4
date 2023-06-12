@@ -137,7 +137,7 @@ Acceptance Criteria
 
 * *As a*   unsatisfied customer
 * *I want*  I want to cancel my order
-* *So that*   
+* *So that*  I don't receive an order and don't pay for something that I don't like or no longer need.
 
 <hr>
 
