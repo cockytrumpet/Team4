@@ -18,11 +18,11 @@ Effort Estimation
 
 Acceptance Criteria
 
-* **Given:** 	\<That I am a registered user of the existing service>\><br><br>
+* **Given:** 	<br>That I am a registered user of the existing service<br>
 	
-* **When :** 	\<I upload images or files and click the post button\><br><br>
+* **When :** 	<br>I upload images or files and click the post button<br>
 	
-* **Then :** 	\<the system saves who posted and what was posted and provides a shareable link to the data that allows registered users to view and download the uploaded image or file\><br><br>
+* **Then :** 	<br>the system saves who posted and what was posted and provides a shareable link to the data that allows registered users to view and download the uploaded image or file.<br>
 	
 <hr><hr><br><br>
 
@@ -44,11 +44,11 @@ Effort Estimation
 
 Acceptance Criteria
 
-* **Given:** 	\<I am an administrator with access to students work\><br><br>
+* **Given:** 	<br>I am an administrator with access to students work<br>
 	
-* **When :** 	\<students upload their work the plagiarism tool will check the students work for plagiarism\><br><br>
+* **When :** 	<br>students upload their work the plagiarism tool will check the students work for plagiarism<br>
 	
-* **Then :** 	\<the system will assign them a score for how likely their work was plagiarised\><br><br>
+* **Then :** 	<br>the system will assign them a score for how likely their work was plagiarised.<br>
 	
 <hr><hr><br><br>
 
@@ -70,11 +70,11 @@ Effort Estimation
 
 Acceptance Criteria
 
-* **Given:** 	\<I am actively enrolled in a class on Moodle\><br><br>
+* **Given:** 	<br>I am actively enrolled in a class on Moodle<br>
 	
-* **When :** 	\<I check my grades and click on "Data Visualization" tab I can see my progress over time\><br><br>
+* **When :** 	<br>I check my grades and click on "Data Visualization" tab I can see my progress over time<br>
 	
-* **Then :** 	\<I am able to view a line graph visualizing my progress\><br><br>
+* **Then :** 	<br>I am able to view a line graph visualizing my progress<br>
 	
 <hr><hr><br><br>
 
@@ -96,11 +96,11 @@ Effort Estimation
 
 Acceptance Criteria
 
-* **Given:** 	\<I am shopping on an e-commerce website\><br><br>
+* **Given:** 	<br>I am shopping on an e-commerce website<br>
 	
-* **When :** 	\<select a product to view I want to click on similar products\><br><br>
+* **When :** 	<br>select a product to view I want to click on similar products<br>
 	
-* **Then :** 	\<then I will recieve a list of similar products based on reviews and price\><br><br>
+* **Then :** 	<br>then I will recieve a list of similar products based on reviews and price.<br>
 	
 <hr><hr><br><br>
 
@@ -122,11 +122,11 @@ Effort Estimation
 
 Acceptance Criteria
 
-* **Given:** 	\<I am a user of the current site with an established account\><br><br>
+* **Given:** 	<br>I am a user of the current site with an established account<br>
 	
-* **When :** 	\<I select the "Buy One" button\><br><br>
+* **When :** 	<br>I select the "Buy One" button<br>
 	
-* **Then :** 	\<the item will be purchased by my account and shipped to me with just one click\><br><br>
+* **Then :** 	<br>the item will be purchased by my account and shipped to me with just one click.<br>
 	
 <hr><hr><br><br>
 
@@ -149,10 +149,10 @@ Effort Estimation
 
 Acceptance Criteria
 
-* **Given:** 	\<I want to cancel my order, worst case it has already shipped but not delivered\><br><br>
+* **Given:** 	<br>I want to cancel my order, worst case it has already shipped but not delivered<br>
 	
-* **When :** 	\<\><br>I view my trasaction history and click cancel order on the correct order\<br>
+* **When :** 	<br>I view my transaction history and click cancel order on the correct order<br>
 	
-* **Then :** 	\<I will recieve a refund and a confirmation my package will not be delivered\><br><br>
+* **Then :** 	<br>I will recieve a refund and a confirmation my package will not be delivered.<br>
 	
 <hr><hr><br><br>
