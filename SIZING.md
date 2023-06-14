@@ -1,4 +1,16 @@
+### Team Number: 4
+### Team Name: TBD
+### Weekly meetings at Thursday 7PM MST
+### Team Members:
 
+* Adam Fowler
+* Emily White (Scrum Master)
+* Nolan Ollada
+* Robert Gunn
+* Taylor Erickson
+
+### Link to Zoom Recording
+https://drive.google.com/file/d/1Rje33696EDG_pObTUKUSwwr7wl4SCeSq/view?usp=sharing
 ### Stories included:  [1, 2, 3, 4, 5]
 
 ### User Story : 1
