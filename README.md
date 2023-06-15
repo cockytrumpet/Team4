@@ -8,9 +8,9 @@
 |------|--------------|--------------|
 | Taylor Erickson | taer7274 | taer7274@colorado.edu|
 | Adam Fowler | | adfo8311@colorado.edu |
-| Robert Gunn | | Robert.Gunn@colorado.edu |
+| Robert Gunn | cockytrumpet | Robert.Gunn@colorado.edu |
 | Nolan Ollada V | | nool0624@colorado.edu |
-| Emily White | | Emily.White-3@colorado.edu |
+| Emily White | emmywh| Emily.White-3@colorado.edu |
 
 ### Day/Time/TimeZone for the scheduled team weekly meeting (30 minutes via Zoom)
 Thursdays, 7 p.m. - 7:30 p.m. MT
