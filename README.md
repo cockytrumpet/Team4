@@ -5,7 +5,7 @@
 ### Team/Product Name
 ### Team members: list the name, git username, and email for each member.
 | Name | Git Username | Email Address|
---------------------------------------
+|------|--------------|--------------|
 | Taylor Erickson | taer7274 | taer7274@colorado.edu|
 | Adam Fowler | | adfo8311@colorado.edu |
 | Robert Gunn | | Robert.Gunn@colorado.edu |
