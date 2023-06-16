@@ -7,10 +7,10 @@
 | Name | Git Username | Email Address|
 |------|--------------|--------------|
 | Taylor Erickson | taer7274 | taer7274@colorado.edu|
-| Adam Fowler | | adfo8311@colorado.edu |
-| Robert Gunn | cockytrumpet | Robert.Gunn@colorado.edu |
-| Nolan Ollada V | | nool0624@colorado.edu |
-| Emily White | emmywh| Emily.White-3@colorado.edu |
+| Adam Fowler | cockytrumpet | adam.fowler@colorado.edu |
+| Robert Gunn | MacGunndam | Robert.Gunn@colorado.edu |
+| Nolan Ollada V | blindtucan | nool0624@colorado.edu |
+| Emily White | emmywh | Emily.White-3@colorado.edu |
 
 ### Day/Time/TimeZone for the scheduled team weekly meeting (30 minutes via Zoom)
 Thursdays, 7 p.m. - 7:30 p.m. MT
