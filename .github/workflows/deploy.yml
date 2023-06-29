@@ -1,0 +1,23 @@
+name: deploy
+run-name: ${{ github.actor }} - deploy carl
+on:
+  push:
+    tags: [ 'v[0-9]+.[0-9]+' ]
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: compose down
+        run: cd /deploy && docker-compose down
+      - name: stage
+        run: |
+          cd /deploy &&
+          rm -rf * && 
+          cp -R /home/runner/_work/flask_test/flask_test/carl/build /deploy/ && 
+          cp -R /home/runner/_work/flask_test/flask_test/carl/docker-compose.yml /deploy/
+      - name: compose-up
+        run: cd /deploy && docker-compose build && docker-compose up -d --remove-orphans
+      - run: echo "Status:${{ job.status }}."
+
