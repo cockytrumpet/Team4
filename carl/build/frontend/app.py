@@ -65,6 +65,16 @@ def index():
     return render_template("index.html", books=books)
 
 
+@app.route("/projects")
+def projects():
+    return render_template("projects.html")
+
+
+@app.route("/tags")
+def tags():
+    return render_template("tags.html")
+
+
 make_db()
 if __name__ == "__main__":
     app.run(debug=True)
