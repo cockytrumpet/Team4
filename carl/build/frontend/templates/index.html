@@ -1,18 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Books {% endblock %}</h1>
+    <h1>{% block title %} Resources {% endblock %}</h1>
     
     {% for book in books %}
-    <h3>{{ book }}</h3>
-    
-        <div>
-            <h3>{{ book[0] }} - {{ book[1] }}</h3>
-            <!--
-            <h3>#{{ book[0] }} - {{ book[1] }} BY {{ book[2] }}</h3>
-            <i><p>({{ book[3] }} pages)</p></i>
-            <p class='review'>{{ book[4] }}</p>
-            <i><p>Added {{ book[5] }}</p></i>-->
+        <div class='resource'>
+            <h3>{{ book[2] }}</h3>
+            <p><b><a href="{{ book[3] }}" >Link</a></b></p>
+            <div class ='descr'><p>{{book[4]}}</p></div>
         </div>
     {% endfor %}
 {% endblock %}

@@ -95,16 +95,40 @@ def add_to_table(title,link,descr):
     cur.close()
     conn.close()
 
+
+def add_to_tags(title,descr):
+    conn = psycopg2.connect(
+        host=os.environ["POSTGRES_HOST"],
+        database=os.environ["POSTGRES_DB"],
+        user=os.environ["POSTGRES_USER"],
+        password=os.environ["POSTGRES_PASSWORD"],
+    )
+
+    # Open a cursor to perform database operations
+    cur = conn.cursor()
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS tags (id serial PRIMARY KEY,"
+        "title varchar (150) NOT NULL,"
+        "descr text);"
+    )
+    cur.execute(
+    "INSERT INTO tags (title, descr)"
+    "VALUES (%s, %s)",
+    (title, descr),
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+
 @app.route("/")
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM resources;")
+    cur.execute("SELECT DISTINCT 0 AS id, create_date, title, link, descr FROM resources ORDER BY create_date DESC;")
     tags = cur.fetchall()
     cur.close()
     conn.close()
     return render_template("index.html", books=tags)
-
 
 @app.route("/home")
 def home():
@@ -117,7 +141,6 @@ def create():
         link = str(request.form['link'])
         descr = str(request.form['descr'])
         add_to_table(title,link,descr)
-
         return redirect(url_for('index'))
     return render_template('form.html')
 
@@ -127,7 +150,22 @@ def projects():
 
 @app.route("/tags")
 def tags():
-    return render_template("tags.html")
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT DISTINCT 0 as id, title, descr FROM tags ORDER BY title ASC;")
+    tags = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template("tags.html", books=tags)
+    
+@app.route("/tagform", methods=('GET','POST'))
+def tagform():
+    if request.method == 'POST':
+        title = str(request.form['title'])
+        descr = str(request.form['descr'])
+        add_to_tags(title,descr)
+        return redirect(url_for('tags'))
+    return render_template('tag_form.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

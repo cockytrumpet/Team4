@@ -6,23 +6,15 @@
         <label for="title">Title</label>
         <br>
         <input type="text" name="title"
-               placeholder="Resource title"
+               placeholder="Tag title"
                value="{{ request.form['title'] }}"></input>
         <br>
-
-        <label for="link">Title</label>
-        <br>
-        <input type="text" name="link"
-               placeholder="Resource link"
-               value="{{ request.form['link'] }}"></input>
-        <br>
-
         <label for="descr">Resource Description</label>
         <br>
         <textarea name="descr"
                   placeholder="Description of your resource"
-                  rows="15"
-                  cols="60"
+                  rows="20"
+                  cols="20"
                   >{{ request.form['descr'] }}</textarea>
         <br>
         <button type="submit">Submit</button>
