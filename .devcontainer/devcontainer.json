@@ -19,7 +19,8 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --upgrade pip && pip3 install --user -r .devcontainer/requirements.txt && cd carl && docker-compose up -d",
+	"postCreateCommand": "pip3 install --upgrade pip && pip3 install --user -r .devcontainer/requirements.txt",
+	"postStartCommand": "cd carl && docker-compose up -d",
 	"customizations": {
 		"vscode": {
 			"extensions": [
