@@ -138,9 +138,36 @@ def add_to_tags(title, descr):
     cur.close()
     conn.close()
 
+def add_to_projects(title, descr):
+    conn = psycopg2.connect(
+        host=os.environ["POSTGRES_HOST"],
+        database=os.environ["POSTGRES_DB"],
+        user=os.environ["POSTGRES_USER"],
+        password=os.environ["POSTGRES_PASSWORD"],
+    )
+
+    # Open a cursor to perform database operations
+    cur = conn.cursor()
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS projects (id serial PRIMARY KEY,"
+        "title varchar (150) NOT NULL,"
+        "descr text);"
+    )
+    cur.execute(
+        "INSERT INTO projects (title, descr)" "VALUES (%s, %s)",
+        (title, descr),
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+
 
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+@app.route("/resources")
+def resources():
     conn = get_db_connection()
     if not table_exists(conn, "resources"):
         return render_template("notable.html", error="Resources")
@@ -151,29 +178,39 @@ def index():
     tags = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template("index.html", books=tags)
+    return render_template("resources.html", books=tags)
 
-
-@app.route("/home")
-def home():
-    return "<p>Home!</p>"
-
-
-@app.route("/create", methods=("GET", "POST"))
-def create():
+@app.route("/resourceform", methods=("GET", "POST"))
+def resourceform():
     if request.method == "POST":
         title = str(request.form["title"])
         link = str(request.form["link"])
         descr = str(request.form["descr"])
         add_to_table(title, link, descr)
-        return redirect(url_for("index"))
-    return render_template("form.html")
+        return redirect(url_for("resources"))
+    return render_template("resource_form.html")
 
 
 @app.route("/projects")
 def projects():
-    return render_template("projects.html")
+    conn = get_db_connection()
+    if not table_exists(conn, "projects"):
+        return render_template("notable.html", error="Projects")
+    cur = conn.cursor()
+    cur.execute("SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;")
+    tags = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template("projects.html", books=tags)
 
+@app.route("/projectform", methods=("GET", "POST"))
+def projectform():
+    if request.method == "POST":
+        title = str(request.form["title"])
+        descr = str(request.form["descr"])
+        add_to_projects(title, descr)
+        return redirect(url_for("projects"))
+    return render_template("project_form.html")
 
 @app.route("/tags")
 def tags():

@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Resources {% endblock %}</h1>
-    
-    {% for book in books %}
-        <div class='resource'>
-            <h3>{{ book[2] }}</h3>
-            <p><b><a href="{{ book[3] }}" >Link</a></b></p>
-            <div class ='descr'><p>{{book[4]}}</p></div>
-        </div>
-    {% endfor %}
+    <h1>Welcome to Company's Resource Library</h1>
+    <p>Navigate through the application using the menus above.</p>
 {% endblock %}

@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Add a New Resource {% endblock %}</h1>
+    <h1>{% block title %} Add a New Tag {% endblock %}</h1>
     <form method="post">
-        <label for="title">Title</label>
+        <label for="title">Tag Title</label>
         <br>
         <input type="text" name="title"
                placeholder="Tag title"
                value="{{ request.form['title'] }}"></input>
         <br>
-        <label for="descr">Resource Description</label>
+        <label for="descr">Tag Description</label>
         <br>
         <textarea name="descr"
-                  placeholder="Description of your resource"
+                  placeholder="Description of your tag"
                   rows="20"
                   cols="20"
                   >{{ request.form['descr'] }}</textarea>
