@@ -35,67 +35,8 @@ def get_db_connection():
     return conn
 
 
-def init():
-    conn = get_db_connection()
-
-    # Open a cursor to perform database operations
-    cur = conn.cursor()
-
-    #############
-    # Tag Table #
-    #############
-    cur.execute(
-        "CREATE TABLE IF NOT EXISTS tags (id serial PRIMARY KEY,"
-        "title varchar (150) NOT NULL,"
-        "descr text);"
-    )
-    cur.execute(
-        "INSERT INTO tags (title, descr)" "VALUES (%s, %s)",
-        ("tag1", "descr"),
-    )
-    ###################
-    # Resources Table #
-    ###################
-    cur.execute(
-        "CREATE TABLE IF NOT EXISTS resources (id serial PRIMARY KEY,"
-        "create_date DATE DEFAULT (CURRENT_DATE),"
-        "title varchar (150) NOT NULL,"
-        "link text,"
-        "descr text);"
-    )
-    cur.execute(
-        "INSERT INTO resources (title, link, descr)" "VALUES (%s, %s, %s)",
-        (
-            "Stack Overflow Article",
-            "https://stackoverflow.com/questions/20461030/current-date-curdate-not-working-as-default-date-value",
-            "Current Date Function",
-        ),
-    )
-    #######################
-    # ResourcesTags Table #
-    #######################
-    # cur.execute(
-    #    "CREATE TABLE IF NOT EXISTS resourcestags (entry_id SERIAL PRIMARY KEY,"
-    #    "FOREIGN KEY(resource_id) REFERENCES resources(id),"
-    #    "FOREIGN KEY(tag_id) REFERENCES tags(id));"
-    # )
-    # cur.execute(
-    #    "INSERT INTO resourcetags (title, link, descr)"
-    #    "VALUES (%s, %s, %s)",
-    #    ("Stack Overflow Article", "https://stackoverflow.com/questions/20461030/current-date-curdate-not-working-as-default-date-value","Current Date Function"),
-    # )
-    conn.commit()
-    cur.close()
-    conn.close()
-
-
 def add_to_table(title, link, descr):
-    conn = psycopg2.connect(
-        host=os.environ["POSTGRES_HOST"],
-        database=os.environ["POSTGRES_DB"],
-        user=os.environ["POSTGRES_USER"],
-        password=os.environ["POSTGRES_PASSWORD"],
-    )
+    conn = get_db_connection()
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -116,12 +57,7 @@ def add_to_table(title, link, descr):
 
 
 def add_to_tags(title, descr):
-    conn = psycopg2.connect(
-        host=os.environ["POSTGRES_HOST"],
-        database=os.environ["POSTGRES_DB"],
-        user=os.environ["POSTGRES_USER"],
-        password=os.environ["POSTGRES_PASSWORD"],
-    )
+    conn = get_db_connection()
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -138,13 +74,9 @@ def add_to_tags(title, descr):
     cur.close()
     conn.close()
 
+
 def add_to_projects(title, descr):
-    conn = psycopg2.connect(
-        host=os.environ["POSTGRES_HOST"],
-        database=os.environ["POSTGRES_DB"],
-        user=os.environ["POSTGRES_USER"],
-        password=os.environ["POSTGRES_PASSWORD"],
-    )
+    conn = get_db_connection()
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -162,9 +94,13 @@ def add_to_projects(title, descr):
     conn.close()
 
 
+# --------------------------- routes --------------------------------#
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.route("/resources")
 def resources():
@@ -179,6 +115,7 @@ def resources():
     cur.close()
     conn.close()
     return render_template("resources.html", books=tags)
+
 
 @app.route("/resourceform", methods=("GET", "POST"))
 def resourceform():
@@ -197,11 +134,14 @@ def projects():
     if not table_exists(conn, "projects"):
         return render_template("notable.html", error="Projects")
     cur = conn.cursor()
-    cur.execute("SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;")
+    cur.execute(
+        "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
+    )
     tags = cur.fetchall()
     cur.close()
     conn.close()
     return render_template("projects.html", books=tags)
+
 
 @app.route("/projectform", methods=("GET", "POST"))
 def projectform():
@@ -211,6 +151,7 @@ def projectform():
         add_to_projects(title, descr)
         return redirect(url_for("projects"))
     return render_template("project_form.html")
+
 
 @app.route("/tags")
 def tags():
