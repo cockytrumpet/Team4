@@ -3,14 +3,14 @@
 {% block content %}
     <h1>{% block title %} Add a New Resource {% endblock %}</h1>
     <form method="post">
-        <label for="title">Title</label>
+        <label for="title">Resource Title</label>
         <br>
         <input type="text" name="title"
                placeholder="Resource title"
                value="{{ request.form['title'] }}"></input>
         <br>
 
-        <label for="link">Title</label>
+        <label for="link">Resource Link</label>
         <br>
         <input type="text" name="link"
                placeholder="Resource link"
