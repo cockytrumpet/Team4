@@ -3,10 +3,10 @@
 {% block content %}
     <h1>{% block title %} Tags {% endblock %}</h1>
     
-    {% for book in books %}
+    {% for tag in tags %}
         <div class='tag'>
-            <h3>{{ book[1] }}</h3>
-            <p>{{book[2]}}</p>
+            <h3>{{ tag[1] }}</h3>
+            <p>{{ tag[2] }}</p>
         </div>
     {% endfor %}
 {% endblock %}

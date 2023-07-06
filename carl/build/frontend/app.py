@@ -2,6 +2,7 @@ import os
 import psycopg2
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.middleware.proxy_fix import ProxyFix
+from markupsafe import escape
 
 app = Flask(__name__)
 # not really 'secret', using os.environment for this one breaks production
@@ -19,7 +20,7 @@ def table_exists(con, table_str):
             + "')"
         )
         exists = cur.fetchone()[0]
-        print(exists)
+        # print(exists)
         cur.close()
     except psycopg2.Error as e:
         print(e)
@@ -112,18 +113,18 @@ def resources():
     cur.execute(
         "SELECT DISTINCT 0 AS id, create_date, title, link, descr FROM resources ORDER BY create_date DESC;"
     )
-    tags = cur.fetchall()
+    resources = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template("resources.html", books=tags)
+    return render_template("resources.html", resources=resources)
 
 
 @app.route("/resourceform", methods=("GET", "POST"))
 def resourceform():
     if request.method == "POST":
-        title = str(request.form["title"])
-        link = str(request.form["link"])
-        descr = str(request.form["descr"])
+        title = escape(request.form["title"])
+        link = escape(request.form["link"])
+        descr = escape(request.form["descr"])
         add_to_table(title, link, descr)
         return redirect(url_for("resources"))
     return render_template("resource_form.html")
@@ -138,17 +139,17 @@ def projects():
     cur.execute(
         "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
     )
-    tags = cur.fetchall()
+    projects = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template("projects.html", books=tags)
+    return render_template("projects.html", projects=projects)
 
 
 @app.route("/projectform", methods=("GET", "POST"))
 def projectform():
     if request.method == "POST":
-        title = str(request.form["title"])
-        descr = str(request.form["descr"])
+        title = escape(request.form["title"])
+        descr = escape(request.form["descr"])
         add_to_projects(title, descr)
         return redirect(url_for("projects"))
     return render_template("project_form.html")
@@ -164,14 +165,14 @@ def tags():
     tags = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template("tags.html", books=tags)
+    return render_template("tags.html", tags=tags)
 
 
 @app.route("/tagform", methods=("GET", "POST"))
 def tagform():
     if request.method == "POST":
-        title = str(request.form["title"])
-        descr = str(request.form["descr"])
+        title = escape(request.form["title"])
+        descr = escape(request.form["descr"])
         add_to_tags(title, descr)
         return redirect(url_for("tags"))
     return render_template("tag_form.html")
