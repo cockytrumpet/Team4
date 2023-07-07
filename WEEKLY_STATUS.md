@@ -4,7 +4,9 @@ This document contains weekly status updates on project progress.
 Each week includes a screenshot of our Trello board and some additional comments to add context and detail. 
 
 ### Week 6 (June 26 - July 2)
-![Alt text](static_assets/image.png)
+![Alt text](static_assets/Week6.png)
+
+
 
 | Task          | Status             |  Developer(s)   | Trello Link   |
 |---------------|--------------------|-----------------|---------------|
@@ -25,6 +27,8 @@ Each week includes a screenshot of our Trello board and some additional comments
 | Create Python module & unit tests | Complete | Taylor Erickson | https://trello.com/c/M02iKGTK |
 Add input sanitation to all user supplied data | Complete | Adam Fowler | https://trello.com/c/OSxIlz0P |
 
+
+This next week, we will focus on implementing additional functionality to assign resources and tags, as well as additional APIs, testing and front-end development. 
 
 
 
