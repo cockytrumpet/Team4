@@ -28,9 +28,8 @@ def get_db_connection():
     return conn
 
 
-def add_to_table(title, link, descr):
-    conn = get_db_connection()
-
+def add_to_resources(title, link, descr, conn):
+    
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -46,12 +45,11 @@ def add_to_table(title, link, descr):
     )
     conn.commit()
     cur.close()
-    conn.close()
+    
 
 
-def add_to_tags(title, descr):
-    conn = get_db_connection()
-
+def add_to_tags(title, descr,conn):
+    #conn = get_db_connection()
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -65,12 +63,10 @@ def add_to_tags(title, descr):
     )
     conn.commit()
     cur.close()
-    conn.close()
+    #conn.close()
 
-
-def add_to_projects(title, descr):
-    conn = get_db_connection()
-
+def add_to_projects(title, descr,conn):
+    #conn = get_db_connection()
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -84,5 +80,5 @@ def add_to_projects(title, descr):
     )
     conn.commit()
     cur.close()
-    conn.close()
+    #conn.close()
 
