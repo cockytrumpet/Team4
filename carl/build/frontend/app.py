@@ -44,7 +44,6 @@ def resourceform():
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
-        conn = get_db_connection()
         add_to_resources(title, link, descr, conn)
         return redirect(url_for("resources"))
     return render_template("resource_form.html", page="resourceform")
