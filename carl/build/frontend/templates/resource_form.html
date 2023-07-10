@@ -25,6 +25,15 @@
                   cols="60"
                   >{{ request.form['descr'] }}</textarea>
         <br>
+
+        <!-- Add the multiple select dropdown for tags -->
+        <label for="tags">Add Tags</label>
+        <br>
+        {% for tag in tags %}
+            <input type="checkbox" id="{{ tag[0] }}" name="tags" value="{{ tag[0] }}">
+            <label for="{{ tag[0] }}">{{ tag[1] }}</label><br> <!-- {{ tag[1] }} represents the tag title -->
+        {% endfor %}
+
         <button type="submit">Submit</button>
     </form>
 {% endblock %}

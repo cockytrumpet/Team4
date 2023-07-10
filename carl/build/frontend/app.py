@@ -6,6 +6,8 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from markupsafe import escape
 from helper import *
 
+init_db()
+
 app = Flask(__name__)
 # not really 'secret', using os.environment for this one breaks production
 app.config["SECRET_KEY"] = "df0331cefc6c2b9a5d0208a726a5d1c0fd37324feba25506"
@@ -34,13 +36,26 @@ def resources():
 
 @app.route("/resourceform", methods=("GET", "POST"))
 def resourceform():
+    conn = get_db_connection()
     if request.method == "POST":
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
-        add_to_resources(title, link, descr, conn)
+        tags = request.form.getlist("tags")
+        resource_id = add_to_resources(title, link, descr, conn)
+
+        for tag_id in tags:
+            add_tag_to_resource(resource_id, int(tag_id), conn)
+
         return redirect(url_for("resources"))
-    return render_template("resource_form.html", page="resourceform")
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM tags ORDER BY title ASC")
+    tags = cur.fetchall()
+    cur.close()
+    return render_template(
+        "resource_form.html", tags=tags, page="resourceform"
+    )
 
 
 @app.route("/projects")
