@@ -17,22 +17,23 @@ conn = h.get_db_connection()
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", page='home')
 
 
 @app.route("/resources")
 def resources():
-    #conn = h.get_db_connection()
-    if not h.table_exists(conn, "resources"):
-        return render_template("notable.html", error="Resources")
+    conn = get_db_connection()
+    if not table_exists(conn, "resources"):
+        return render_template("notable.html", error="Resources", page='resources')
     cur = conn.cursor()
     cur.execute(
         "SELECT DISTINCT 0 AS id, create_date, title, link, descr FROM resources ORDER BY create_date DESC;"
     )
     resources = cur.fetchall()
     cur.close()
-    #conn.close()
-    return render_template("resources.html", resources=resources)
+    conn.close()
+    return render_template("resources.html", books=tags, page='resources')
+
 
 
 @app.route("/resourceform", methods=("GET", "POST"))
@@ -44,22 +45,22 @@ def resourceform():
         conn = h.get_db_connection()
         h.add_to_resources(title, link, descr, conn)
         return redirect(url_for("resources"))
-    return render_template("resource_form.html")
+    return render_template("resource_form.html", page = 'resourceform')
 
 
 @app.route("/projects")
 def projects():
-    #conn = h.get_db_connection()
-    if not h.table_exists(conn, "projects"):
-        return render_template("notable.html", error="Projects")
+    conn = get_db_connection()
+    if not table_exists(conn, "projects"):
+        return render_template("notable.html", error="Projects", page='projects')
     cur = conn.cursor()
     cur.execute(
         "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
     )
     projects = cur.fetchall()
     cur.close()
-    #conn.close()
-    return render_template("projects.html", projects=projects)
+    conn.close()
+    return render_template("projects.html", books=tags, page='projects')
 
 
 @app.route("/projectform", methods=("GET", "POST"))
@@ -69,20 +70,20 @@ def projectform():
         descr = escape(request.form["descr"])
         h.add_to_projects(title, descr,conn)
         return redirect(url_for("projects"))
-    return render_template("project_form.html")
+    return render_template("project_form.html", page = 'projectform')
 
 
 @app.route("/tags")
 def tags():
-    #conn = h.get_db_connection()
-    if not h.table_exists(conn, "tags"):
-        return render_template("notable.html", error="Tags")
+    conn = get_db_connection()
+    if not table_exists(conn, "tags"):
+        return render_template("notable.html", error="Tags", page='tags')
     cur = conn.cursor()
     cur.execute("SELECT DISTINCT 0 as id, title, descr FROM tags ORDER BY title ASC;")
     tags = cur.fetchall()
     cur.close()
-    #conn.close()
-    return render_template("tags.html", tags=tags)
+    conn.close()
+    return render_template("tags.html", books=tags, page = 'tags')
 
 
 @app.route("/tagform", methods=("GET", "POST"))
@@ -92,7 +93,7 @@ def tagform():
         descr = escape(request.form["descr"])
         h.add_to_tags(title, descr,conn)
         return redirect(url_for("tags"))
-    return render_template("tag_form.html")
+    return render_template("tag_form.html", page = 'tagform')
 
 def request_has_connection():
     return hasattr(flask.g, 'dbconn')
@@ -109,4 +110,4 @@ def close_db_connection(ex):
         conn.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=3000)

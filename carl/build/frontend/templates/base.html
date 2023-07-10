@@ -1,47 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - CARL</title>
+    <title>Your Web Application</title>
     <style>
-        nav a {
-            color: #000075;
-            font-size: 1em;
-            margin-left: 10px;
+        /* Add your custom styles here */
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background-color: #f2f2f2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 16px;
             text-decoration: none;
+            color: #000;
         }
 
-        .resource {
-            padding: 20px;
-            margin: 10px;
-            background-color: #ecf0fb;
-        }
-        .tag {
-            padding: 20px;
-            margin: 10px;
-            background-color: #fdf1e8;
+        .sidebar a.active {
+            background-color: #70d8ef;
+            color: black;
+            font-weight: bold;
         }
 
-        .descr {
-
-                font-size: 15px;
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
+        .content {
+            margin-left: 200px; /* Same width as the sidebar */
+            padding: 16px;
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('projects')}}">Projects</a>
-        <a href="{{ url_for('projectform')}}">AddProject</a>
-        <a href="{{ url_for('resources')}}">Resources</a>
-        <a href="{{ url_for('resourceform') }}">AddResource</a>
-        <a href="{{ url_for('tags')}}">Tags</a>
-        <a href="{{ url_for('tagform')}}">AddTag</a>
-    </nav>
-    <hr>
+    <div class="sidebar">
+        <div class="logo">
+        </div>
+        <a href="{{ url_for('index') }}" {% if page == 'home' %}class="active"{% endif %}>Home</a>
+        <a href="{{ url_for('projects')}}" {% if page == 'projects' %}class="active"{% endif %}>Projects</a>
+        <a href="{{ url_for('projectform')}}"{% if page == 'projectform' %}class="active"{% endif %}>AddProject</a>
+        <a href="{{ url_for('resources')}}"{% if page == 'resources' %}class="active"{% endif %}>Resources</a>
+        <a href="{{ url_for('resourceform') }}"{% if page == 'resourceform' %}class="active"{% endif %}>AddResource</a>
+        <a href="{{ url_for('tags')}}"{% if page == 'tags' %}class="active"{% endif %}>Tags</a>
+        <a href="{{ url_for('tagform')}}"{% if page == 'tagform' %}class="active"{% endif %}>AddTag</a>
+    </div>
+
     <div class="content">
-        {% block content %} {% endblock %}
+        {% block content %}
+        <!-- Content of each page goes here -->
+        {% endblock %}
     </div>
 </body>
 </html>
