@@ -1,6 +1,7 @@
 import os
 import psycopg2
 
+
 def table_exists(con, table_str):
     exists = False
     try:
@@ -29,7 +30,6 @@ def get_db_connection():
 
 
 def add_to_resources(title, link, descr, conn):
-    
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -45,11 +45,10 @@ def add_to_resources(title, link, descr, conn):
     )
     conn.commit()
     cur.close()
-    
 
 
-def add_to_tags(title, descr,conn):
-    #conn = get_db_connection()
+def add_to_tags(title, descr, conn):
+    # conn = get_db_connection()
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -63,10 +62,11 @@ def add_to_tags(title, descr,conn):
     )
     conn.commit()
     cur.close()
-    #conn.close()
+    # conn.close()
 
-def add_to_projects(title, descr,conn):
-    #conn = get_db_connection()
+
+def add_to_projects(title, descr, conn):
+    # conn = get_db_connection()
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -80,5 +80,34 @@ def add_to_projects(title, descr,conn):
     )
     conn.commit()
     cur.close()
-    #conn.close()
+    # conn.close()
 
+
+def get_tags(conn):
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT DISTINCT 0 as id, title, descr FROM tags ORDER BY title ASC;"
+    )
+    tags = cur.fetchall()
+    cur.close()
+    return tags
+
+
+def get_projects(conn):
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
+    )
+    projects = cur.fetchall()
+    cur.close()
+    return projects
+
+
+def get_resources(conn):
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT DISTINCT 0 AS id, create_date, title, link, descr FROM resources ORDER BY create_date DESC;"
+    )
+    resources = cur.fetchall()
+    cur.close()
+    return resources

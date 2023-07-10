@@ -27,14 +27,8 @@ def resources():
         return render_template(
             "notable.html", error="Resources", page="resources"
         )
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT DISTINCT 0 AS id, create_date, title, link, descr FROM resources ORDER BY create_date DESC;"
-    )
-    resources = cur.fetchall()
-    cur.close()
     return render_template(
-        "resources.html", resources=resources, page="resources"
+        "resources.html", resources=get_resources(conn), page="resources"
     )
 
 
@@ -55,13 +49,9 @@ def projects():
         return render_template(
             "notable.html", error="Projects", page="projects"
         )
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
+    return render_template(
+        "projects.html", projects=get_projects(conn), page="projects"
     )
-    projects = cur.fetchall()
-    cur.close()
-    return render_template("projects.html", projects=projects, page="projects")
 
 
 @app.route("/projectform", methods=("GET", "POST"))
@@ -78,13 +68,7 @@ def projectform():
 def tags():
     if not table_exists(conn, "tags"):
         return render_template("notable.html", error="Tags", page="tags")
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT DISTINCT 0 as id, title, descr FROM tags ORDER BY title ASC;"
-    )
-    tags = cur.fetchall()
-    cur.close()
-    return render_template("tags.html", tags=tags, page="tags")
+    return render_template("tags.html", tags=get_tags(conn), page="tags")
 
 
 @app.route("/tagform", methods=("GET", "POST"))
@@ -96,9 +80,11 @@ def tagform():
         return redirect(url_for("tags"))
     return render_template("tag_form.html", page="tagform")
 
+
 @app.errorhandler(404)
-def page_not_found(error): 
-    return render_template('404.html'), 404
+def page_not_found(error):
+    return render_template("404.html"), 404
+
 
 def request_has_connection():
     return hasattr(flask.g, "dbconn")
