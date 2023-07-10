@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.middleware.proxy_fix import ProxyFix
 from markupsafe import escape
 from helper import *
+init_db()
 
 app = Flask(__name__)
 # not really 'secret', using os.environment for this one breaks production
@@ -29,7 +30,12 @@ def resources():
         )
     cur = conn.cursor()
     cur.execute(
-        "SELECT DISTINCT 0 AS id, create_date, title, link, descr FROM resources ORDER BY create_date DESC;"
+        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
+        "FROM resources "
+        "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
+        "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
+        "GROUP BY resources.id "
+        "ORDER BY create_date DESC;"
     )
     resources = cur.fetchall()
     cur.close()
@@ -40,14 +46,24 @@ def resources():
 
 @app.route("/resourceform", methods=("GET", "POST"))
 def resourceform():
+    conn = get_db_connection()
     if request.method == "POST":
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
-        conn = get_db_connection()
-        add_to_resources(title, link, descr, conn)
+        tags = request.form.getlist("tags")
+        resource_id = add_to_resources(title, link, descr, conn)
+
+        for tag_id in tags:
+            add_tag_to_resource(resource_id, int(tag_id), conn)
+
         return redirect(url_for("resources"))
-    return render_template("resource_form.html", page="resourceform")
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM tags ORDER BY title ASC")
+    tags = cur.fetchall()
+    cur.close()
+    return render_template("resource_form.html", tags=tags, page="resourceform")
 
 
 @app.route("/projects")
@@ -96,6 +112,7 @@ def tagform():
         add_to_tags(title, descr, conn)
         return redirect(url_for("tags"))
     return render_template("tag_form.html", page="tagform")
+
 
 @app.errorhandler(404)
 def page_not_found(error): 
