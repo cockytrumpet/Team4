@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.middleware.proxy_fix import ProxyFix
 from markupsafe import escape
 import helper as h
+from helper import get_db_connection, table_exists
 
 app = Flask(__name__)
 # not really 'secret', using os.environment for this one breaks production
