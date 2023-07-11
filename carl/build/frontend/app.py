@@ -36,7 +36,6 @@ def resources():
 
 @app.route("/resourceform", methods=("GET", "POST"))
 def resourceform():
-    conn = get_db_connection()
     if request.method == "POST":
         title = escape(request.form["title"])
         link = escape(request.form["link"])
@@ -49,12 +48,8 @@ def resourceform():
 
         return redirect(url_for("resources"))
 
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM tags ORDER BY title ASC")
-    tags = cur.fetchall()
-    cur.close()
     return render_template(
-        "resource_form.html", tags=tags, page="resourceform"
+        "resource_form.html", tags=get_tags(conn), page="resourceform"
     )
 
 

@@ -129,9 +129,9 @@ def add_to_projects(title, descr, conn):
 
 def get_tags(conn):
     cur = conn.cursor()
-    cur.execute(
-        "SELECT DISTINCT 0 as id, title, descr FROM tags ORDER BY title ASC;"
-    )
+    # TODO: maybe we should be ensureing no duplicates on input instead of here
+    # cur.execute("SELECT DISTINCT 0 as id, title, descr FROM tags ORDER BY title ASC;")
+    cur.execute("SELECT * FROM tags ORDER BY title ASC")
     tags = cur.fetchall()
     cur.close()
     return tags
