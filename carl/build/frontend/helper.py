@@ -177,3 +177,17 @@ def add_tag_to_resource(resource_id, tag_id, conn):
     )
     conn.commit()
     cur.close()
+
+
+def get_tagged_resources(tag_id, conn):
+    curr = conn.cursor()
+    # SQL query to select all rows from the resource table where the tag_id is in the resource_tags table
+    curr.execute(
+        f"""
+        SELECT * FROM Resources WHERE id IN
+        (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id})
+        """
+    )
+    resources = curr.fetchall()
+    curr.close()
+    return resources

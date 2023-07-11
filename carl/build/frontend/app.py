@@ -23,15 +23,27 @@ def index():
     return render_template("index.html", page="home")
 
 
-@app.route("/resources")
-def resources():
+@app.route("/resources", defaults={"tag": "ALL"})
+@app.route("/resources/<tag>")
+def resources(tag=None):
     if not table_exists(conn, "resources"):
         return render_template(
             "notable.html", error="Resources", page="resources"
         )
-    return render_template(
-        "resources.html", resources=get_resources(conn), page="resources"
-    )
+    if tag == "ALL":
+        return render_template(
+            "resources.html",
+            resources=get_resources(conn),
+            tags=get_tags(conn),
+            page="resources",
+        )
+    else:
+        return render_template(
+            "resources.html",
+            resources=get_tagged_resources(tag, conn),
+            tags=get_tags(conn),
+            page="resources",
+        )
 
 
 @app.route("/resourceform", methods=("GET", "POST"))

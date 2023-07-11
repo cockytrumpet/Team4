@@ -5,6 +5,10 @@
     <div class="view">
         <div class="topBar">
             <h1>{% block title %} Resources {% endblock %}</h1>
+            Tags: <a href="{{ url_for('resources') }}">ALL</a>
+            {% for tag in tags %}
+                <a href="{{ url_for('resources') }}/{{ tag[0] }}">{{ tag[1] }}</a>
+            {% endfor %}
         </div>
         <div class="main">
             {% for resource in resources %}
