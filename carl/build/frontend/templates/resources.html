@@ -5,9 +5,9 @@
     <div class="view">
         <div class="topBar">
             <h1>{% block title %} Resources {% endblock %}</h1>
-            Tags: <a href="{{ url_for('resources') }}">ALL</a>
+            Tags: <a href="{{ url_for('resources') }}"><button label='button' name='button'>ALL</button></a>
             {% for tag in tags %}
-                <a href="{{ url_for('resources') }}/{{ tag[0] }}">{{ tag[1] }}</a>
+                <a href="{{ url_for('resources') }}/{{ tag[0] }}"><button label='button' name='button'>{{ tag[1] }}</button></a>
             {% endfor %}
         </div>
         <div class="main">
