@@ -25,7 +25,8 @@ Each week includes a screenshot of our Trello board and some additional comments
 | Handle empty tables | Complete | Adam Fowler | https://trello.com/c/lt8y3qsO |
 | Database cleaning | Complete | Adam Fowler | https://trello.com/c/XzvR1IMw |
 | Create Python module & unit tests | Complete | Taylor Erickson | https://trello.com/c/M02iKGTK |
-Add input sanitation to all user supplied data | Complete | Adam Fowler | https://trello.com/c/OSxIlz0P |
+| Add input sanitation to all user supplied data | Complete | Adam Fowler | https://trello.com/c/OSxIlz0P |
+| Design Interface to Tag Resources | In Progress | Emily White | https://trello.com/c/9sj2ZqtC |
 
 
 This next week, we will focus on implementing additional functionality to assign resources and tags, as well as additional APIs, testing and front-end development. 

@@ -11,14 +11,14 @@
 		"POSTGRES_HOST": "localhost",
 		"POSTGRES_USER": "flask",
 		"POSTGRES_PASSWORD": "^E.8@9kG",
-		"POSTGRES_DB": "carl",
+		"POSTGRES_DB": "carl"
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --upgrade pip && pip3 install --user -r .devcontainer/requirements.txt",
+	"postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
 	"postStartCommand": "cd carl && docker-compose up -d",
 	"customizations": {
 		"vscode": {

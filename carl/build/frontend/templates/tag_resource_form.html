@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+    <label for="resource_id">Resource ID:</label>
+    <input name="resource_id" id="resource_id" required>
+    <label for="tag_id">Tag ID:</label>
+    <input name="tag_id" id="tag_id" required>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
