@@ -20,8 +20,8 @@ jobs:
       - name: compose-up
         run: |
           cd /deploy &&
-          docker stop carl_frontend carl_backend &&
-          docker rm carl_frontend carl_backend &&
+          docker ps -q --filter "name=carl_backend" | grep -q . && docker stop carl_backend && docker rm -fv carl_backend &&
+          docker ps -q --filter "name=carl_frontend" | grep -q . && docker stop carl_frontend && docker rm -fv carl_frontend &&
           docker-compose up -d --remove-orphans
       - run: echo "Status:${{ job.status }}."
 
