@@ -10,18 +10,20 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: compose down
-        run: cd /deploy && docker-compose down
+        run: |
+          cd /deploy
+          docker-compose down
+          docker ps -q --filter "name=carl_backend" | grep -q . && docker stop carl_backend && docker rm -fv carl_backend || true
+          docker ps -q --filter "name=carl_frontend" | grep -q . && docker stop carl_frontend && docker rm -fv carl_frontend || true
       - name: stage
         run: |
-          cd /deploy &&
-          rm -rf * && 
-          cp -R /home/runner/_work/Team4/Team4/carl/build /deploy/ &&
+          cd /deploy
+          rm -rf *
+          cp -R /home/runner/_work/Team4/Team4/carl/build /deploy/
           cp /deploy/.save/docker-compose.yml /deploy/docker-compose.yml
       - name: compose-up
         run: |
-          cd /deploy &&
-          docker ps -q --filter "name=carl_backend" | grep -q . && docker stop carl_backend && docker rm -fv carl_backend &&
-          docker ps -q --filter "name=carl_frontend" | grep -q . && docker stop carl_frontend && docker rm -fv carl_frontend &&
+          cd /deploy
           docker-compose up -d --remove-orphans
       - run: echo "Status:${{ job.status }}."
 
