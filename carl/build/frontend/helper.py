@@ -182,12 +182,16 @@ def add_tag_to_resource(resource_id, tag_id, conn):
 def get_tagged_resources(tag_id, conn):
     curr = conn.cursor()
     # SQL query to select all rows from the resource table where the tag_id is in the resource_tags table
+    # note from TE - technically joins are faster than nested queries (not super important but just for fun)
     curr.execute(
         f"""
-        SELECT * FROM Resources WHERE id IN
-        (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id})
+        SELECT * FROM resources AS r 
+        LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
+        INNER JOIN tags AS t ON t.id = rt.tag_id
+        WHERE t.id = {tag_id}
         """
     )
+    # SELECT * FROM resources AS r WHERE id IN (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id}
     resources = curr.fetchall()
     curr.close()
     return resources
