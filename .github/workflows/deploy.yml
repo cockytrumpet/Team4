@@ -18,6 +18,10 @@ jobs:
           cp -R /home/runner/_work/Team4/Team4/carl/build /deploy/ &&
           cp /deploy/.save/docker-compose.yml /deploy/docker-compose.yml
       - name: compose-up
-        run: cd /deploy && docker-compose build && docker-compose up -d --remove-orphans
+        run: |
+          cd /deploy &&
+          docker stop carl_frontend carl_backend &&
+          docker rm carl_frontend carl_backend &&
+          docker-compose up -d --remove-orphans
       - run: echo "Status:${{ job.status }}."
 
