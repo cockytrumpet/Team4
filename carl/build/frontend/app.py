@@ -22,7 +22,6 @@ def index():
 
 @app.route("/resources")
 def resources():
-    #conn = h.get_db_connection()
     if not h.table_exists(conn, "resources"):
         return render_template("notable.html", error="Resources")
     cur = conn.cursor()
@@ -41,10 +40,19 @@ def resourceform():
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
-        conn = h.get_db_connection()
-        h.add_to_resources(title, link, descr, conn)
+        tag = escape(request.form.get("tag"))
+        tag = tag[6:-7]
+        h.add_to_resources(title, link, descr, conn, tag)
+
         return redirect(url_for("resources"))
-    return render_template("resource_form.html")
+
+    cur = conn.cursor()
+    cur.execute(
+            "SELECT DISTINCT title FROM tags GROUP BY id;"
+    )
+    tags = cur.fetchall()
+    cur.close()
+    return render_template("resource_form.html", tags=tags)
 
 
 @app.route("/projects")
@@ -93,6 +101,20 @@ def tagform():
         h.add_to_tags(title, descr,conn)
         return redirect(url_for("tags"))
     return render_template("tag_form.html")
+
+@app.route("/find", methods=("GET", "POST"))
+def find():
+    if request.method == "POST":
+        tag = escape(request.form["tag"])
+        cur = conn.cursor()
+        cur.execute(
+            f"SELECT DISTINCT 0 as id, r.create_date, r.title, r.link, r.descr FROM resources AS r LEFT JOIN tags AS t ON t.id = r.id WHERE '{tag}' IN (SELECT DISTINCT title FROM tags)"
+        )
+        resources = cur.fetchall()
+        cur.close()
+        return render_template("resources.html", resources=resources)
+    return render_template("find.html")
+
 
 def request_has_connection():
     return hasattr(flask.g, 'dbconn')

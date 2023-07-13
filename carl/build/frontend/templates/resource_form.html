@@ -25,6 +25,14 @@
                   cols="60"
                   >{{ request.form['descr'] }}</textarea>
         <br>
+        <label for="tag">Select a Tag</label>
+        <br>
+        <select name = "tag" multiple="multiple" rows="40" cols="60">
+            {% for tag in tags %}
+            <option value="{{ tag }}">{{tag[0]}}</option>
+            {% endfor %}
+            </select>
+        <br>
         <button type="submit">Submit</button>
     </form>
 {% endblock %}

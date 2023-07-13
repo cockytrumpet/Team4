@@ -28,7 +28,7 @@ def get_db_connection():
     return conn
 
 
-def add_to_resources(title, link, descr, conn):
+def add_to_resources(title, link, descr, conn, tag):
     
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -44,7 +44,25 @@ def add_to_resources(title, link, descr, conn):
         (title, link, descr),
     )
     conn.commit()
+    cur.execute(
+        "SELECT id FROM resources ORDER BY create_date DESC LIMIT 1;"
+    )
+    res_id = cur.fetchall()
+    res_id = res_id[0]
     cur.close()
+    cur = conn.cursor()
+    cur.execute(
+        f"SELECT id FROM tags WHERE title IN ('{tag}');"
+    )
+    tag_id = cur.fetchall()
+
+    cur.execute(
+        "INSERT INTO restag (resource_id, tag_id)" "VALUES (%s,%s)",
+        (res_id,tag_id)
+    )
+    
+    cur.close()
+    
     
 
 

@@ -1,4 +1,4 @@
-from build.frontend.app import get_db_connection
+from build.frontend.helper import get_db_connection
 
 conn = get_db_connection()
 
@@ -38,16 +38,16 @@ cur.execute(
 #######################
 # ResourcesTags Table #
 #######################
-# cur.execute(
-#    "CREATE TABLE IF NOT EXISTS resourcestags (entry_id SERIAL PRIMARY KEY,"
-#    "FOREIGN KEY(resource_id) REFERENCES resources(id),"
-#    "FOREIGN KEY(tag_id) REFERENCES tags(id));"
-# )
-# cur.execute(
-#    "INSERT INTO resourcetags (title, link, descr)"
-#    "VALUES (%s, %s, %s)",
-#    ("Stack Overflow Article", "https://stackoverflow.com/questions/20461030/current-date-curdate-not-working-as-default-date-value","Current Date Function"),
-# )
+cur.execute(
+    "CREATE TABLE IF NOT EXISTS restag (entry_id SERIAL PRIMARY KEY,"
+    "resource_id INT,"
+    "tag_id INT);"
+)
+cur.execute(
+    "INSERT INTO restag (resource_id, tag_id)"
+    "VALUES (%s, %s)",
+    ("1","1"),
+ )
 conn.commit()
 cur.close()
 conn.close()
