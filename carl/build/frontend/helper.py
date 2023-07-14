@@ -38,6 +38,14 @@ def init_db():
         "FOREIGN KEY (tag_id) REFERENCES tags (id));"
     )
 
+    # Create projects_resources table
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS project_resources (id serial PRIMARY KEY,"
+        "project_id integer,"
+        "resource_id integer,"
+        "FOREIGN KEY (project_id) REFERENCES projects (id),"
+        "FOREIGN KEY (resource_id) REFERENCES resources (id));"
+    )
     conn.commit()
     cur.close()
     conn.close()
