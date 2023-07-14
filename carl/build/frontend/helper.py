@@ -189,6 +189,7 @@ def get_tagged_resources(tag_id, conn):
         LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
         INNER JOIN tags AS t ON t.id = rt.tag_id
         WHERE t.id = {tag_id}
+        ORDER BY r.id DESC
         """
     )
     # SELECT * FROM resources AS r WHERE id IN (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id}
