@@ -38,7 +38,7 @@ This next week, we will focus on implementing additional functionality to assign
 
 ### Week 7 (July 3 - July 9)
 
-
+![Alt text](static_assets/Week7.png)
 
 | Task          | Status             |  Developer(s)   | Trello Link   |
 |---------------|--------------------|-----------------|---------------|
@@ -59,13 +59,21 @@ This next week, we will focus on implementing additional functionality to assign
 | Add resources to a project | In-Progress | Robert Gunn | https://trello.com/c/upYTVUFb |
 
 In the next week, we will be doing the following:
+
 design interface to tag resources - emily
+
 css design and rendering tests - emily
+
 home page implementation - robert
+
 enable editing & deletion of a resource - nolan
+
 see tags assigned to resources - adam
+
 ensure all tests pass prior to production - adam
+
 add more unit tests - taylor
+
 search by one or more tags - taylor
 
 
