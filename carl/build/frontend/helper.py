@@ -192,15 +192,36 @@ def get_tagged_resources(tag_id, conn):
     # SQL query to select all rows from the resource table where the tag_id is in the resource_tags table
     # note from TE - technically joins are faster than nested queries (not super important but just for fun)
     curr.execute(
-        f"""
-        SELECT * FROM resources AS r 
-        LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
-        INNER JOIN tags AS t ON t.id = rt.tag_id
-        WHERE t.id = {tag_id}
-        ORDER BY r.id DESC
-        """
+        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
+        "FROM resources "
+        "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
+        "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
+        f"WHERE tags.id = {tag_id} "
+        "GROUP BY resources.id "
+        "ORDER BY create_date DESC;"
+        #f"""
+        #SELECT 
+        #*
+        #FROM resources AS r 
+        #LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
+        #INNER JOIN tags AS t ON t.id = rt.tag_id
+        #WHERE t.id = {tag_id} 
+        #ORDER BY r.id DESC
+        #"""
     )
     # SELECT * FROM resources AS r WHERE id IN (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id}
     resources = curr.fetchall()
     curr.close()
     return resources
+
+
+def format_search(tags):
+    tags = str(tags)
+    tags = tags.split(' ')
+    tag_search = '('
+    for tag in tags:
+        tag_search = tag_search + '\'' + tag + '\''
+        tag_search = tag_search + ','
+    tag_search = tag_search[0:-1]
+    tag_search = tag_search + ')'
+    return tag_search

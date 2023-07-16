@@ -6,6 +6,9 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from markupsafe import escape
 from helper import *
 
+# We don't need to initialize the database every time we run the application
+# Our database information is persistent storage, and stored for use between instances of the application
+# The only thing we need to do every time is establish a connection to the database
 init_db()
 
 app = Flask(__name__)
@@ -111,16 +114,28 @@ def page_not_found(error):
 @app.route("/find", methods=("GET", "POST"))
 def find():
     if request.method == "POST":
-        tag = escape(request.form["tag"])
+        tags = escape(request.form["tags"])
+        tag_search = format_search(tags)
         cur = conn.cursor()
         cur.execute(
-            f"SELECT DISTINCT 0 as id, r.create_date, r.title, r.link, r.descr FROM resources AS r LEFT JOIN tags AS t ON t.id = r.id WHERE '{tag}' IN (SELECT DISTINCT title FROM tags)"
+            "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
+            "FROM resources "
+            "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
+            "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
+            f"WHERE tags.title IN{tag_search} OR resources.title IN {tag_search}"
+            "GROUP BY resources.id "
+            "ORDER BY create_date DESC;"
         )
         resources = cur.fetchall()
         cur.close()
-        return render_template("resources.html", resources=resources)
-    return render_template("find.html")
+        return render_template(
+            "resources.html",
+            resources=resources,
+            tags=get_tags(conn),
+            page="resources",
+        )
 
+    return render_template("find.html")
 
 def request_has_connection():
     return hasattr(flask.g, "dbconn")

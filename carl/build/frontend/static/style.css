@@ -30,3 +30,30 @@
 .main {
     overflow-y: auto;
 }
+
+.resources{
+    border:1px solid gray;
+    margin:5px;
+    padding:5px;
+
+}
+
+.tags{
+    border:1px solid gray;
+    margin:5px;
+    padding:5px;
+}
+
+.disabled{
+    pointer-events:none;
+}
+
+.tags {
+        border-radius: 5px;
+        border: 1px solid #000;
+        background: #ebebeb;
+        cursor: pointer;
+        display: inline-block;
+        margin: 10px;
+}
+

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Add a New Resource {% endblock %}</h1>
+    <h1>{% block title %} Find Resources {% endblock %}</h1>
     <form method="post">
-        <label for="tag">Tag</label>
+        <label for="tags">Search</label>
         <br>
-        <input type="text" name="tag"
-               placeholder="tag"
-               value="{{ request.form['tag'] }}"></input>
+        <input type="text" name="tags"
+               placeholder="resource tag1"
+               value="{{ request.form['tags'] }}"></input>
         <br>
         <button type="submit">Submit</button>
     </form>
