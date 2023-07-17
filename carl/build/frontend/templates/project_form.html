@@ -5,18 +5,19 @@
     <form method="post">
         <label for="title">Project Title</label>
         <br>
-        <input type="text" name="title"
+        <input type="text" name="title" class="input-field"
                placeholder="Project title"
-               value="{{ request.form['title'] }}"></input>
+               value="{{ request.form['title'] }}">
         <br>
         <label for="descr">Project Description</label>
         <br>
-        <textarea name="descr"
+        <textarea name="descr" class="textarea-field"
                   placeholder="Description of your project"
-                  rows="20"
-                  cols="20"
+                  rows="8"
+                  cols="40"
                   >{{ request.form['descr'] }}</textarea>
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit" class="submit-button">Submit</button>
     </form>
 {% endblock %}
+

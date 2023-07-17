@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Projects {% endblock %}</h1>
-    
+    <h1 align="center">{% block title %} Projects {% endblock %}</h1 align="center">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <div class="search-container">
+      <input type="text" placeholder="Search">
+      <button type="submit">Search</button>
+    </div>
     {% for project in projects %}
         <div class='tag'>
             <h3>{{ project[1] }}</h3>

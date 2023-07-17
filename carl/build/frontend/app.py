@@ -26,7 +26,6 @@ def index():
     return render_template("index.html", page="home")
 
 
-
 @app.route("/resources", defaults={"tag": "ALL"})
 @app.route("/resources/<tag>")
 def resources(tag=None):
@@ -67,6 +66,7 @@ def resourceform():
     return render_template(
         "resource_form.html", tags=get_tags(conn), page="resourceform"
     )
+
 
 @app.route("/projects")
 def projects():

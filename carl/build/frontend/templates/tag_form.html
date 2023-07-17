@@ -5,18 +5,18 @@
     <form method="post">
         <label for="title">Tag Title</label>
         <br>
-        <input type="text" name="title"
+        <input type="text" name="title" class="input-field"
                placeholder="Tag title"
                value="{{ request.form['title'] }}"></input>
         <br>
         <label for="descr">Tag Description</label>
         <br>
-        <textarea name="descr"
+        <textarea name="descr", class="textarea-field"
                   placeholder="Description of your tag"
                   rows="20"
                   cols="20"
                   >{{ request.form['descr'] }}</textarea>
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit" class="submit-button">Submit</button> 
     </form>
 {% endblock %}

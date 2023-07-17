@@ -8,6 +8,36 @@
             {% for tag in tags %}
                 <a href="{{ url_for('resources') }}/{{ tag[0] }}"><button label='button' name='button'>{{ tag[1] }}</button></a>
             {% endfor %}
+    <h1>{% block title %} Resources {% endblock %}</h1>
+    
+    <table class="my-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Link</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Example Title 1</td>
+            <td><a href="https://example.com/link1">Link 1</a></td>
+            <td>Tag 1, Tag 2</td>
+          </tr>
+          <tr>
+            <td>Example Title 2</td>
+            <td><a href="https://example.com/link2">Link 2</a></td>
+            <td>Tag 3, Tag 4</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+      
+    {% for resource in resources %}
+        <div class='resource'>
+            <h3>{{ resource[2] }}</h3>
+            <p><b><a href="{{ resource[3] }}" target="_blank" rel="noopener noreferrer">Link</a></b></p>
+            <div class ='descr'><p>{{ resource[4] }}</p></div>
         </div>
         <div class="main">
             {% for resource in resources %}

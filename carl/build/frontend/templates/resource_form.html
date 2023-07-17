@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Add a New Resource {% endblock %}</h1>
+    <h1 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">{% block title %} Add a New Resource {% endblock %}</h1>
     <form method="post">
         <label for="title">Resource Title</label>
         <br>
-        <input type="text" name="title"
+        <input type="text" name="title" class="input-field"
                placeholder="Resource title"
                value="{{ request.form['title'] }}"></input>
         <br>
 
         <label for="link">Resource Link</label>
         <br>
-        <input type="text" name="link"
+        <input type="text" name="link" class="input-field"
                placeholder="Resource link"
                value="{{ request.form['link'] }}"></input>
         <br>
 
         <label for="descr">Resource Description</label>
         <br>
-        <textarea name="descr"
+        <textarea name="descr" class="textarea-field"
                   placeholder="Description of your resource"
                   rows="15"
                   cols="60"
