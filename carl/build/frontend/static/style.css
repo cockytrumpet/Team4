@@ -27,10 +27,6 @@
     background-color: white;
 }
 
-.main {
-    overflow-y: auto;
-}
-
 .resources{
     border:1px solid gray;
     margin:5px;
@@ -54,7 +50,7 @@
         background: #ebebeb;
         cursor: pointer;
         display: inline-block;
-        margin: 10px;
+        margin: 0px 0px 4px 0px;
 }
 
 .input-field, .textarea-field {

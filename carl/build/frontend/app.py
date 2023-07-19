@@ -135,7 +135,8 @@ def find():
             page="resources",
         )
 
-    return render_template("find.html")
+    return render_template("find.html", page="find")
+
 
 def request_has_connection():
     return hasattr(flask.g, "dbconn")
