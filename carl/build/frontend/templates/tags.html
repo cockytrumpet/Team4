@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Tags {% endblock %}</h1>
-    
-    {% for tag in tags %}
-        <div class='tag'>
-            <h3>{{ tag[1] }}</h3>
-            <p>{{ tag[2] }}</p>
-        </div>
-    {% endfor %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <table class="my-table">
+        <thead>
+        <tr>
+            <th>Tag</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for tag in tags %}
+                <tr>
+                <td>{{ tag[1] }}</td>
+                <td>{{ tag[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
