@@ -67,6 +67,16 @@ def resourceform():
         "resource_form.html", tags=get_tags(conn), page="resourceform"
     )
 
+@app.route("/resource/<int:id>/delete", methods=("POST",))
+def delete_resource(id):
+    get_resource = get_resource_by_id(id, conn)
+    if get_resource is None:
+        flash("Error: Resource not found.")
+        return redirect(url_for("resources"))
+    else:
+        delete_resource_by_id(id, conn)
+        flash("Resource deleted successfully!")
+        return redirect(url_for("resources"))
 
 @app.route("/projects")
 def projects():

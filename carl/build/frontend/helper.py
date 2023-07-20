@@ -98,6 +98,25 @@ def add_to_resources(title, link, descr, conn):
     cur.close()
     return resource_id
 
+def get_resource_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT * FROM resources WHERE id = %s", (id,)
+    )
+    resource = cur.fetchone()
+    cur.close()
+    return resource
+
+def delete_resource_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute(
+        "DELETE FROM resource_tags WHERE resource_id = %s", (id,) # delete tag relations first
+    )
+    cur.execute(
+        "DELETE FROM resources WHERE id = %s", (id,) # then delete resource
+    )
+    conn.commit()
+    cur.close()
 
 def add_to_tags(title, descr, conn):
     # conn = get_db_connection()
