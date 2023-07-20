@@ -33,6 +33,9 @@
                         {% endif %}
                     </td>
                     <td>
+                        <a href="{{ url_for('edit_resource', id=resource[0]) }}">
+                            <button>Edit</button>
+                        </a>
                         <form action="{{ url_for('delete_resource', id=resource[0]) }}" method="post">
                             <input type="submit" value="Delete">
                         </form>

@@ -118,6 +118,27 @@ def delete_resource_by_id(id, conn):
     conn.commit()
     cur.close()
 
+def get_resource(id, conn):
+    with conn.cursor() as cur:
+        cur.execute("SELECT * FROM resources WHERE id=%s", (id,))
+        resource = cur.fetchone()
+    return resource
+
+def update_resource(id, title, link, descr, tags, conn):
+    with conn.cursor() as cur:
+        cur.execute(
+            "UPDATE resources SET title=%s, link=%s, descr=%s WHERE id=%s",
+            (title, link, descr, id),
+        )
+        # Assuming you have a separate table for resource_tags relationship
+        cur.execute("DELETE FROM resource_tags WHERE resource_id=%s", (id,))
+        for tag in tags:
+            cur.execute(
+                "INSERT INTO resource_tags (resource_id, tag_id) VALUES (%s, %s)",
+                (id, tag),
+            )
+    conn.commit()
+
 def add_to_tags(title, descr, conn):
     # conn = get_db_connection()
     # Open a cursor to perform database operations
