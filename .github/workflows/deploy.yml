@@ -26,6 +26,7 @@ jobs:
       - name: Run Tests
         run: cd carl/build; python -m unittest
   deploy:
+    needs: test
     runs-on: self-hosted
     steps:
       - name: checkout
