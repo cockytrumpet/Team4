@@ -3,5 +3,4 @@
 carl/data
 *.dSYM
 venv/**
-__*
-
+__pycache__
