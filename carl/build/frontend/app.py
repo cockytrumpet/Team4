@@ -81,21 +81,20 @@ def delete_resource(id):
 @app.route("/edit_resource/<int:id>", methods=("GET", "POST"))
 def edit_resource(id):
     if request.method == "POST":
-        # Fetch the new data from the form
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
         tags = request.form.getlist("tags")
 
-        # Update the resource in the database
         update_resource(id, title, link, descr, tags, conn)
 
-        # Redirect to the resources page
         return redirect(url_for("resources"))
     else:
-        # Fetch the current data from the database
         resource = get_resource(id, conn)
-        return render_template("edit_resource.html", resource=resource, tags=get_tags(conn))
+        print("Resource Tags: ", resource[5])  # Debug statement
+        all_tags = get_tags(conn)
+        print("All Tags: ", all_tags)  # Debug statement
+        return render_template("edit_resource.html", resource=resource, tags=all_tags)
 
 @app.route("/projects")
 def projects():

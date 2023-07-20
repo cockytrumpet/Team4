@@ -120,7 +120,14 @@ def delete_resource_by_id(id, conn):
 
 def get_resource(id, conn):
     with conn.cursor() as cur:
-        cur.execute("SELECT * FROM resources WHERE id=%s", (id,))
+        cur.execute("""
+        SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags
+        FROM resources
+        LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id
+        LEFT JOIN tags ON resource_tags.tag_id = tags.id
+        WHERE resources.id=%s
+        GROUP BY resources.id
+        """, (id,))
         resource = cur.fetchone()
     return resource
 
