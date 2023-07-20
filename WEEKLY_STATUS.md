@@ -83,6 +83,38 @@ search by one or more tags - taylor
 
 ### Week 8 (July 10 - July 16)
 
+
+| Task          | Status             |  Developer(s)   | Trello Link   |
+|---------------|--------------------|-----------------|---------------|
+| Search by title or tag | Complete | Taylor Erickson | https://trello.com/c/jksNrR7J |
+| Initial see tags assigned to resources | Complete | Taylor Erickson | https://trello.com/c/fxCrftmO |
+| Search by one or more tags | Complete | Taylor Erickson | https://trello.com/c/ZsljTaP9 |
+| Add tests, parameters to web page design | Complete | Taylor Erickson | https://trello.com/c/xpc1R3wL |
+| Add more unit tests | In progress | Taylor Erickson | https://trello.com/c/GqducP0V |
+| Enable deletion of resources | Complete | Nolan Ollada | https://trello.com/c/WX3gS7cc |
+| Enable editing of a resource | Complete | Nolan Ollada | https://trello.com/c/Ezy1JVW5 |
+| Add ability to see tags assigned to resoures | Complete | Adam Fowler | https://trello.com/c/zGc4lldQ |
+| Ensure all tests pass before production | Complete | Adam Fowler | https://trello.com/c/uTKmMvlH |
+| Lead writing of web pages design doc | Complete | Emily White | https://trello.com/c/AUzjXYC4 |
+| Rendering resources objects | In progress | Emily White | https://trello.com/c/DdKCNWpf |
+| Rendering project objects | In progress | Emily White | https://trello.com/c/DSmlnZYX |
+| Rendering tags objects | In progress | Emily White | https://trello.com/c/gGxrHPng |
+| Add ability to assign resources to projects | In progress | Robert Gunn | https://trello.com/c/upYTVUFb |
+
+Backlog
+
+| Task          | Status             |  Developer(s)   | Trello Link   |
+|---------------|--------------------|-----------------|---------------|
+| Design interface to tag resources | Backlog | Emily White | https://trello.com/c/9sj2ZqtC |
+| CSS design and rendering tests | Backlog | Emily White | https://trello.com/c/44KYG8re | 
+| Home page implementation and design | Backlog | Robert Gunn | https://trello.com/c/P1vSqGuT |
+
+
+In the next sprint, we're going to focus on:
+
+
+
+
 ### Week 9 (July 17 - July 23)
 
 ### Week 10 (July 24 - July 30)
