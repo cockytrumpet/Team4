@@ -63,20 +63,23 @@ def handler(postgresql):
     resource_ids = cursor.fetchall()
     cursor.execute("SELECT DISTINCT id FROM tags")
     tag_ids = cursor.fetchall()
-    
+
     for res_id in resource_ids:
         for tag_id in tag_ids:
             cursor.execute(
-                    "INSERT INTO resource_tags (resource_id, tag_id)" "VALUES (%s, %s)",
-                    (res_id, tag_id),
-                )
+                "INSERT INTO resource_tags (resource_id, tag_id)"
+                "VALUES (%s, %s)",
+                (res_id, tag_id),
+            )
 
     cursor.close()
     conn.commit()
     conn.close()
 
-Postgresql = testing.postgresql.PostgresqlFactory(cache_initialized_db=True,
-                                                  on_initialized=handler)
+
+Postgresql = testing.postgresql.PostgresqlFactory(
+    cache_initialized_db=True, on_initialized=handler
+)
 
 # Generate Postgresql class which shares the generated database
 
@@ -89,15 +92,15 @@ class Test(unittest.TestCase):
         engine = create_engine(self.postgresql.url())
         # use driver
         self.db = psycopg2.connect(**self.postgresql.dsn())
-    
+
     def tearDown(self):
         self.db.close()
         self.postgresql.stop()
 
     def test_table_exists(self):
-        self.assertTrue(h.table_exists(self.db, 'tags'))
-        self.assertTrue(h.table_exists(self.db, 'resources'))
-        self.assertFalse(h.table_exists(self.db, 'fake'))
+        self.assertTrue(h.table_exists(self.db, "tags"))
+        self.assertTrue(h.table_exists(self.db, "resources"))
+        self.assertFalse(h.table_exists(self.db, "fake"))
 
     def test_add_to_res(self):
         title = "Test"
@@ -107,7 +110,7 @@ class Test(unittest.TestCase):
         cur = self.db.cursor()
 
         # call the function
-        h.add_to_resources(title, link, descr,self.db)
+        h.add_to_resources(title, link, descr, self.db)
 
         # check results of output
         cur = self.db.cursor()
@@ -115,9 +118,9 @@ class Test(unittest.TestCase):
         # items are not necessarily returned in order - cannot assume it's returned in order of creation
         data = cur.fetchall()
         newest_item = data[-1]
-        self.assertEqual(newest_item[2],title)
-        self.assertEqual(newest_item[3],link)
-        self.assertEqual(newest_item[4],descr)
+        self.assertEqual(newest_item[2], title)
+        self.assertEqual(newest_item[3], link)
+        self.assertEqual(newest_item[4], descr)
 
     def test_add_to_tags(self):
         title = "Test"
@@ -126,7 +129,7 @@ class Test(unittest.TestCase):
         cur = self.db.cursor()
 
         # call the function
-        h.add_to_tags(title, descr,self.db)
+        h.add_to_tags(title, descr, self.db)
 
         # check results of output
         cur = self.db.cursor()
@@ -134,8 +137,8 @@ class Test(unittest.TestCase):
         # items are not necessarily returned in order - cannot assume it's returned in order of creation
         data = cur.fetchall()
         newest_item = data[-1]
-        self.assertEqual(newest_item[1],title)
-        self.assertEqual(newest_item[2],descr)
+        self.assertEqual(newest_item[1], title)
+        self.assertEqual(newest_item[2], descr)
 
     def test_get_tagged_resources(self):
         # test_tag2
@@ -143,27 +146,12 @@ class Test(unittest.TestCase):
         cur.execute("SELECT * FROM tags WHERE title = 'test_tag2'")
         tag_ids = cur.fetchall()
         tag_id = tag_ids[0][0]
-        
-        results = h.get_tagged_resources(tag_id, self.db)
 
+        results = h.get_tagged_resources(tag_id, self.db)
         # we expect that we should get two resources
-        cur.execute(f"SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id} ORDER BY resource_id DESC")
+        cur.execute(
+            f"SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id} ORDER BY resource_id"
+        )
         resource_ids = cur.fetchall()
         self.assertEqual(results[0][0], resource_ids[0][0])
         self.assertEqual(results[0][0], resource_ids[0][0])
-
-
-        
-
-
-
-
-        
-
-
-
-
-        
-
-
-
