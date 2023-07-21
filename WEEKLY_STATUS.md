@@ -99,20 +99,34 @@ search by one or more tags - taylor
 | Rendering resources objects | In progress | Emily White | https://trello.com/c/DdKCNWpf |
 | Rendering project objects | In progress | Emily White | https://trello.com/c/DSmlnZYX |
 | Rendering tags objects | In progress | Emily White | https://trello.com/c/gGxrHPng |
+| Design interface to tag resources | In progress | Emily White | https://trello.com/c/9sj2ZqtC |
+| CSS design and rendering tests | In progress | Emily White | https://trello.com/c/44KYG8re | 
 | Add ability to assign resources to projects | In progress | Robert Gunn | https://trello.com/c/upYTVUFb |
-
-Backlog
-
-| Task          | Status             |  Developer(s)   | Trello Link   |
-|---------------|--------------------|-----------------|---------------|
-| Design interface to tag resources | Backlog | Emily White | https://trello.com/c/9sj2ZqtC |
-| CSS design and rendering tests | Backlog | Emily White | https://trello.com/c/44KYG8re | 
-| Home page implementation and design | Backlog | Robert Gunn | https://trello.com/c/P1vSqGuT |
+| Home page implementation and design | In progress | Robert Gunn | https://trello.com/c/P1vSqGuT |
+| Implement password and username | In progress | Robert Gunn | https://trello.com/c/uwkklm9v |
 
 
 In the next sprint, we're going to focus on:
 
+Emily White: 
+- ongoing items
+- HTML & CSS tests
 
+Robert Gunn:
+- ongoing items
+- add ads to homepage
+- add current projects to homepage
+
+Nolan Ollada:
+- Unit tests for assigning tags to resources
+
+Adam Fowler:
+- refactor main app for scalability
+- combine multiple pages to a few pages to improve the user experience
+
+Taylor Erickson:
+- get_tagged_resources() bug
+- lead SQL design doc
 
 
 ### Week 9 (July 17 - July 23)
