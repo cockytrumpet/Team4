@@ -83,7 +83,7 @@ search by one or more tags - taylor
 
 ### Week 8 (July 10 - July 16)
 
-
+![Alt text](static_assets/Week8.png)
 | Task          | Status             |  Developer(s)   | Trello Link   |
 |---------------|--------------------|-----------------|---------------|
 | Search by title or tag | Complete | Taylor Erickson | https://trello.com/c/jksNrR7J |
