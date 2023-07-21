@@ -19,6 +19,8 @@ We will use the the testing libraries available through the flask testing librar
 - Test to ensure input from the user is passed to the back-end
 - Test to ensure the successful redirect to the user's project page upon successful login.
 - Test to ensure that the project page renders only the data associated with the authenticated and authorized user. 
+- Test that the project icons have proper padding a margins to ensure they align on the page
+
 ### Add Projects Page
 ![Alt text](static_assets/add_projects.png)
 #### Description:
@@ -35,6 +37,8 @@ We will implement the following tests:
 - Test to make sure that the form submission data is passed to the back-end
 - Test to make sure there is a successful redirect upon submission of a project
 - Test to make sure that the redirect to the project page renders the data submitted by the user correctly
+- Test that each element has proper padding and margins to ensure the page renders properly and test that input is displayed properly within the text area
+
 ### Resources Page
 ![Alt text](static_assets/resources.png)
 #### Description:
@@ -50,6 +54,8 @@ We will implement the following tests:
 - Test to ensure that when a user searches for a resource, the query is appropriately passed to the back-end
 - Test to ensure that when a user searches for a resource, the page renders only the relevant resources
 - Test to ensure that when a user selects to view a single resource, that the page redirects to that single resource by resource id.
+- Test that the table ocntaining the resources renders with proper spacing and alignment
+
 ### Add Resources Page
 ![Alt text](static_assets/add_resources.png)
 #### Description:
@@ -66,6 +72,7 @@ We will implement the following tests:
 - Test to make sure that the form takes in the user's inputs and passes them to the back-end appropriately
 - Test to make sure that the page redirects to the resources page upon successful storage of the resource and renders the newly created resource correctly
 - Test to make sure that the tag information is rendered correctly from the back-end.
+- Test that each element has proper padding and margins and test that input is displayed properly within the text area
 
 ### Tag Manager
 ![Alt text](static_assets/tag_manager.png)
@@ -87,3 +94,4 @@ We will implement the following tests:
 - Test to make sure that query results are appropriately rendered given the response from the back-end on matching results
 - Test to make sure that form data is handled correctly and passed to the back-end
 - Test to make sure that when a user creates a new tag, that the page succesfully refreshes and shows the newly created tag.
+- Test to make sure tags icons render with proper font, padding, color, etc.
