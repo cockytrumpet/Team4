@@ -64,8 +64,9 @@ def resourceform():
         return redirect(url_for("resources"))
 
     return render_template(
-        "resource_form.html", tags=get_tags(conn), page="resourceform"
+        "resource_form.html", tags=get_tags(conn), page="resources"
     )
+
 
 @app.route("/resource/<int:id>/delete", methods=("POST",))
 def delete_resource(id):
@@ -77,6 +78,7 @@ def delete_resource(id):
         delete_resource_by_id(id, conn)
         flash("Resource deleted successfully!")
         return redirect(url_for("resources"))
+
 
 @app.route("/edit_resource/<int:id>", methods=("GET", "POST"))
 def edit_resource(id):
@@ -94,7 +96,13 @@ def edit_resource(id):
         print("Resource Tags: ", resource[5])  # Debug statement
         all_tags = get_tags(conn)
         print("All Tags: ", all_tags)  # Debug statement
-        return render_template("edit_resource.html", resource=resource, tags=all_tags)
+        return render_template(
+            "edit_resource.html",
+            resource=resource,
+            tags=all_tags,
+            page="resources",
+        )
+
 
 @app.route("/projects")
 def projects():
@@ -163,7 +171,7 @@ def find():
             page="resources",
         )
 
-    return render_template("find.html", page="find")
+    return render_template("find.html", page="resources")
 
 
 def request_has_connection():

@@ -70,3 +70,15 @@
     border: none;
     cursor: pointer;
 }
+
+.icon {
+    height: 15px;
+    width: 15px;
+    padding: 1px;
+    margin: 4px;
+    text-align: center;
+}
+
+.icon_row {
+    display: inline-flex;
+}
