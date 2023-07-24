@@ -139,7 +139,7 @@ def tagform():
         descr = escape(request.form["descr"])
         add_to_tags(title, descr, conn)
         return redirect(url_for("tags"))
-    return render_template("tag_form.html", page="tagform")
+    return render_template("tag_form.html", page="tags")
 
 
 @app.errorhandler(404)

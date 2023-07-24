@@ -2,6 +2,9 @@
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <a href="{{ url_for('tagform') }}">
+        <img class="icon" src="{{ url_for('static', filename='add.svg') }}" title="Add Tag"/>
+    </a>
     <table class="my-table">
         <thead>
         <tr>
