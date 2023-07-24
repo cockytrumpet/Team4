@@ -151,26 +151,12 @@ def page_not_found(error):
 def find():
     if request.method == "POST":
         tags = escape(request.form["tags"])
-        tag_search = format_search(tags)
-        cur = conn.cursor()
-        cur.execute(
-            "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
-            "FROM resources "
-            "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
-            "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
-            f"WHERE tags.title IN{tag_search} OR resources.title IN {tag_search}"
-            "GROUP BY resources.id "
-            "ORDER BY create_date DESC;"
-        )
-        resources = cur.fetchall()
-        cur.close()
         return render_template(
             "resources.html",
-            resources=resources,
+            resources=search_resources(tags, conn),
             tags=get_tags(conn),
             page="resources",
         )
-
     return render_template("find.html", page="resources")
 
 

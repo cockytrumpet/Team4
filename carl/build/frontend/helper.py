@@ -98,38 +98,44 @@ def add_to_resources(title, link, descr, conn):
     cur.close()
     return resource_id
 
+
 def get_resource_by_id(id, conn):
     cur = conn.cursor()
-    cur.execute(
-        "SELECT * FROM resources WHERE id = %s", (id,)
-    )
+    cur.execute("SELECT * FROM resources WHERE id = %s", (id,))
     resource = cur.fetchone()
     cur.close()
     return resource
 
+
 def delete_resource_by_id(id, conn):
     cur = conn.cursor()
     cur.execute(
-        "DELETE FROM resource_tags WHERE resource_id = %s", (id,) # delete tag relations first
+        "DELETE FROM resource_tags WHERE resource_id = %s",
+        (id,),  # delete tag relations first
     )
     cur.execute(
-        "DELETE FROM resources WHERE id = %s", (id,) # then delete resource
+        "DELETE FROM resources WHERE id = %s", (id,)  # then delete resource
     )
     conn.commit()
     cur.close()
 
+
 def get_resource(id, conn):
     with conn.cursor() as cur:
-        cur.execute("""
+        cur.execute(
+            """
         SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags
         FROM resources
         LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id
         LEFT JOIN tags ON resource_tags.tag_id = tags.id
         WHERE resources.id=%s
         GROUP BY resources.id
-        """, (id,))
+        """,
+            (id,),
+        )
         resource = cur.fetchone()
     return resource
+
 
 def update_resource(id, title, link, descr, tags, conn):
     with conn.cursor() as cur:
@@ -145,6 +151,7 @@ def update_resource(id, title, link, descr, tags, conn):
                 (id, tag),
             )
     conn.commit()
+
 
 def add_to_tags(title, descr, conn):
     # conn = get_db_connection()
@@ -246,15 +253,15 @@ def get_tagged_resources(tag_id, conn):
         f"WHERE tags.id = {tag_id} "
         "GROUP BY resources.id "
         "ORDER BY create_date DESC;"
-        #f"""
-        #SELECT 
-        #*
-        #FROM resources AS r 
-        #LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
-        #INNER JOIN tags AS t ON t.id = rt.tag_id
-        #WHERE t.id = {tag_id} 
-        #ORDER BY r.id DESC
-        #"""
+        # f"""
+        # SELECT
+        # *
+        # FROM resources AS r
+        # LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
+        # INNER JOIN tags AS t ON t.id = rt.tag_id
+        # WHERE t.id = {tag_id}
+        # ORDER BY r.id DESC
+        # """
     )
     # SELECT * FROM resources AS r WHERE id IN (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id}
     resources = curr.fetchall()
@@ -262,13 +269,29 @@ def get_tagged_resources(tag_id, conn):
     return resources
 
 
+def search_resources(tags, conn):
+    tag_search = format_search(tags)
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
+        "FROM resources "
+        "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
+        "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
+        f"WHERE tags.title IN{tag_search} OR resources.title IN {tag_search}"
+        "GROUP BY resources.id "
+        "ORDER BY create_date DESC;"
+    )
+    resources = cur.fetchall()
+    return resources
+
+
 def format_search(tags):
     tags = str(tags)
-    tags = tags.split(' ')
-    tag_search = '('
+    tags = tags.split(" ")
+    tag_search = "("
     for tag in tags:
-        tag_search = tag_search + '\'' + tag + '\''
-        tag_search = tag_search + ','
+        tag_search = tag_search + "'" + tag + "'"
+        tag_search = tag_search + ","
     tag_search = tag_search[0:-1]
-    tag_search = tag_search + ')'
+    tag_search = tag_search + ")"
     return tag_search
