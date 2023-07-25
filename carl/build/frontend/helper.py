@@ -50,7 +50,7 @@ def init_db():
     cur.close()
     conn.close()
 
-    # Create projects_resources table
+    # Create projects_tags table
     cur.execute(
         "CREATE TABLE IF NOT EXISTS project_tags (id serial PRIMARY KEY,"
         "project_id integer,"
