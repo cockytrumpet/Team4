@@ -50,6 +50,15 @@ def init_db():
     cur.close()
     conn.close()
 
+    # Create projects_resources table
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS project_tags (id serial PRIMARY KEY,"
+        "project_id integer,"
+        "tag_id integer,"
+        "FOREIGN KEY (project_id) REFERENCES projects (id),"
+        "FOREIGN KEY (tag_id) REFERENCES tags (id));"
+    )
+
 
 def table_exists(con, table_str):
     exists = False
