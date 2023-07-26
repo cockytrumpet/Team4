@@ -662,7 +662,6 @@ __Test steps:__ <br>
 2. Select the project that you want to add to the resource to
 3. Hit submit
 4. Check to make sure that the project contains the resource added to the project
-<br>
 __Expected result:__ <br>
 The expected result is that the resource is added to the project that the user wanted to add the resource to.
 <br>
