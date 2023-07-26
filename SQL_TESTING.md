@@ -495,14 +495,105 @@ __tag_id:__ the primary key of the tags table, the key that points to the tag be
 
 
 ### Access Methods:
-Get resource by id  with tag information (get_resource)
-Delete resource and related tags (delete_resource_by_id
-Update resource information (update_resource)
-Get resources with tag information (get_resources)
-Search for resources by tag or title (search_resources)
-Retrieve tagged resources (get_tagged_resources)
-Add tag to a resource (add_tag_to_resource)
+#### 1. Get resource by id  with tag information
+__Name:__ get_resource
+<br>
+__Description:__ This is a method that allows a user to retrieve a resource from the resources table by a specific resource id and also return the related tag information associated with the resource retrieved.
+<br>
+__Parameters:__ The method requires a resource id and a database connection.
+<br>
+__Return Values:__ The return value is the resource and it's associated attributes from the resources table, as well as the related tag titles from the tags table. 
+<br>
+__Test:__ see test 1 in the tests section.
+<br>
+#### 2. Delete resource and related tags (delete_resource_by_id)
+__Name:__ delete_resource_by_id
+<br>
+__Description:__ This is a method that allows a user to remove a resource.
+<br>
+__Parameters:__ The method requires the id of the resource and a database connection.
+<br>
+__Return Values:__ There is no return value, just side effects. The resource_tags table is updated to remove the rows with the resource id we're deleting, and then the resources table is updated to remove the resource that matches the resource id passed in to the method.
+<br>
+__Test:__ see test 2 in the tests section.
+<br>
+#### 3. Update resource information (update_resource)
+__Name:__ update_resource
+<br>
+__Description:__ This is a method that allows a user to change and save details about an existing resource.
+<br>
+__Parameters:__ The method requires the id of the resource id, the new title, link, description, and tags. It also requires a database connection.
+<br>
+__Return Values:__ There is no return value, just side effects. The resources table is updated with the new information about the resource, and the new tags relationship is added to the resources_tag table.
+<br>
+__Test:__ see test 3 in the tests section.
+<br>
+#### 4. Get resources with tag information
+__Name:__ <br>
+get_resources
+<br>
+__Description:__ <br>
+This is a method that returns all resources and their associated attributes and associated tags information from the back-end to render on the front-end.
+<br>
+__Parameters:__ <br>
+The method requires a database connection.
+<br>
+__Return Values:__ <br>
+The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ <br>
+see test 4 in the tests section.
+<br>
+#### 5. Search for resources by tag or title
+__Name:__ <br>
+search_resources
+<br>
+__Description:__ <br>
+This is a method that allows a user to search for resources by either resource title or associated tag title.
+<br>
+__Parameters:__ <br>
+The method requires a database connection and a list of words that the user is searching for from the front-end.
+<br>
+__Return Values:__ <br>
+The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ <br>
+see test 5 in the tests section.
+<br>
+#### 6. Retrieve tagged resources
+__Name:__ <br>
+get_tagged_resources
+<br>
+__Description:__ <br>
+This is a method that retrieves resources that are tagged with a specific tag.
+<br>
+__Parameters:__ <br>
+The method requires a database connection and a tag_id that the user wants to find resources for.
+<br>
+__Return Values:__ <br>
+The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ <br>
+see test 6 in the tests section.
+<br>
+#### 7. Add tag to a resource (add_tag_to_resource)
+__Name:__ <br>
+add_tag_to_resource
+<br>
+__Description:__ <br>
+This is a method that allows a user to add an existing tag to an existing resource.
+<br>
+__Parameters:__ <br>
+This requires a resource id (of a resource that already exists), a tag id (of a tag that already exists), and a database connection. It also requires that the database exists and that the resources and tags tables exist. If the resource_tags table does not exist it is created in order to add the mapping of resource and tag to the table.
+<br>
+__Return Values:__ <br>
+There is not a return value from the function, just side effects. The resource_tags table is updated with the newly created mapping and the tags associated with each resource are visible on the resources page.
+<br>
+__Test:__ <br>
+see test 7 in the tests section.
+<br>
 
+### Tests
 #### Search for resources by tag
 __Description:__ <br>
 When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
@@ -543,33 +634,48 @@ __resource_id:__ the primary key of the resources table, points to the resource 
 
 ### Access Methods:
 #### Add a resource to a project
-__Name:__ add_projects_resources
+__Name:__ <br>
+add_projects_resources
 <br>
-__Description:__ This is a method that allows a user to add a resource to an existing project.
+__Description:__ <br>
+This is a method that allows a user to add a resource to an existing project.
 <br>
-__Parameters:__ The method requires a database connection and a resource id and a project id.
+__Parameters:__ <br>
+The method requires a database connection and a resource id and a project id.
 <br>
-__Return Values:__ There is no return value, just side effects.
+__Return Values:__ <br>
+There is no return value, just side effects.
 <br>
-__Test:__ see test 1 in the tests section.
+__Test:__ <br>
+see test 1 in the tests section.
 <br>
 ### Tests:
 #### 1. Add a resource to a project
-
-__Description:__
+__Description:__ <br>
 When a user wants to add an existing resource to an existing project, they need a way to add that information to the databse.
-__Preconditions:__
-This method requires that 
-__Test steps:__
 <br>
-__Expected result:__
+__Preconditions:__ <br>
+This method requires that there is a resource that has been already been created in the resources table and a project that has already been created in the projects table. It also requires that there is a database connection and that the project_resources table has already been created.
 <br>
-__Actual result:__
+__Test steps:__ <br>
+1. Access the resources page
+2. Select the project that you want to add to the resource to
+3. Hit submit
+4. Check to make sure that the project contains the resource added to the project
 <br>
-__Status:__
+__Expected result:__ <br>
+The expected result is that the resource is added to the project that the user wanted to add the resource to.
 <br>
-__Notes:__
+__Actual result:__ <br>
+The project_resources table is updated with the new relationship between an existing project and an existing resource to render on the front end.
 <br>
-__Post-conditions:__
+__Status:__ <br>
+Work in progress
+<br>
+__Notes:__ <br>
+This method still needs to be implemented.
+<br>
+__Post-conditions:__ <br>
+The database will be updated with the new mapping between project and resource and the resource will be visible on the respective project page. 
 <br>
  
