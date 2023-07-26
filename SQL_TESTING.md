@@ -295,6 +295,7 @@ __Test steps:__
 2. Fill out the form and add a title, a description, and a link.
 3. Add the tags to the resource from the available tags if needed
 4. Click submit
+
 __Expected result:__
 A new resource should be accessible from the resources page
 <br>
@@ -398,29 +399,88 @@ __id:__ primary key for the table, automatically increments every time a project
 __title:__ the user created title for the project -  limit of 150 characters VARCHAR(150) <br>
 __descr:__ the description of the project created by the user - TEXT <br>
 ### Access Methods:
-Get all projects (get_projects)
+#### Get all projects 
+__Name:__ get_projects
 <br>
-Add a new project (add_to_projects)
+__Description:__ This is a method that retrieves all of the projects and their associated details from the back-end to render on the front-end.
+<br>
+__Parameters:__ The method requires a database connection.
+<br>
+__Return Values:__ The return value is an array of all of the projects in the projects table and their associated attributes. 
+<br>
+__Test:__ see test 1 in the tests section.
+<br>
+
+#### Add a new project (add_to_projects)
+__Name:__ add_to_projects
+<br>
+__Description:__ This is a method that allows a user to add a new project to the projects table.
+<br>
+__Parameters:__ The method requires a database connection, as well as the title and description of the project that the user is creating.
+<br>
+__Return Values:__ There is no return value, only side effects. The projects table is udpated with the new project created by the user.
+<br>
+__Test:__ see test 2 in the tests section.
 <br>
 
 ### Tests:
-__Test 1__
+__1. Get all projects__
 <br>
 __Description:__ 
+The front-end needs to display all of the current projects that have been created.
 <br>
-__Preconditions:__ 
+__Preconditions:__
+It's required that the database is created. It's also required that the projects table exists, and ideally there should be some projects in that table, otherwise it will return an empty array.
 <br>
 __Test steps:__
+1. Navigate to the projects list page
+2. Make sure that all of the projects that have been created are visible in the projects list
 <br>
 __Expected result:__
+All of the previously created projects are visible on the projects list.
 <br>
 __Actual result:__
+The projects list shows the list of created projects from the projects table that was returned from the method. If there are no projects in the projects table, it will not show anything.
 <br>
 __Status:__
+Pass - 07/26/2023
 <br>
 __Notes:__
+no notes
 <br>
 __Post-conditions:__
+The list of projects is available to the user whenever they access the projects list page.
+<br>
+
+### Tests:
+__2. Add a new project__
+<br>
+__Description:__ 
+The user wants to be able to add a project to the projects table with their inputted title and description.
+<br>
+__Preconditions:__
+It's required that the database is created. If the projects table is not created it is created to add the projects table.
+<br>
+__Test steps:__
+1. Navigate to the add projects page
+2. Enter in the title and description
+3. Hit submit
+4. Check to make sure that the newly created project is visible on the front-end
+<br>
+__Expected result:__
+The newly created project is visible on the front-end projects list.
+<br>
+__Actual result:__
+The projects table is updated with the new project that the user created and the projects list is updated on the front-end to include the new project.
+<br>
+__Status:__
+Pass
+<br>
+__Notes:__
+no notes
+<br>
+__Post-conditions:__
+The projects table contains the new project and it is visible on the list of projects.
 <br>
 
 ## ResourcesTags Table
@@ -482,14 +542,24 @@ __project_id:__ the primary key of the projects table, points to the project bei
 __resource_id:__ the primary key of the resources table, points to the resource being mapped to a project. the table requires that this is a foreign key that references the resources table. <br>
 
 ### Access Methods:
-
+#### Add a resource to a project
+__Name:__ add_projects_resources
+<br>
+__Description:__ This is a method that allows a user to add a resource to an existing project.
+<br>
+__Parameters:__ The method requires a database connection and a resource id and a project id.
+<br>
+__Return Values:__ There is no return value, just side effects.
+<br>
+__Test:__ see test 1 in the tests section.
+<br>
 ### Tests:
-__Test 1__
-<br>
+#### 1. Add a resource to a project
+
 __Description:__
-<br>
+When a user wants to add an existing resource to an existing project, they need a way to add that information to the databse.
 __Preconditions:__
-<br>
+This method requires that 
 __Test steps:__
 <br>
 __Expected result:__
@@ -502,95 +572,4 @@ __Notes:__
 <br>
 __Post-conditions:__
 <br>
-
-
-## ProjectsTags Table
-### Name:
-project_tags
-### Description:
-Given the many-to-many relationship between our projects and our tags, we need an additional table to store the relationship between them. Each row represents the distinct combination between each project and each tag that are mapped together. The table leverages the primary keys of each project and each tag that are mapped together, and has a foreign key requirement to ensure that the relationship between a project and a tag is referring to a project and a tag that actually exist.
-### Fields:
-__id:__ primary key for the table, automatically increments every time a new relationship between a project and a resource is added. <br>
-__project_id:__ primary key of the projects table, points to the project being mapped to a tag. the table requires that this is a foreign key that references the projects table. <br>
-__tag_id:__ primary key of the tags table, points to the tag being mapped to a project. the table requires that this is a foreign key that references the tags table. <br>
-#### Access Methods:
-
-#### Tests:
-__Test 1__
-<br>
-__Description:__
-<br>
-__Preconditions:__
-<br>
-__Test steps:__
-<br>
-__Expected result:__
-<br>
-__Actual result:__
-<br>
-__Status:__
-<br>
-__Notes:__
-<br>
-__Post-conditions:__
-<br>
-
-
-
-
-You will create a list of descriptions for tables and functions being created for the project.
-You must add a file SQL_TESTING.md to your repository and provide the following for each table (at least 3 tables):
-
-Table Name
-Table Description
-For each field of the table, provide name and short description.
-List of tests for verifying each table
-You must also provide the following (in SQL_TESTING.md)for each data access method (at least one access method for each table or query required to get the data to display):
-
-Name
-Description
-Parameters
-return values
-List of tests for verifying each access method
-Below is an example format that has been used for describing each test. Your tests might not have information for all those fields, but you should try to specify exactly how each of the pages behaves.
-
-           
-           Use case name : 
-                Verify login with valid user name and password
-            Description:
-                Test the Google login page
-            Pre-conditions (what needs to be true about the system before the test can be applied):
-                User has valid user name and password
-            Test steps:
-                1. Navigate to login page
-                2. Provide valid user name
-                3. Provide valid password
-                4. Click login button
-            Expected result:
-                User should be able to login
-            Actual result (when you are testing this, how can you tell it worked):
-                User is navigated to dashboard with successful login
-            Status (Pass/Fail, when this test was performed)
-                Pass
-            Notes:
-                N/A
-            Post-conditions (what must be true about the system when the test has completed successfully):
-                User is validated with database and successfully signed into their account.
-                The account session details are logged in database. 
-This is a Design Document for Developers
-This should be a document that you would hand to developers (not a homework assignment where you list the question and then the answer). It should be easy to tell what your design for the database is going to encompass.
-
-Please make sure it answers the following questions:
-
-What are the tables you are going to have in the database?
-What are the fields of each table?
-What are the constraints for those table fields?
-What are the relationships between tables?
-
-What are the functions that will be created to access the database?
-
-What are the tests to make sure those access routines work?
-
-Which pages will need to access the database information?
-
-What are the tests to make sure the pages access the correct data in the database?
+ 
