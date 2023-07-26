@@ -14,7 +14,7 @@ __title:__ title of the tag, user generated - limit of 150 characters - VARCHAR(
 __descr:__ description of the tag - TEXT <br>
 
 ### Access Methods:
-#### 1. add to the tags table (add_to_tags)
+#### 1. add to the tags table
 __Name:__ add_to_tags 
 <br>
 __Description:__ This is a method that allows a user to add a tag to the tags table
@@ -222,12 +222,12 @@ __Return Values:__ The return value is the resource and it's associated attribut
 __Test:__ see test 3 in the tests section.
 <br>
 
-#### 4. Retrieve all resources from the resources table (get_resources)
+#### 4. Retrieve all resources from the resources table
 __Name:__ get_resources
 <br>
-__Description:__ This is a method that allows a user to search for resources by either resource title or associated tag title.
+__Description:__ This is a method that returns all resources and their associated attributes and associated tags information from the back-end to render on the front-end.
 <br>
-__Parameters:__ The method requires a database connection and a list of words that the user is searching for from the front-end.
+__Parameters:__ The method requires a database connection.
 <br>
 __Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
@@ -237,6 +237,30 @@ __Test:__ see test 4 in the tests section.
 #### 5. Update a resource with new details
 __Name:__ update_resource
 <br>
+__Description:__ This is a method that allows a user to change and save details about an existing resource.
+<br>
+__Parameters:__ The method requires the id of the resource id, the new title, link, description, and tags. It also requires a database connection.
+<br>
+__Return Values:__ There is no return value, just side effects. The resources table is updated with the new information about the resource, and the new tags relationship is added to the resources_tag table.
+<br>
+__Test:__ see test 5 in the tests section.
+<br>
+
+#### 6. Delete resource from the resource table (delete_resource_by_id)
+__Name:__ delete_resource_by_id
+<br>
+__Description:__ This is a method that allows a user to remove a resource.
+<br>
+__Parameters:__ The method requires the id of the resource and a database connection.
+<br>
+__Return Values:__ There is no return value, just side effects. The resource_tags table is updated to remove the rows with the resource id we're deleting, and then the resources table is updated to remove the resource that matches the resource id passed in to the method.
+<br>
+__Test:__ see test 6 in the tests section.
+<br>
+
+#### 7. search for resources by tag or resource
+__Name:__ search_resources
+<br>
 __Description:__ This is a method that allows a user to search for resources by either resource title or associated tag title.
 <br>
 __Parameters:__ The method requires a database connection and a list of words that the user is searching for from the front-end.
@@ -245,12 +269,16 @@ __Return Values:__ The return value is an array of resources and their associate
 <br>
 __Test:__ see test 4 in the tests section.
 <br>
+#### 8. get resources by tag id 
+__Name:__ get_tagged_resources
 <br>
-Delete resource from the resource table (delete_resource_by_id)
+__Description:__ This is a method that retrieves resources that are tagged with a specific tag.
 <br>
-search for resources by tag or resource (search_resources)
+__Parameters:__ The method requires a database connection and a tag_id that the user wants to find resources for.
 <br>
-get resources by tag id 
+__Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ see test 8 in the tests section.
 <br>
 
 ### Tests:
