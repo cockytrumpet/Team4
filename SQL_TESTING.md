@@ -14,14 +14,55 @@ __title:__ title of the tag, user generated - limit of 150 characters - VARCHAR(
 __descr:__ description of the tag - TEXT <br>
 
 ### Access Methods:
-add to the tags table (add_to_tags)
+#### 1. add to the tags table (add_to_tags)
+__Name:__ add_to_tags 
 <br>
-retrieve all tags (get_tags)
+__Description:__ This is a method that allows a user to add a tag to the tags table
 <br>
-search for resources by tag or resource title (search_resources)
+__Parameters:__ The tag title and description that the user wants to use for the new tag. The function also requires a database connection. 
 <br>
+__Return Values:__ There is no return value, just side effects - the table is updated with the new tag.
+<br>
+__Test:__ see test 1 in the tests section.
+<br>
+#### 2. retrieve all tags
+__Name:__ get_tags
+<br>
+__Description:__ This is a method that retrieves all of the tags from the tags table to render on the front end
+<br>
+__Parameters:__ The only parameter is a database connection.
+<br>
+__Return Values:__ The return value is an array of tags and their associated attributes from the tags table.
+<br>
+__Test:__ see test 2 in the tests section.
+<br>
+
+#### 3. search for resources by tag (get_tagged_resources)
+__Name:__ get_tagged_resources
+<br>
+__Description:__ This is a method that retrieves resources that are tagged with a specific tag.
+<br>
+__Parameters:__ The method requires a database connection and a tag_id that the user wants to find resources for.
+<br>
+__Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ see test 3 in the tests section.
+<br>
+
+#### 4. search for resources by tag(s) or resource title
+__Name:__ search_resources
+<br>
+__Description:__ This is a method that allows a user to search for resources by either resource title or associated tag title.
+<br>
+__Parameters:__ The method requires a database connection and a list of words that the user is searching for from the front-end.
+<br>
+__Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ see test 4 in the tests section.
+<br>
+
 ### Tests:
-#### Test adding to the tags table
+#### 1. Test adding to the tags table
 __Description:__ <br>
 When a user creates a new tag, it will be stored in the tags table.
 <br>
@@ -49,7 +90,7 @@ __Post-conditions:__ <br>
 The tag is available to add either to a new resource or an existing resource.
 <br>
 
-#### Test retrieving all tags
+#### 2. Test retrieving all tags
 __Description:__ <br>
 When a user wants to view all of the available tags, we need to return all of them from the table.
 <br>
@@ -76,7 +117,7 @@ __Post-conditions:__ <br>
 The list of tags is visible to the user on the tags page and on the add to resources page.
 <br>
 
-#### Search for resources by tag
+#### 3. Search for resources by tag
 __Description:__ <br>
 When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
 <br>
@@ -103,6 +144,35 @@ __Post-conditions:__ <br>
 The list of resources that match the tag title selected by the user are visible.
 <br>
 
+#### 4. Search for resources by tag(s) or resource title
+__Description:__ <br>
+When a user wants to view all of the resources related to a user search which could contain either a resource title or one or more tags associated with a resource. This access method touches three tables - we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources that match either one or more tags or one or more resource titles related to a resource.
+<br>
+__Preconditions:__ <br>
+The tags table has been created and there are tags available to query from the tags table. It is also required that the tags resources table and the resources table has been created. Is is also helpful if there is at least one resource and one tag that have been mapped in the resource_tags table and added to their respective tables. It will return an empty list if there are no resources that match the search.
+<br>
+__Test steps:__ <br>
+1. Access the search page
+2. Enter a search that contains either one or more tags or one or more resource titles into the search bar
+3. Hit submit
+4. Read through the returned results and make sure they match the search criteria
+
+__Expected result:__ <br>
+The list of resources that match either the tag title(s) or resource title(s) submitted in the search are visible to the user.
+<br>
+__Actual result:__ <br>
+A query is executed to retrieve resources that are tagged with the tag title(s) or resource title(s) that are passed in to the search bar from the front-end. The query joins the resources and tags table using the resource_tags table and returns the matching resources to the front-end to display to the user.
+<br>
+__Status:__ <br>
+Pass - tested 07/26/2023
+<br>
+__Notes:__ <br>
+This is related to the tags table, the resources table, and the resource_tag table. 
+<br>
+__Post-conditions:__ <br>
+The list of resources that match the tag title(s) or the resource title(s) entered into the search bar by the user are visible.
+<br>
+
 ## Resources Table
 ### Name: 
 resources
@@ -116,15 +186,65 @@ __link:__ link to the resource that the user provides - TEXT <br>
 __descr:__ description that the user provides - TEXT <br>
 
 ### Access Methods:
-Add a resource to the resources table (add_to_resources) 
+#### 1. Add a resource to the resources table
+__Name:__ add_to_resources
 <br>
-Retrieve resource from the resources table (get_resource_by_id)
+__Description:__ This is a method that allows a user to create and store a new resource.
 <br>
-Retrieve resource and related tags (get_resource)
+__Parameters:__ The method requires a title, link, description that the user wants to use to create a new resource, as well as a database connection.
 <br>
-Retrieve all resources from the resources table (get_resources)
+__Return Values:__ The return value is the resource id of the newly created resource that's been added to the resources table. 
 <br>
-Update a resource with new details (update_resource)
+__Test:__ see test 1 in the tests section.
+<br>
+
+#### 2. Retrieve resource from the resources table
+__Name:__ get_resource_by_id
+<br>
+__Description:__ This is a method that allows a user to retrieve a resource from the resources table by a specific resource id.
+<br>
+__Parameters:__ The method requires a resource id and a database connection.
+<br>
+__Return Values:__ The return value is the resource and it's associated attributes from the resources table that matches the resource id passed to the function.
+<br>
+__Test:__ see test 2 in the tests section.
+<br>
+
+#### 3. Retrieve resource and related tags
+__Name:__ get_resource
+<br>
+__Description:__ This is a method that allows a user to retrieve a resource from the resources table by a specific resource id and also return the related tag information associated with the resource retrieved.
+<br>
+__Parameters:__ The method requires a resource id and a database connection.
+<br>
+__Return Values:__ The return value is the resource and it's associated attributes from the resources table, as well as the related tag titles from the tags table. 
+<br>
+__Test:__ see test 3 in the tests section.
+<br>
+
+#### 4. Retrieve all resources from the resources table (get_resources)
+__Name:__ get_resources
+<br>
+__Description:__ This is a method that allows a user to search for resources by either resource title or associated tag title.
+<br>
+__Parameters:__ The method requires a database connection and a list of words that the user is searching for from the front-end.
+<br>
+__Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ see test 4 in the tests section.
+<br>
+
+#### 5. Update a resource with new details
+__Name:__ update_resource
+<br>
+__Description:__ This is a method that allows a user to search for resources by either resource title or associated tag title.
+<br>
+__Parameters:__ The method requires a database connection and a list of words that the user is searching for from the front-end.
+<br>
+__Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
+<br>
+__Test:__ see test 4 in the tests section.
+<br>
 <br>
 Delete resource from the resource table (delete_resource_by_id)
 <br>
@@ -189,6 +309,35 @@ This is related to the tags table, the resources table, and the resource_tag tab
 <br>
 __Post-conditions:__ <br>
 The list of resources that match the tag title selected by the user are visible.
+<br>
+
+#### Search for resources by tag(s) or resource title
+__Description:__ <br>
+When a user wants to view all of the resources related to a user search which could contain either a resource title or one or more tags associated with a resource. This access method touches three tables - we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources that match either one or more tags or one or more resource titles related to a resource.
+<br>
+__Preconditions:__ <br>
+The tags table has been created and there are tags available to query from the tags table. It is also required that the tags resources table and the resources table has been created. Is is also helpful if there is at least one resource and one tag that have been mapped in the resource_tags table and added to their respective tables. It will return an empty list if there are no resources that match the search.
+<br>
+__Test steps:__ <br>
+1. Access the search page
+2. Enter a search that contains either one or more tags or one or more resource titles into the search bar
+3. Hit submit
+4. Read through the returned results and make sure they match the search criteria
+
+__Expected result:__ <br>
+The list of resources that match either the tag title(s) or resource title(s) submitted in the search are visible to the user.
+<br>
+__Actual result:__ <br>
+A query is executed to retrieve resources that are tagged with the tag title(s) or resource title(s) that are passed in to the search bar from the front-end. The query joins the resources and tags table using the resource_tags table and returns the matching resources to the front-end to display to the user.
+<br>
+__Status:__ <br>
+Pass - tested 07/26/2023
+<br>
+__Notes:__ <br>
+This is related to the tags table, the resources table, and the resource_tag table. 
+<br>
+__Post-conditions:__ <br>
+The list of resources that match the tag title(s) or the resource title(s) entered into the search bar by the user are visible.
 <br>
 
 
