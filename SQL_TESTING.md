@@ -14,11 +14,94 @@ __title:__ title of the tag, user generated - limit of 150 characters - VARCHAR(
 __descr:__ description of the tag - TEXT <br>
 
 ### Access Methods:
-
+add to the tags table (add_to_tags)
+<br>
+retrieve all tags (get_tags)
+<br>
+search for resources by tag or resource title (search_resources)
+<br>
 ### Tests:
+#### Test adding to the tags table
+__Description:__ <br>
+When a user creates a new tag, it will be stored in the tags table.
+<br>
+__Preconditions:__ <br>
+The database has been created and the user can access the tags form.
+<br>
+__Test steps:__ <br>
+1. Access the create tags page
+2. Fill out the form with the tag title and description
+3. Click submit
 
+__Expected result:__ <br>
+The newly created tag should be visible on the list of available tags
+<br>
+__Actual result:__ <br>
+There is a new row in the tags table with the created tag id, tag title and tag description.
+<br>
+__Status:__ <br>
+Pass - tested 07/26/2023
+<br>
+__Notes:__ <br>
+The only primary key is the tag_id, so it is possible to create tags with the same title
+<br>
+__Post-conditions:__ <br>
+The tag is available to add either to a new resource or an existing resource.
+<br>
 
+#### Test retrieving all tags
+__Description:__ <br>
+When a user wants to view all of the available tags, we need to return all of them from the table.
+<br>
+__Preconditions:__ <br>
+The tags table has been created and there are tags available to query from the tags table.
+<br>
+__Test steps:__ <br>
+1. Access the tags page
+2. Check that all of the tags are visible
 
+__Expected result:__ <br>
+The list of tags are visible to the user
+<br>
+__Actual result:__ <br>
+A query is executed against the tags table and all of the tags are returned from the tags table to the front-end.
+<br>
+__Status:__ <br>
+Pass - tested 07/26/2023
+<br>
+__Notes:__ <br>
+The query returns all fields from the tags table, even though the tag id is not visible to the user.
+<br>
+__Post-conditions:__ <br>
+The list of tags is visible to the user on the tags page and on the add to resources page.
+<br>
+
+#### Search for resources by tag
+__Description:__ <br>
+When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
+<br>
+__Preconditions:__ <br>
+The tags table has been created and there are tags available to query from the tags table. It is also required that the tags resources table and the resources table has been created. It will return an empty list if there are no resources that match the tag, so it is not required to have a mapping from the tag to the resource. 
+<br>
+__Test steps:__ <br>
+1. Access the resources page
+2. Click the tags filter to filter the resources by a tag.
+
+__Expected result:__ <br>
+The list of resources are visible to the user that match the tag that was selected.
+<br>
+__Actual result:__ <br>
+A query is executed to retrieve resources that are tagged with the tag title passed in from the front-end. The query joins the resources and tags table using the resource_tags table and returns the matching resources and tag title to the front-end to display to the user.
+<br>
+__Status:__ <br>
+Pass - tested 07/26/2023
+<br>
+__Notes:__ <br>
+This is related to the tags table, the resources table, and the resource_tag table. 
+<br>
+__Post-conditions:__ <br>
+The list of resources that match the tag title selected by the user are visible.
+<br>
 
 ## Resources Table
 ### Name: 
@@ -33,8 +116,22 @@ __link:__ link to the resource that the user provides - TEXT <br>
 __descr:__ description that the user provides - TEXT <br>
 
 ### Access Methods:
-Add a page to the resources table
-Retrieve resources from the resources table
+Add a resource to the resources table (add_to_resources) 
+<br>
+Retrieve resource from the resources table (get_resource_by_id)
+<br>
+Retrieve resource and related tags (get_resource)
+<br>
+Retrieve all resources from the resources table (get_resources)
+<br>
+Update a resource with new details (update_resource)
+<br>
+Delete resource from the resource table (delete_resource_by_id)
+<br>
+search for resources by tag or resource (search_resources)
+<br>
+get resources by tag id 
+<br>
 
 ### Tests:
 __Test adding a new resources__
@@ -66,6 +163,35 @@ __Post-conditions:__
 The user has successfully created a new resource, and it can be accessed via the resources page.
 <br>
 
+
+#### Search for resources by tag
+__Description:__ <br>
+When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
+<br>
+__Preconditions:__ <br>
+The tags table has been created and there are tags available to query from the tags table. It is also required that the tags resources table and the resources table has been created. It will return an empty list if there are no resources that match the tag, so it is not required to have a mapping from the tag to the resource. 
+<br>
+__Test steps:__ <br>
+1. Access the resources page
+2. Click the tags filter to filter the resources by a tag.
+
+__Expected result:__ <br>
+The list of resources are visible to the user that match the tag that was selected.
+<br>
+__Actual result:__ <br>
+A query is executed to retrieve resources that are tagged with the tag title passed in from the front-end. The query joins the resources and tags table using the resource_tags table and returns the matching resources and tag title to the front-end to display to the user.
+<br>
+__Status:__ <br>
+Pass - tested 07/26/2023
+<br>
+__Notes:__ <br>
+This is related to the tags table, the resources table, and the resource_tag table. 
+<br>
+__Post-conditions:__ <br>
+The list of resources that match the tag title selected by the user are visible.
+<br>
+
+
 __Test retrieving resources from the resources table__
 <br>
 __Description:__
@@ -95,6 +221,10 @@ __id:__ primary key for the table, automatically increments every time a project
 __title:__ the user created title for the project -  limit of 150 characters VARCHAR(150) <br>
 __descr:__ the description of the project created by the user - TEXT <br>
 ### Access Methods:
+Get all projects (get_projects)
+<br>
+Add a new project (add_to_projects)
+<br>
 
 ### Tests:
 __Test 1__
@@ -128,24 +258,39 @@ __tag_id:__ the primary key of the tags table, the key that points to the tag be
 
 
 ### Access Methods:
-### Tests:
-__Test 1__
+Get resource by id  with tag information (get_resource)
+Delete resource and related tags (delete_resource_by_id
+Update resource information (update_resource)
+Get resources with tag information (get_resources)
+Search for resources by tag or title (search_resources)
+Retrieve tagged resources (get_tagged_resources)
+Add tag to a resource (add_tag_to_resource)
+
+#### Search for resources by tag
+__Description:__ <br>
+When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
 <br>
-__Description:__
+__Preconditions:__ <br>
+The tags table has been created and there are tags available to query from the tags table. It is also required that the tags resources table and the resources table has been created. It will return an empty list if there are no resources that match the tag, so it is not required to have a mapping from the tag to the resource. 
 <br>
-__Preconditions:__
+__Test steps:__ <br>
+1. Access the resources page
+2. Click the tags filter to filter the resources by a tag.
+
+__Expected result:__ <br>
+The list of resources are visible to the user that match the tag that was selected.
 <br>
-__Test steps:__
+__Actual result:__ <br>
+A query is executed to retrieve resources that are tagged with the tag title passed in from the front-end. The query joins the resources and tags table using the resource_tags table and returns the matching resources and tag title to the front-end to display to the user.
 <br>
-__Expected result:__
+__Status:__ <br>
+Pass - tested 07/26/2023
 <br>
-__Actual result:__
+__Notes:__ <br>
+This is related to the tags table, the resources table, and the resource_tag table. 
 <br>
-__Status:__
-<br>
-__Notes:__
-<br>
-__Post-conditions:__
+__Post-conditions:__ <br>
+The list of resources that match the tag title selected by the user are visible.
 <br>
 
 
