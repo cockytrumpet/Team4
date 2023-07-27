@@ -46,9 +46,6 @@ def init_db():
         "FOREIGN KEY (project_id) REFERENCES projects (id),"
         "FOREIGN KEY (resource_id) REFERENCES resources (id));"
     )
-    conn.commit()
-    cur.close()
-    conn.close()
 
     # Create projects_tags table
     cur.execute(
@@ -58,6 +55,13 @@ def init_db():
         "FOREIGN KEY (project_id) REFERENCES projects (id),"
         "FOREIGN KEY (tag_id) REFERENCES tags (id));"
     )
+
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    
 
 
 def table_exists(con, table_str):
