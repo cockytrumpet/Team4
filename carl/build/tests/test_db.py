@@ -4,7 +4,6 @@ import psycopg2
 import testing.postgresql
 import frontend.helper as h
 from sqlalchemy import create_engine
-import psycopg2
 
 
 def handler(postgresql):

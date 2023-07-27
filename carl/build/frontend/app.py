@@ -134,12 +134,16 @@ def tags():
 
 @app.route("/tagform", methods=("GET", "POST"))
 def tagform():
+    error = None
     if request.method == "POST":
         title = escape(request.form["title"])
         descr = escape(request.form["descr"])
-        add_to_tags(title, descr, conn)
-        return redirect(url_for("tags"))
-    return render_template("tag_form.html", page="tags")
+        if not add_to_tags(title, descr, conn):
+            # If the tag could not be added (because it already exists), set an error massage.
+            error = "Error: Tag already exists"
+        else:
+            return redirect(url_for("tags"))
+    return render_template("tag_form.html", page="tags", error=error)
 
 
 @app.errorhandler(404)
