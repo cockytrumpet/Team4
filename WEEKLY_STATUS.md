@@ -131,6 +131,59 @@ Taylor Erickson:
 
 ### Week 9 (July 17 - July 23)
 
+![Alt text](static_assets/Week9.png)
+
+| Task          | Status             |  Developer(s)   | Trello Link   |
+|---------------|--------------------|-----------------|---------------|
+| Lead writing of SQL design doc | Completed | Taylor Erickson | https://trello.com/c/Yo0WiIbX |
+| Add projects_resources table | Completed | Taylor Erickson | https://trello.com/c/PMI3JVWJ |
+| Fix get_tagged_resources() bug | In progress | Taylor Erickson | https://trello.com/c/MbCMu4g0 |
+| Add more unit tests | In progress | Taylor Erickson | https://trello.com/c/GqducP0V |
+| Bug fix for projects_tags table | Completed | Emily White | https://trello.com/c/Wl7Y9hr1 |
+| Combine add and find pages to main project Project, Resources, and Tags pages | Completed | Emily White | https://trello.com/c/Nb6qOfWg |
+| Rendering tags objects | Completed | Emily White | https://trello.com/c/gGxrHPng |
+| Rendering project objects | completed | Emily White | https://trello.com/c/DSmlnZYX |
+| Rendering resources objects | Completed| Emily White | https://trello.com/c/DdKCNWpf |
+| Design interface to tag resources | In progress | Emily White | https://trello.com/c/9sj2ZqtC |
+| CSS Design & Rendering Tests | In progress | Emily White | https://trello.com/c/44KYG8re |
+| Unit tests for static ojbects| In progress | Emily White | https://trello.com/c/beUu0tC9 |
+| Home page implementation and design | Completed | Robert Gunn | https://trello.com/c/P1vSqGuT |
+| Password and username | Completed | Robert Gunn | https://trello.com/c/uwkklm9v |
+| Add ads to the homepage | Completed | Robert Gunn | https://trello.com/c/5X4Qvdol |
+| Add current projects to homepage | In progress | Robert Gunn | https://trello.com/c/TCLUexo1 |
+| Refactor main app for scalability | Completed | Adam Fowler | https://trello.com/c/3YAh3h0l |
+| Simplify menu/workflow (resources/tags) | Completed | Adam Fowler | https://trello.com/c/GTLuWneE |
+| Home page edits and design | Completed | Nolan Ollada | https://trello.com/c/uy5d4lHc |
+| Remove ability to create duplicate tags | Completed | Nolan Ollada | https://trello.com/c/j4HByQTv |
+
+
+In the next sprint, we're going to work on:
+
+Emily White: 
+- Design interface to tag resources
+- CSS design and rendering tests
+- unit tests for static objects
+
+Robert Gunn:
+- Load all of the passwords and usernames into a document 
+
+Nolan Ollada:
+- Remove ability to create duplicate resources
+
+Adam Fowler:
+- implement functionality to edit tags and delete tags
+
+
+Taylor Erickson:
+- complete work on get_tagged_resources() bug
+- add functionality to add a resource to a project 
+- continue adding more unit tests
+
+
+
+
+
+
 ### Week 10 (July 24 - July 30)
 
 ### Week 11 (July 31 - August 6)

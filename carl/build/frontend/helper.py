@@ -167,20 +167,32 @@ def update_resource(id, title, link, descr, tags, conn):
 
 
 def add_to_tags(title, descr, conn):
-    # conn = get_db_connection()
-    # Open a cursor to perform database operations
     cur = conn.cursor()
+
+    # Create table if it does not exist.
     cur.execute(
         "CREATE TABLE IF NOT EXISTS tags (id serial PRIMARY KEY,"
         "title varchar (150) NOT NULL,"
         "descr text);"
     )
+
+    # Check if tag exists.
+    cur.execute("SELECT COUNT(*) FROM tags WHERE title = %s", (title,))
+    tag_exists = cur.fetchone()[0]
+
+    if tag_exists:
+        # If the tag already exists, close the cursor and return False.
+        cur.close()
+        return False
+
+    # If the tag does not exist, create it and return True.
     cur.execute(
-        "INSERT INTO tags (title, descr)" "VALUES (%s, %s)",
+        "INSERT INTO tags (title, descr) VALUES (%s, %s)",
         (title, descr),
     )
     conn.commit()
     cur.close()
+    return True
     # conn.close()
 
 
