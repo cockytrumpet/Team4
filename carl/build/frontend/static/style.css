@@ -45,12 +45,12 @@
 }
 
 .tags {
-        border-radius: 5px;
-        border: 1px solid #000;
-        background: #ebebeb;
-        cursor: pointer;
-        display: inline-block;
-        margin: 0px 0px 4px 0px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background: #ebebeb;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0px 0px 4px 0px;
 }
 
 .input-field, .textarea-field {
@@ -81,4 +81,113 @@
 
 .icon_row {
     display: inline-flex;
+}
+
+.sidebar {
+    font-family:Arial, Helvetica, sans-serif;
+    width: 200px;
+    height: 100vh;
+    background-color: #f2f2f2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #000;
+}
+
+.sidebar a.active {
+    background-color: #70d8ef;
+    color: black;
+    font-weight: bold;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.content {
+    margin-left: 200px; /* Same width as the sidebar */
+    padding: 16px;
+}
+
+.input-field, .textarea-field {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: #f2f2f2;
+    color: #333;
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+    font-family: 'Times New Roman', Times, serif;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background: linear-gradient(to right, #6987ff, #14d2df);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.my-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-table th,
+.my-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.my-table th {
+  background-color: #f2f2f2;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  text-align: left;
+}
+
+.my-table a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.my-table a:hover {
+  text-decoration: underline;
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.search-container input[type="text"] {
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+}
+
+.search-container button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
 }
