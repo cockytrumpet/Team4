@@ -146,6 +146,36 @@ def tagform():
     return render_template("tag_form.html", page="tags", error=error)
 
 
+@app.route("/tag/<int:id>/delete", methods=("POST",))
+def delete_tag(id):
+    tag = get_tag_by_id(id, conn)
+    if tag is None:
+        flash("Error: Tag not found.")
+        return redirect(url_for("tags"))
+    else:
+        delete_tag_by_id(id, conn)
+        flash("Tag deleted successfully!")
+        return redirect(url_for("tags"))
+
+
+@app.route("/edit_tag/<int:id>", methods=("GET", "POST"))
+def edit_tag(id):
+    if request.method == "POST":
+        title = escape(request.form["title"])
+        descr = escape(request.form["descr"])
+
+        update_tag(id, title, descr, conn)
+
+        return redirect(url_for("tags"))
+    else:
+        tag = get_tag_by_id(id, conn)
+        return render_template(
+            "edit_tag.html",
+            tag=tag,
+            page="tags",
+        )
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("404.html"), 404

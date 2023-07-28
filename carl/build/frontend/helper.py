@@ -56,12 +56,9 @@ def init_db():
         "FOREIGN KEY (tag_id) REFERENCES tags (id));"
     )
 
-    
     conn.commit()
     cur.close()
     conn.close()
-
-    
 
 
 def table_exists(con, table_str):
@@ -194,6 +191,34 @@ def add_to_tags(title, descr, conn):
     cur.close()
     return True
     # conn.close()
+
+
+def get_tag_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM tags WHERE id = %s", (id,))
+    tag = cur.fetchone()
+    cur.close()
+    return tag
+
+
+def delete_tag_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute(
+        "DELETE FROM resource_tags WHERE tag_id = %s",
+        (id,),  # delete tag relations first
+    )
+    cur.execute("DELETE FROM tags WHERE id = %s", (id,))  # then delete tag
+    conn.commit()
+    cur.close()
+
+
+def update_tag(id, title, descr, conn):
+    with conn.cursor() as cur:
+        cur.execute(
+            "UPDATE tags SET title=%s, descr=%s WHERE id=%s",
+            (title, descr, id),
+        )
+    conn.commit()
 
 
 def add_to_projects(title, descr, conn):

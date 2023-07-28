@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Edit Tag {% endblock %}</h1>
+    <form method="post">
+        <label for="title">Tag Title</label>
+        <br>
+        <input type="text" name="title" class="input-field"
+               placeholder="Tag title"
+               value="{{ request.form['title'] }}"></input>
+        <br>
+        <label for="descr">Tag Description</label>
+        <br>
+        <textarea name="descr", class="textarea-field"
+                  placeholder="Description of your tag"
+                  rows="20"
+                  cols="20"
+                  >{{ request.form['descr'] }}</textarea>
+        <br>
+        <button type="submit" class="submit-button">Submit</button> 
+    </form>
+    <a href="javascript:history.go(-1)"><button class="cancel-button">Cancel</button></a>
+{% endblock %}
