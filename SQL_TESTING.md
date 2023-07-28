@@ -23,7 +23,7 @@ __Parameters:__ The tag title and description that the user wants to use for the
 <br>
 __Return Values:__ There is no return value, just side effects - the table is updated with the new tag.
 <br>
-##### Test: Test adding to the tags table
+#### Test: Test adding to the tags table
 __Description:__ <br>
 When a user creates a new tag, it will be stored in the tags table.
 <br>
@@ -60,7 +60,7 @@ __Parameters:__ The only parameter is a database connection.
 <br>
 __Return Values:__ The return value is an array of tags and their associated attributes from the tags table.
 <br>
-##### Test: Test retrieving all tags
+#### Test: Test retrieving all tags
 __Description:__ <br>
 When a user wants to view all of the available tags, we need to return all of them from the table.
 <br>
@@ -96,7 +96,7 @@ __Parameters:__ The method requires a database connection and a tag_id that the 
 <br>
 __Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: Search for resources by tag
+#### Test: Search for resources by tag
 __Description:__ <br>
 When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
 <br>
@@ -132,7 +132,7 @@ __Parameters:__ The method requires a database connection and a list of words th
 <br>
 __Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: Search for resources by tag(s) or resource title
+#### Test: Search for resources by tag(s) or resource title
 __Description:__ <br>
 When a user wants to view all of the resources related to a user search which could contain either a resource title or one or more tags associated with a resource. This access method touches three tables - we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources that match either one or more tags or one or more resource titles related to a resource.
 <br>
@@ -185,7 +185,7 @@ __Parameters:__ The method requires a title, link, description that the user wan
 <br>
 __Return Values:__ The return value is the resource id of the newly created resource that's been added to the resources table. 
 <br>
-##### Test: Test adding a new resource
+#### Test: Test adding a new resource
 __Description:__
 Test adding a new resource, given input from the user on the front-end add a resource page.
 <br>
@@ -223,7 +223,7 @@ __Parameters:__ The method requires a resource id and a database connection.
 <br>
 __Return Values:__ The return value is the resource and it's associated attributes from the resources table that matches the resource id passed to the function.
 <br>
-##### Test: Test retrieve a resource
+#### Test: Test retrieve a resource
 __Description:__
 Test retrieval of a single resource for a given resource id from the resources table, given input from the front-end to retrieve a resource.
 <br>
@@ -260,7 +260,7 @@ __Parameters:__ The method requires a resource id and a database connection.
 <br>
 __Return Values:__ The return value is the resource and it's associated attributes from the resources table, as well as the related tag titles from the tags table. 
 <br>
-##### Test: Test retrieve resource and related tags
+#### Test: Test retrieve resource and related tags
 __Description:__
 Test retrieval of a single resource for a given resource id from the resources table, given input from the front-end to retrieve a resource.
 <br>
@@ -297,7 +297,7 @@ __Parameters:__ The method requires a database connection.
 <br>
 __Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: Test retrieving all resources
+#### Test: Test retrieving all resources
 __Description:__ <br>
 This test is to make sure that we can retrieve all of the resources that exist from the backend, with their associated attributes and details, including tag information. This is to populate our resources page, where we display all of the available resources to a user. This requires use of the tags table, the resources table, and the resource_tags table in order to map the relationship between each resource and it's associated tags. 
 <br>
@@ -333,7 +333,7 @@ __Parameters:__ The method requires the id of the resource id, the new title, li
 <br>
 __Return Values:__ There is no return value, just side effects. The resources table is updated with the new information about the resource, and the new tags relationship is added to the resources_tag table.
 <br>
-##### Test: Test updating a resource
+#### Test: Test updating a resource
 __Description:__ <br>
 When a user wants to update an existing resource with new details and or new tags, we need to be able to modify the resources table and the resource_tags table to store those changes.
 <br>
@@ -372,7 +372,7 @@ __Parameters:__ The method requires the id of the resource and a database connec
 <br>
 __Return Values:__ There is no return value, just side effects. The resource_tags table is updated to remove the rows with the resource id we're deleting, and then the resources table is updated to remove the resource that matches the resource id passed in to the method.
 <br>
-##### Test: Test deleting a resource
+#### Test: Test deleting a resource
 __Description:__ <br>
 When a user wants to delete a resource, they need a way to modify both the resources table and the resources_tags table so that there is not a relationship between a tag and a resource that no longer exists. This test ensures that a user can successfully delete a resource from the back-end tables. 
 <br>
@@ -410,7 +410,7 @@ __Parameters:__ The method requires a database connection and a list of words th
 <br>
 __Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: Test search for resources by tag(s) or resource title
+#### Test: Test search for resources by tag(s) or resource title
 __Description:__ <br>
 When a user wants to view all of the resources related to a user search which could contain either a resource title or one or more tags associated with a resource. This access method touches three tables - we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources that match either one or more tags or one or more resource titles related to a resource.
 <br>
@@ -448,7 +448,7 @@ __Parameters:__ The method requires a database connection and a tag_id that the 
 <br>
 __Return Values:__ The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: test search for resources by tag
+#### Test: test search for resources by tag
 __Description:__ <br>
 When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
 <br>
@@ -497,30 +497,30 @@ __Parameters:__ The method requires a database connection.
 <br>
 __Return Values:__ The return value is an array of all of the projects in the projects table and their associated attributes. 
 <br>
-##### Test: Test get all projects
-__Description:__ 
+#### Test: Test get all projects
+__Description:__ <br>
 The front-end needs to display all of the current projects that have been created.
 <br>
-__Preconditions:__
+__Preconditions:__ <br>
 It's required that the database is created. It's also required that the projects table exists, and ideally there should be some projects in that table, otherwise it will return an empty array.
 <br>
-__Test steps:__
+__Test steps:__ <br>
 1. Navigate to the projects list page
 2. Make sure that all of the projects that have been created are visible in the projects list
-<br>
-__Expected result:__
+
+__Expected result:__ <br>
 All of the previously created projects are visible on the projects list.
 <br>
-__Actual result:__
+__Actual result:__ <br>
 The projects list shows the list of created projects from the projects table that was returned from the method. If there are no projects in the projects table, it will not show anything.
 <br>
-__Status:__
+__Status:__ <br>
 Pass - 07/26/2023
 <br>
-__Notes:__
+__Notes:__ <br>
 no notes
 <br>
-__Post-conditions:__
+__Post-conditions:__ <br>
 The list of projects is available to the user whenever they access the projects list page.
 <br>
 _________________________________________________________________________________________________________________________________________________________________________________
@@ -533,32 +533,32 @@ __Parameters:__ The method requires a database connection, as well as the title 
 <br>
 __Return Values:__ There is no return value, only side effects. The projects table is udpated with the new project created by the user.
 <br>
-##### Test: Test adding a new project
+#### Test: Test adding a new project
 __Description:__ 
 The user wants to be able to add a project to the projects table with their inputted title and description.
 <br>
-__Preconditions:__
+__Preconditions:__ <br>
 It's required that the database is created. If the projects table is not created it is created to add the projects table.
 <br>
-__Test steps:__
+__Test steps:__ <br>
 1. Navigate to the add projects page
 2. Enter in the title and description
 3. Hit submit
 4. Check to make sure that the newly created project is visible on the front-end
-<br>
-__Expected result:__
+5. 
+__Expected result:__ <br>
 The newly created project is visible on the front-end projects list.
 <br>
-__Actual result:__
+__Actual result:__ <br>
 The projects table is updated with the new project that the user created and the projects list is updated on the front-end to include the new project.
 <br>
-__Status:__
+__Status:__ <br>
 Pass
 <br>
-__Notes:__
+__Notes:__ <br>
 no notes
 <br>
-__Post-conditions:__
+__Post-conditions:__ <br>
 The projects table contains the new project and it is visible on the list of projects.
 <br>
 _________________________________________________________________________________________________________________________________________________________________________________
@@ -585,7 +585,7 @@ __Parameters:__ The method requires a resource id and a database connection.
 <br>
 __Return Values:__ The return value is the resource and it's associated attributes from the resources table, as well as the related tag titles from the tags table. 
 <br>
-##### Test: Test retrieve resource and related tags
+#### Test: Test retrieve resource and related tags
 __Description:__
 Test retrieval of a single resource for a given resource id from the resources table, given input from the front-end to retrieve a resource.
 <br>
@@ -622,7 +622,7 @@ __Parameters:__ The method requires the id of the resource and a database connec
 <br>
 __Return Values:__ There is no return value, just side effects. The resource_tags table is updated to remove the rows with the resource id we're deleting, and then the resources table is updated to remove the resource that matches the resource id passed in to the method.
 <br>
-##### Test: Test deleting a resource
+#### Test: Test deleting a resource
 __Description:__ <br>
 When a user wants to delete a resource, they need a way to modify both the resources table and the resources_tags table so that there is not a relationship between a tag and a resource that no longer exists. This test ensures that a user can successfully delete a resource from the back-end tables. 
 <br>
@@ -660,7 +660,7 @@ __Parameters:__ The method requires the id of the resource id, the new title, li
 <br>
 __Return Values:__ There is no return value, just side effects. The resources table is updated with the new information about the resource, and the new tags relationship is added to the resources_tag table.
 <br>
-##### Test: Test updating a resource
+#### Test: Test updating a resource
 __Description:__ <br>
 When a user wants to update an existing resource with new details and or new tags, we need to be able to modify the resources table and the resource_tags table to store those changes.
 <br>
@@ -703,7 +703,7 @@ The method requires a database connection.
 __Return Values:__ <br>
 The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: Test retrieving all resources
+#### Test: Test retrieving all resources
 __Description:__ <br>
 This test is to make sure that we can retrieve all of the resources that exist from the backend, with their associated attributes and details, including tag information. This is to populate our resources page, where we display all of the available resources to a user. This requires use of the tags table, the resources table, and the resource_tags table in order to map the relationship between each resource and it's associated tags. 
 <br>
@@ -743,7 +743,7 @@ The method requires a database connection and a list of words that the user is s
 __Return Values:__ <br>
 The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: Search for resources by tag(s) or resource title
+#### Test: Search for resources by tag(s) or resource title
 __Description:__ <br>
 When a user wants to view all of the resources related to a user search which could contain either a resource title or one or more tags associated with a resource. This access method touches three tables - we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources that match either one or more tags or one or more resource titles related to a resource.
 <br>
@@ -785,7 +785,7 @@ The method requires a database connection and a tag_id that the user wants to fi
 __Return Values:__ <br>
 The return value is an array of resources and their associated tag information from the joined tags and resources tables.
 <br>
-##### Test: test search for resources by tag
+#### Test: test search for resources by tag
 __Description:__ <br>
 When a user wants to view all of the resources related to a specific tag, we need to access the tags table, resources table, and resources tags table. This is because we need to retrieve the resources by tag title. 
 <br>
@@ -825,7 +825,7 @@ This requires a resource id (of a resource that already exists), a tag id (of a 
 __Return Values:__ <br>
 There is not a return value from the function, just side effects. The resource_tags table is updated with the newly created mapping and the tags associated with each resource are visible on the resources page.
 <br>
-##### Test: test adding a tag to a resource
+#### Test: test adding a tag to a resource
 __Description:__ <br>
 When a user adds a tag to a resource, we have to store the new relationship between a tag and a resource in the back-end so that we can map the two together in other access methods. So this test is not explicitly visible to the user, but is a helper access method for other functions, specifically when a new tag is added to a resource. 
 <br>
@@ -880,7 +880,7 @@ The method requires a database connection and a resource id and a project id.
 __Return Values:__ <br>
 There is no return value, just side effects.
 <br>
-##### Test: test adding a resource to a project
+#### Test: test adding a resource to a project
 __Description:__ <br>
 When a user wants to add an existing resource to an existing project, they need a way to add that information to the databse.
 <br>
@@ -892,6 +892,7 @@ __Test steps:__ <br>
 2. Select the project that you want to add to the resource to
 3. Hit submit
 4. Check to make sure that the project contains the resource added to the project
+
 __Expected result:__ <br>
 The expected result is that the resource is added to the project that the user wanted to add the resource to.
 <br>
