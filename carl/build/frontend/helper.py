@@ -267,7 +267,7 @@ def get_resources(conn):
         "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
         "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
         "GROUP BY resources.id "
-        "ORDER BY create_date DESC;"
+        "ORDER BY title ASC;"
     )
     resources = cur.fetchall()
     cur.close()
