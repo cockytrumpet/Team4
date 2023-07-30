@@ -123,6 +123,37 @@ def projectform():
     return render_template("project_form.html", page="projectform")
 
 
+@app.route("/project/<int:id>/delete", methods=("POST",))
+def delete_project(id):
+    project = get_project_by_id(id, conn)
+    print(project)
+    if project is None:
+        flash("Error: Project not found.")
+        return redirect(url_for("projects"))
+    else:
+        delete_project_by_id(id, conn)
+        flash("Project deleted successfully!")
+        return redirect(url_for("projects"))
+
+
+# @app.route("/edit_project/<int:id>", methods=("GET", "POST"))
+# def edit_project(id):
+#     if request.method == "POST":
+#         title = escape(request.form["title"])
+#         descr = escape(request.form["descr"])
+
+#         update_project(id, title, descr, conn)
+
+#         return redirect(url_for("projects"))
+#     else:
+#         tag = get_project_by_id(id, conn)
+#         return render_template(
+#             "edit_project.html",
+#             project=project,
+#             page="projects",
+#         )
+
+
 @app.route("/tags")
 def tags():
     if not table_exists(conn, "tags"):

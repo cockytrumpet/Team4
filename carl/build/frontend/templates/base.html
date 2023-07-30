@@ -11,7 +11,6 @@
         </div>
         <a href="{{ url_for('index') }}" {% if page == 'home' %}class="active"{% endif %}>Home</a>
         <a href="{{ url_for('projects')}}" {% if page == 'projects' %}class="active"{% endif %}>Projects</a>
-        <a href="{{ url_for('projectform')}}"{% if page == 'projectform' %}class="active"{% endif %}>AddProject</a>
         <a href="{{ url_for('resources')}}"{% if page == 'resources' %}class="active"{% endif %}>Resources</a>
         <a href="{{ url_for('tags')}}"{% if page == 'tags' %}class="active"{% endif %}>Tags</a>
     </div>

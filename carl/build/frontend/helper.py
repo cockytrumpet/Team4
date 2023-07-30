@@ -251,12 +251,30 @@ def get_tags(conn):
 
 def get_projects(conn):
     cur = conn.cursor()
-    cur.execute(
-        "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
-    )
+    cur.execute("SELECT * FROM projects ORDER BY title ASC;")
     projects = cur.fetchall()
     cur.close()
     return projects
+
+
+def get_project_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM projects WHERE id = %s", (id,))
+    project = cur.fetchone()
+    cur.close()
+    return project
+
+
+def delete_project_by_id(id, conn):
+    cur = conn.cursor()
+    ############  implement once resources can be assinged to projects #########
+    # cur.execute(
+    #     "DELETE FROM project_resources WHERE project_id = %s",
+    #     (id,),  # delete tag relations first
+    # )
+    cur.execute("DELETE FROM projects WHERE id = %s", (id,))  # then delete tag
+    conn.commit()
+    cur.close()
 
 
 def get_resources(conn):
