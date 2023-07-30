@@ -1,7 +1,5 @@
-import os
-import psycopg2
 import flask
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 from markupsafe import escape
 from helper import *
@@ -93,9 +91,9 @@ def edit_resource(id):
         return redirect(url_for("resources"))
     else:
         resource = get_resource(id, conn)
-        print("Resource Tags: ", resource[5])  # Debug statement
+        # print("Resource Tags: ", resource[5])  # Debug statement
         all_tags = get_tags(conn)
-        print("All Tags: ", all_tags)  # Debug statement
+        # print("All Tags: ", all_tags)  # Debug statement
         return render_template(
             "edit_resource.html",
             resource=resource,
