@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
-<link rel="stylesheet" href="style.css">
 {% block content %}
     <h1>{% block title %} Find Resources {% endblock %}</h1>
     <form method="post">
-        <label for="tags">Search</label>
-        <br>
-        <input type="text" name="tags" class="input-field
-               placeholder="resource tag1"
-               value="{{ request.form['tags'] }}"></input>
-        <br>
-        <button type="submit" class="submit-button">Submit</button>
+        <label for="tags"></label>
+        <div class="search-container">
+            <input type="text" placeholder="Search" name="tags" value="{{ request.form['tags'] }}"></input>
+            <button class="submit-button" type="submit">Submit</button>
+        </div>
     </form>
-    <a href="javascript:history.go(-1)"><button class="cancel-button">Cancel</button></a>
+    <center><a href="javascript:history.go(-1)"><button class="cancel-button">Cancel</button></a></center>
 {% endblock %}
