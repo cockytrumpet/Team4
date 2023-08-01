@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Edit Resource</h1>
+    <head>
+        <link rel="stylesheet" href="../static/style.css"> 
+    </head>
+    <h1>Edit Resource</h1>
     <form method="post">
         <label for="title">Resource Title</label>
         <br>
-        <input type="text" name="title" class="input-field"
+        <input type="text" name="title" class="textarea-field"
                placeholder="Resource title"
                value="{{ resource[2] }}"></input>
         <br>
 
         <label for="link">Resource Link</label>
         <br>
-        <input type="text" name="link" class="input-field"
+        <input type="text" name="link" class="textarea-field"
                placeholder="Resource link"
                value="{{ resource[3] }}"></input>
         <br>
@@ -27,12 +30,11 @@
 
 
         <!-- Add the multiple select dropdown for tags -->
-        <label for="tags">Add Tags</label>
-        <br>
+        <label for="tags" class="tag_title">Add Tags</label>
         {% for tag in tags %}
             <input type="checkbox" id="{{ tag[0] }}" name="tags" value="{{ tag[0] }}"
                    {% if tag[1] in resource[5] %}checked{% endif %}>
-            <label for="{{ tag[0] }}">{{ tag[1] }}</label><br> <!-- {{ tag[1] }} represents the tag title -->
+            <label class="tags" for="{{ tag[0] }}">{{ tag[1] }}</label><br><!-- {{ tag[1] }} represents the tag title -->
         {% endfor %}
 
         <button type="submit" class="submit-button">Save Changes</button>

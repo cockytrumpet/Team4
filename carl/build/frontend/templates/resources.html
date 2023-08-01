@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+    <head>
+        <link rel="stylesheet" href="../../static/style.css"> 
+    </head>
     <div class="view">
         <div class="topBar">
             <a href="{{ url_for('find') }}"><img class="icon" src="{{ url_for('static', filename='search.svg') }}" title="Find Resource"/></a>
-            Tags: <a href="{{ url_for('resources') }}"><button label='button' name='button'>ALL</button></a>
-            {% for tag in tags %}
-                <a href="{{ url_for('resources') }}/{{ tag[0] }}"><button label='button' name='button'>{{ tag[1] }}</button></a>
+            <a class="tag_title">Tags:</a>
+            <a href="{{ url_for('resources') }}"><button label='button' name='button' class="tags">ALL</button></a>
+            {% for tag in tags %}   
+            <a href="{{ url_for('resources') }}/{{ tag[0] }}"><button label='button' name='button' class="tags">{{ tag[1] }}</button></a>
             {% endfor %}
         </div>
         <br>

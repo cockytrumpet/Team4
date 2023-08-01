@@ -39,12 +39,23 @@
 }
 
 .tags {
-    border-radius: 5px;
-    border: 1px solid #000;
-    background: #ebebeb;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    border-radius: 15px;
+    border-width: 3px;
+    border-color: rgba(232, 27, 27, 1.0);
+    background: #ebebeba9;
     cursor: pointer;
     display: inline-block;
     margin: 0px 0px 4px 0px;
+    padding: 7px; 
+}
+
+.tag_title {
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 5px;
+    font-size: large;
 }
 
 .input-field, .textarea-field {
@@ -84,7 +95,7 @@
 }
 
 .sidebar {
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     width: 200px;
     height: 100vh;
     background-color: #f2f2f2;
@@ -139,7 +150,7 @@
 }
 
 .submit-button {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
@@ -165,7 +176,7 @@
 
 .my-table th {
   background-color: #f2f2f2;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: left;
 }
