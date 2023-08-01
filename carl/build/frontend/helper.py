@@ -89,6 +89,8 @@ def get_db_connection():
 
 
 def add_to_resources(title, link, descr, conn):
+    if link[:5].lower() != "http":
+        link = "http://" + link
     # Open a cursor to perform database operations
     cur = conn.cursor()
     cur.execute(
@@ -148,6 +150,8 @@ def get_resource(id, conn):
 
 
 def update_resource(id, title, link, descr, tags, conn):
+    if link[:5].lower() != "http":
+        link = "http://" + link
     with conn.cursor() as cur:
         cur.execute(
             "UPDATE resources SET title=%s, link=%s, descr=%s WHERE id=%s",
