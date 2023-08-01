@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{% block title %} Add a New Tag {% endblock %}</h1>
+    <h1>{% block title %} Edit Tag {% endblock %}</h1>
     <form method="post">
         <label for="title">Tag Title</label>
         <br>
         <input type="text" name="title" class="input-field"
                placeholder="Tag title"
-               value="{{ request.form['title'] }}"></input>
+               value="{{ tag[1] }}"></input>
         <br>
         <label for="descr">Tag Description</label>
         <br>
@@ -14,11 +14,8 @@
                   placeholder="Description of your tag"
                   rows="20"
                   cols="20"
-                  >{{ request.form['descr'] }}</textarea>
+                  >{{ tag[2] }}</textarea>
         <br>
-        {% if error %}
-        <p class="error-message">{{ error }}</p>
-        {% endif %}
         <button type="submit" class="submit-button">Submit</button> 
     </form>
     <a href="javascript:history.go(-1)"><button class="cancel-button">Cancel</button></a>

@@ -1,7 +1,5 @@
-import os
-import psycopg2
 import flask
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 from markupsafe import escape
 from helper import *
@@ -93,9 +91,9 @@ def edit_resource(id):
         return redirect(url_for("resources"))
     else:
         resource = get_resource(id, conn)
-        print("Resource Tags: ", resource[5])  # Debug statement
+        # print("Resource Tags: ", resource[5])  # Debug statement
         all_tags = get_tags(conn)
-        print("All Tags: ", all_tags)  # Debug statement
+        # print("All Tags: ", all_tags)  # Debug statement
         return render_template(
             "edit_resource.html",
             resource=resource,
@@ -125,6 +123,37 @@ def projectform():
     return render_template("project_form.html", page="projectform")
 
 
+@app.route("/project/<int:id>/delete", methods=("POST",))
+def delete_project(id):
+    project = get_project_by_id(id, conn)
+    print(project)
+    if project is None:
+        flash("Error: Project not found.")
+        return redirect(url_for("projects"))
+    else:
+        delete_project_by_id(id, conn)
+        flash("Project deleted successfully!")
+        return redirect(url_for("projects"))
+
+
+# @app.route("/edit_project/<int:id>", methods=("GET", "POST"))
+# def edit_project(id):
+#     if request.method == "POST":
+#         title = escape(request.form["title"])
+#         descr = escape(request.form["descr"])
+
+#         update_project(id, title, descr, conn)
+
+#         return redirect(url_for("projects"))
+#     else:
+#         tag = get_project_by_id(id, conn)
+#         return render_template(
+#             "edit_project.html",
+#             project=project,
+#             page="projects",
+#         )
+
+
 @app.route("/tags")
 def tags():
     if not table_exists(conn, "tags"):
@@ -144,6 +173,36 @@ def tagform():
         else:
             return redirect(url_for("tags"))
     return render_template("tag_form.html", page="tags", error=error)
+
+
+@app.route("/tag/<int:id>/delete", methods=("POST",))
+def delete_tag(id):
+    tag = get_tag_by_id(id, conn)
+    if tag is None:
+        flash("Error: Tag not found.")
+        return redirect(url_for("tags"))
+    else:
+        delete_tag_by_id(id, conn)
+        flash("Tag deleted successfully!")
+        return redirect(url_for("tags"))
+
+
+@app.route("/edit_tag/<int:id>", methods=("GET", "POST"))
+def edit_tag(id):
+    if request.method == "POST":
+        title = escape(request.form["title"])
+        descr = escape(request.form["descr"])
+
+        update_tag(id, title, descr, conn)
+
+        return redirect(url_for("tags"))
+    else:
+        tag = get_tag_by_id(id, conn)
+        return render_template(
+            "edit_tag.html",
+            tag=tag,
+            page="tags",
+        )
 
 
 @app.errorhandler(404)

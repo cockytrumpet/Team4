@@ -40,9 +40,8 @@ jobs:
       - name: stage
         run: |
           cd /deploy
-          rm -rf *
+          rm -rf build
           cp -R /home/runner/_work/Team4/Team4/carl/build /deploy/
-          cp /deploy/.save/docker-compose.yml /deploy/docker-compose.yml
       - name: compose-up
         run: |
           cd /deploy

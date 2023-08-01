@@ -56,12 +56,9 @@ def init_db():
         "FOREIGN KEY (tag_id) REFERENCES tags (id));"
     )
 
-    
     conn.commit()
     cur.close()
     conn.close()
-
-    
 
 
 def table_exists(con, table_str):
@@ -196,6 +193,34 @@ def add_to_tags(title, descr, conn):
     # conn.close()
 
 
+def get_tag_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM tags WHERE id = %s", (id,))
+    tag = cur.fetchone()
+    cur.close()
+    return tag
+
+
+def delete_tag_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute(
+        "DELETE FROM resource_tags WHERE tag_id = %s",
+        (id,),  # delete tag relations first
+    )
+    cur.execute("DELETE FROM tags WHERE id = %s", (id,))  # then delete tag
+    conn.commit()
+    cur.close()
+
+
+def update_tag(id, title, descr, conn):
+    with conn.cursor() as cur:
+        cur.execute(
+            "UPDATE tags SET title=%s, descr=%s WHERE id=%s",
+            (title, descr, id),
+        )
+    conn.commit()
+
+
 def add_to_projects(title, descr, conn):
     # conn = get_db_connection()
     # Open a cursor to perform database operations
@@ -226,12 +251,30 @@ def get_tags(conn):
 
 def get_projects(conn):
     cur = conn.cursor()
-    cur.execute(
-        "SELECT DISTINCT 0 as id, title, descr FROM projects ORDER BY title ASC;"
-    )
+    cur.execute("SELECT * FROM projects ORDER BY title ASC;")
     projects = cur.fetchall()
     cur.close()
     return projects
+
+
+def get_project_by_id(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM projects WHERE id = %s", (id,))
+    project = cur.fetchone()
+    cur.close()
+    return project
+
+
+def delete_project_by_id(id, conn):
+    cur = conn.cursor()
+    ############  implement once resources can be assinged to projects #########
+    # cur.execute(
+    #     "DELETE FROM project_resources WHERE project_id = %s",
+    #     (id,),  # delete tag relations first
+    # )
+    cur.execute("DELETE FROM projects WHERE id = %s", (id,))  # then delete tag
+    conn.commit()
+    cur.close()
 
 
 def get_resources(conn):
@@ -242,7 +285,7 @@ def get_resources(conn):
         "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
         "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
         "GROUP BY resources.id "
-        "ORDER BY create_date DESC;"
+        "ORDER BY title ASC;"
     )
     resources = cur.fetchall()
     cur.close()
