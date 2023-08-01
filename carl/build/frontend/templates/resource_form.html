@@ -31,7 +31,7 @@
         <br>
         {% for tag in tags %}
             <input type="checkbox" id="{{ tag[0] }}" name="tags" value="{{ tag[0] }}">
-            <label for="{{ tag[0] }}">{{ tag[1] }}</label><br> <!-- {{ tag[1] }} represents the tag title -->
+            <label class="tags" for="{{ tag[0] }}">{{ tag[1] }}</label><br> <!-- {{ tag[1] }} represents the tag title -->
         {% endfor %}
 
         <button type="submit" class="submit-button">Submit</button>

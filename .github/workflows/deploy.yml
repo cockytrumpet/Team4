@@ -30,21 +30,14 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: checkout
-        uses: actions/checkout@v2
-      - name: compose down
-        run: |
-          cd /deploy
-          docker-compose down
-          docker ps -q --filter "name=carl_backend" | grep -q . && docker stop carl_backend && docker rm -fv carl_backend || true
-          docker ps -q --filter "name=carl_frontend" | grep -q . && docker stop carl_frontend && docker rm -fv carl_frontend || true
+        uses: actions/checkout@v3
       - name: stage
         run: |
           cd /deploy
           rm -rf build
-          cp -R /home/runner/_work/Team4/Team4/carl/build /deploy/
-      - name: compose-up
+          cp -R /home/runner/_work/Team4/Team4/carl/build /deploy/build
+      - name: trigger docker reload
         run: |
-          cd /deploy
-          docker-compose up -d --remove-orphans --force-recreate
+          date > /deploy/date.txt
       - run: echo "Status:${{ job.status }}."
 

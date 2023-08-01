@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-    <head>
-        <link rel="stylesheet" href="../static/style.css"> 
-    </head>
     <h1>Edit Resource</h1>
     <form method="post">
         <label for="title">Resource Title</label>
@@ -31,6 +28,7 @@
 
         <!-- Add the multiple select dropdown for tags -->
         <label for="tags" class="tag_title">Add Tags</label>
+        <br>
         {% for tag in tags %}
             <input type="checkbox" id="{{ tag[0] }}" name="tags" value="{{ tag[0] }}"
                    {% if tag[1] in resource[5] %}checked{% endif %}>
