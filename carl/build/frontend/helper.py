@@ -346,6 +346,32 @@ def add_to_projects(title, descr, conn):
     return message
 
 
+def add_resource_to_project(conn, project, resource):
+    message = None
+
+    if project == "":
+        message = ("error", "Project cannot be empty")
+        return message
+    
+    cur = conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM projects WHERE title = %s", (project,))
+    project_exists = cur.fetchone()[0]
+    cur.execute("SELECT id FROM projects WHERE title = %s", (project,))
+    project_id = cur.fetchone()[0]
+    cur.execute("SELECT id FROM resources WHERE title = %s", (resource,))
+    resource_id = cur.fetchone()[0]
+    if project_exists:
+        cur.execute("SELECT id FROM projects WHERE title = %s", (project,))
+        project_id = cur.fetchone()[0]
+        cur.execute(
+        "INSERT INTO project_resources (project_id, resource_id)" "VALUES (%s, %s)",
+        (project_id, resource_id),
+        )
+        conn.commit()
+    else:
+        message = ("error", "Project does not exist")
+
+
 def get_tags(conn):
     cur = conn.cursor()
     # TODO: maybe we should be ensureing no duplicates on input instead of here
