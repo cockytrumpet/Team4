@@ -18,6 +18,7 @@
         <thead>
         <tr>
             <th>Title</th>
+            <th>View</th>
             <th>Description</th>
             <th>Resources</th>
         </tr>
@@ -26,6 +27,13 @@
             {% for project in projects %}
                 <tr>
                 <td>{{ project[1] }}</td>
+                <td>
+                    <center>
+                        <a href="{{ url_for('project', id=project[0]) }}">
+                            <img class="icon" style="height: 25px; width: 25px;" src="{{ url_for('static', filename='list.svg') }}" title="{{ project[1] }}"/>
+                        </a>
+                    </center>
+                </td>
                 <td>{{ project[2] }}</td>
                 <td>resource assignment not implemented
                     <!-- {% if project[3] is not none %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="view">
+            <h1>
+                {{ project[1] }}
+            </h1>
+            <h3>
+                <p>
+                    {{ project[2] }}
+                </p>
+            </h3>
+            <a href="{{ url_for('projects') }}"><button class="cancel-button" style="margin-bottom: 20px;">Go Back</button></a>
+            <br>
+        <table class="my-table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Link</th>
+                <th>Description</th>
+                <th>Tags</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% if resource %}
+                {% for resource in resources %}
+                    <tr>
+                    <td>{{ resource[2] }}</td>
+                    <td>
+                        <center>
+                        <a href="{{ resource[3] }}" target="_blank" rel="noopener noreferrer">
+                            <img class="icon" src="{{ url_for('static', filename='link.svg') }}" title="{{ resource[3] }}"/>
+                        </a>
+                        </center>
+                    </td>
+                    <td>{{ resource[4] }}</td>
+                    <td>
+                        {% if resource[5] is not none %}
+                            {% for tag in resource[5] %}
+                                {% if tag != 'None' %}
+                                        <button class="tags disabled" label='button' name='button'>{{ tag }}</button>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

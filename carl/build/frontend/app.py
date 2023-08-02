@@ -124,6 +124,25 @@ def projects(message=None):
     )
 
 
+@app.route("/project/<int:id>", methods=("GET",))
+def project(id):
+    project = get_project_by_id(id, conn)
+    if project is None:
+        message = ("error", "Project not found")
+    else:
+        # TODO: get resources assigned to project
+        # resources = get_resources_by_project_id(id, conn)
+        resources = None  # placeholder
+
+        return render_template(
+            "project.html",
+            project=project,
+            resources=resources,
+            page="projects",
+        )
+    return projects(message)
+
+
 @app.route("/projectform", methods=("GET", "POST"))
 def projectform():
     message = None
