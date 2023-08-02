@@ -9,6 +9,7 @@
             <a href="{{ url_for('resources') }}/{{ tag[0] }}"><button label='button' name='button' class="tags">{{ tag[1] }}</button></a>
             {% endfor %}
         </div>
+
         <br>
         <a href="{{ url_for('resourceform') }}">
             <img class="icon" src="{{ url_for('static', filename='add.svg') }}" title="Add Resource"/>
@@ -48,7 +49,7 @@
                         {% if resource[6] is not none %}
                             {% for project in resource[6] %}
                                 {% if project != 'None' %}
-                                        <button class="tags disabled" label='button' name='button'>{{ project }}</button>
+                                        <button class="projects disabled" label='button' name='button'>{{ project }}</button>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
