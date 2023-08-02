@@ -155,6 +155,10 @@ def delete_resource_by_id(id, conn):
         (id,),  # delete tag relations first
     )
     cur.execute(
+        "DELETE FROM project_resources WHERE resource_id = %s",
+        (id,), #also delete project resource relationships
+    )
+    cur.execute(
         "DELETE FROM resources WHERE id = %s", (id,)  # then delete resource
     )
     conn.commit()
@@ -180,7 +184,7 @@ def get_resource(id, conn):
     return resource
 
 
-def update_resource(id, title, link, descr, tags, conn):
+def update_resource(id, title, link, descr, tags, conn, projects):
     message = None
 
     # Check for empty fields
@@ -223,6 +227,12 @@ def update_resource(id, title, link, descr, tags, conn):
             cur.execute(
                 "INSERT INTO resource_tags (resource_id, tag_id) VALUES (%s, %s)",
                 (id, tag),
+            )
+        cur.execute("DELETE FROM project_resources WHERE resource_id=%s", (id,))
+        for project in projects:
+            cur.execute(
+                "INSERT INTO project_resources (project_id, resource_id) VALUES (%s, %s)",
+                (project, id),
             )
     conn.commit()
     message = ("success", f"Resource {title.unescape()} updated")

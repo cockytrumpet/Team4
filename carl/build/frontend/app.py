@@ -96,19 +96,22 @@ def edit_resource(id):
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
         tags = request.form.getlist("tags")
+        projects = request.form.getlist("projects")
 
-        message = update_resource(id, title, link, descr, tags, conn)
+        message = update_resource(id, title, link, descr, tags, conn, projects)
         if message[0] == "success":
             return resources(message=message)
 
     resource = get_resource(id, conn)
     # print("Resource Tags: ", resource[5])  # Debug statement
     all_tags = get_tags(conn)
+    all_projects = get_projects(conn)
     # print("All Tags: ", all_tags)  # Debug statement
     return render_template(
         "edit_resource.html",
         resource=resource,
         tags=all_tags,
+        projects=all_projects,
         page="resources",
         message=message,
     )
@@ -124,7 +127,6 @@ def projects(message=None):
     return render_template(
         "projects.html",
         projects=get_projects_with_resources(conn),
-        
         page="projects",
         message=message,
     )
