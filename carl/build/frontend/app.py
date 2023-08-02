@@ -120,9 +120,11 @@ def projects(message=None):
         return render_template(
             "notable.html", error="Projects", page="projects"
         )
+    #return get_projects_with_resources(conn)
     return render_template(
         "projects.html",
-        projects=get_projects(conn),
+        projects=get_projects_with_resources(conn),
+        
         page="projects",
         message=message,
     )

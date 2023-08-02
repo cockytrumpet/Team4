@@ -413,6 +413,21 @@ def get_resources(conn):
     return resources
 
 
+def get_projects_with_resources(conn):
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT projects.id, projects.title, projects.descr, array_agg(resources.title) as resources "
+        "FROM projects "
+        "LEFT JOIN project_resources ON projects.id = project_resources.project_id "
+        "LEFT JOIN resources ON project_resources.resource_id = resources.id "
+        "GROUP BY projects.id "
+        "ORDER BY title ASC;"
+    )
+    projects = cur.fetchall()
+    cur.close()
+    return projects
+
+
 def add_tag_to_resource(resource_id, tag_id, conn):
     cur = conn.cursor()
     cur.execute(
