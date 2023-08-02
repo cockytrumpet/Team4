@@ -58,14 +58,14 @@ def resourceform():
         descr = escape(request.form["descr"])
         tags = request.form.getlist("tags")
         projects = request.form.getlist("projects")
-        message = add_to_resources(title, link, descr, conn, projects)
+        message = add_to_resources(title, link, descr, conn)
 
         if message[0] == "success":
             resource_id = get_rescource_id_by_title(title, conn)
             for tag_id in tags:
                 add_tag_to_resource(resource_id, int(tag_id), conn)
             for project_id in projects:
-                add_resource_to_project(resource_id, int(project_id), conn)
+                add_resource_to_project(conn, project_id, resource_id)
             return resources(message=message)
 
     return render_template(

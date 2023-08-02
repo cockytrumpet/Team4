@@ -165,10 +165,12 @@ def get_resource(id, conn):
     with conn.cursor() as cur:
         cur.execute(
             """
-        SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags
+        SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags, array_agg(projects.title) as projects
         FROM resources
         LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id
         LEFT JOIN tags ON resource_tags.tag_id = tags.id
+        LEFT JOIN project_resources ON resources.id = project_resources.resource_id
+        LEFT JOIN projects ON project_resources.project_id = projects.id
         WHERE resources.id=%s
         GROUP BY resources.id
         """,
@@ -346,30 +348,14 @@ def add_to_projects(title, descr, conn):
     return message
 
 
-def add_resource_to_project(conn, project, resource):
-    message = None
-
-    if project == "":
-        message = ("error", "Project cannot be empty")
-        return message
-    
+def add_resource_to_project(conn, project_id, resource_id):
     cur = conn.cursor()
-    cur.execute("SELECT COUNT(*) FROM projects WHERE title = %s", (project,))
-    project_exists = cur.fetchone()[0]
-    cur.execute("SELECT id FROM projects WHERE title = %s", (project,))
-    project_id = cur.fetchone()[0]
-    cur.execute("SELECT id FROM resources WHERE title = %s", (resource,))
-    resource_id = cur.fetchone()[0]
-    if project_exists:
-        cur.execute("SELECT id FROM projects WHERE title = %s", (project,))
-        project_id = cur.fetchone()[0]
-        cur.execute(
+
+    cur.execute(
         "INSERT INTO project_resources (project_id, resource_id)" "VALUES (%s, %s)",
         (project_id, resource_id),
-        )
-        conn.commit()
-    else:
-        message = ("error", "Project does not exist")
+    )
+    conn.commit()
 
 
 def get_tags(conn):
@@ -413,10 +399,12 @@ def delete_project_by_id(id, conn):
 def get_resources(conn):
     cur = conn.cursor()
     cur.execute(
-        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
+        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags, array_agg(projects.title) as projects "
         "FROM resources "
         "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
         "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
+        "LEFT JOIN project_resources ON resources.id = project_resources.resource_id "
+        "LEFT JOIN projects ON project_resources.project_id = projects.id "
         "GROUP BY resources.id "
         "ORDER BY title ASC;"
     )

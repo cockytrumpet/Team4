@@ -20,6 +20,7 @@
                 <th>Link</th>
                 <th>Description</th>
                 <th>Tags</th>
+                <th>Projects</th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +40,15 @@
                             {% for tag in resource[5] %}
                                 {% if tag != 'None' %}
                                         <button class="tags disabled" label='button' name='button'>{{ tag }}</button>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if resource[6] is not none %}
+                            {% for project in resource[6] %}
+                                {% if project != 'None' %}
+                                        <button class="tags disabled" label='button' name='button'>{{ project }}</button>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
