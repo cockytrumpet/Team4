@@ -128,7 +128,7 @@ def add_to_resources(title, link, descr, conn):
     conn.commit()
     cur.close()
 
-    message = ("success", f"Resource {title.unescape()} added")
+    message = ("success", f"Resource {title} added")
     return message
 
 
@@ -259,7 +259,7 @@ def add_to_tags(title, descr, conn):
     )
     conn.commit()
     cur.close()
-    message = ("success", f"Tag {title.unescape()} added")
+    message = ("success", f"Tag {title} added")
     return message
 
 

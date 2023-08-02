@@ -117,9 +117,16 @@ class Test(unittest.TestCase):
         # items are not necessarily returned in order - cannot assume it's returned in order of creation
         data = cur.fetchall()
         newest_item = data[-1]
+
+        if link[:5].lower() != "http":
+            new_link = "http://" + link
+
         self.assertEqual(newest_item[2], title)
-        self.assertEqual(newest_item[3], link)
+        self.assertEqual(newest_item[3], new_link)
         self.assertEqual(newest_item[4], descr)
+
+        message = h.add_to_resources(title, link, descr, self.db)
+        self.assertEqual(message[0], "error")
 
     def test_add_to_tags(self):
         title = "Test"
