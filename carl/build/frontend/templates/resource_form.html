@@ -24,7 +24,14 @@
                   cols="60"
                   >{{ request.form['descr'] }}</textarea>
         <br>
-
+        <!-- Add the multiple select dropdown for projects -->
+        <label for="projects" class="tag_title">Add to Project(s)</label>
+        <br>
+        {% for project in projects %}
+            <input type="checkbox" id="{{ project[0] }}" name="projects" value="{{ project[0] }}">
+            <label class="tags" for="{{ project[0] }}">{{ project[1] }}</label><br><!-- {{ project[1] }} represents the project title -->
+        {% endfor %}
+        <br>
 
         <!-- Add the multiple select dropdown for tags -->
         <label for="tags">Add Tags</label>
