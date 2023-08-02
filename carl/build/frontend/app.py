@@ -26,7 +26,7 @@ def index():
 
 @app.route("/resources", defaults={"tag": "ALL"})
 @app.route("/resources/<tag>")
-def resources(tag=None):
+def resources(tag="ALL", message=None):
     if not table_exists(conn, "resources"):
         return render_template(
             "notable.html", error="Resources", page="resources"
@@ -37,6 +37,7 @@ def resources(tag=None):
             resources=get_resources(conn),
             tags=get_tags(conn),
             page="resources",
+            message=message,
         )
     else:
         return render_template(
@@ -44,25 +45,31 @@ def resources(tag=None):
             resources=get_tagged_resources(tag, conn),
             tags=get_tags(conn),
             page="resources",
+            message=message,
         )
 
 
 @app.route("/resourceform", methods=("GET", "POST"))
 def resourceform():
+    message = None
     if request.method == "POST":
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
         tags = request.form.getlist("tags")
-        resource_id = add_to_resources(title, link, descr, conn)
+        message = add_to_resources(title, link, descr, conn)
 
-        for tag_id in tags:
-            add_tag_to_resource(resource_id, int(tag_id), conn)
-
-        return redirect(url_for("resources"))
+        if message[0] == "success":
+            resource_id = get_rescource_id_by_title(title, conn)
+            for tag_id in tags:
+                add_tag_to_resource(resource_id, int(tag_id), conn)
+            return resources(message=message)
 
     return render_template(
-        "resource_form.html", tags=get_tags(conn), page="resources"
+        "resource_form.html",
+        tags=get_tags(conn),
+        page="resources",
+        message=message,
     )
 
 
@@ -70,70 +77,76 @@ def resourceform():
 def delete_resource(id):
     get_resource = get_resource_by_id(id, conn)
     if get_resource is None:
-        flash("Error: Resource not found.")
-        return redirect(url_for("resources"))
+        message = ("error", "Resource not found")
     else:
         delete_resource_by_id(id, conn)
-        flash("Resource deleted successfully!")
-        return redirect(url_for("resources"))
+        message = ("success", "Resource deleted")
+    return resources(message=message)
 
 
 @app.route("/edit_resource/<int:id>", methods=("GET", "POST"))
 def edit_resource(id):
+    message = None
     if request.method == "POST":
         title = escape(request.form["title"])
         link = escape(request.form["link"])
         descr = escape(request.form["descr"])
         tags = request.form.getlist("tags")
 
-        update_resource(id, title, link, descr, tags, conn)
+        message = update_resource(id, title, link, descr, tags, conn)
+        if message[0] == "success":
+            return resources(message=message)
 
-        return redirect(url_for("resources"))
-    else:
-        resource = get_resource(id, conn)
-        # print("Resource Tags: ", resource[5])  # Debug statement
-        all_tags = get_tags(conn)
-        # print("All Tags: ", all_tags)  # Debug statement
-        return render_template(
-            "edit_resource.html",
-            resource=resource,
-            tags=all_tags,
-            page="resources",
-        )
+    resource = get_resource(id, conn)
+    # print("Resource Tags: ", resource[5])  # Debug statement
+    all_tags = get_tags(conn)
+    # print("All Tags: ", all_tags)  # Debug statement
+    return render_template(
+        "edit_resource.html",
+        resource=resource,
+        tags=all_tags,
+        page="resources",
+        message=message,
+    )
 
 
 @app.route("/projects")
-def projects():
+def projects(message=None):
     if not table_exists(conn, "projects"):
         return render_template(
             "notable.html", error="Projects", page="projects"
         )
     return render_template(
-        "projects.html", projects=get_projects(conn), page="projects"
+        "projects.html",
+        projects=get_projects(conn),
+        page="projects",
+        message=message,
     )
 
 
 @app.route("/projectform", methods=("GET", "POST"))
 def projectform():
+    message = None
     if request.method == "POST":
         title = escape(request.form["title"])
         descr = escape(request.form["descr"])
-        add_to_projects(title, descr, conn)
-        return redirect(url_for("projects"))
-    return render_template("project_form.html", page="projectform")
+        message = add_to_projects(title, descr, conn)
+        if message[0] == "success":
+            return projects(message=message)
+    return render_template(
+        "project_form.html", page="projectform", message=message
+    )
 
 
 @app.route("/project/<int:id>/delete", methods=("POST",))
 def delete_project(id):
     project = get_project_by_id(id, conn)
-    print(project)
     if project is None:
-        flash("Error: Project not found.")
-        return redirect(url_for("projects"))
+        message = ("error", "Project not found")
     else:
         delete_project_by_id(id, conn)
-        flash("Project deleted successfully!")
-        return redirect(url_for("projects"))
+        message = ("success", "Project deleted")
+    return projects(message=message)
 
 
 # @app.route("/edit_project/<int:id>", methods=("GET", "POST"))
@@ -155,54 +168,52 @@ def delete_project(id):
 
 
 @app.route("/tags")
-def tags():
+def tags(message=None):
     if not table_exists(conn, "tags"):
         return render_template("notable.html", error="Tags", page="tags")
-    return render_template("tags.html", tags=get_tags(conn), page="tags")
+    return render_template(
+        "tags.html", tags=get_tags(conn), page="tags", message=message
+    )
 
 
 @app.route("/tagform", methods=("GET", "POST"))
 def tagform():
-    error = None
+    message = None
     if request.method == "POST":
         title = escape(request.form["title"])
         descr = escape(request.form["descr"])
-        if not add_to_tags(title, descr, conn):
-            # If the tag could not be added (because it already exists), set an error massage.
-            error = "Error: Tag already exists"
-        else:
-            return redirect(url_for("tags"))
-    return render_template("tag_form.html", page="tags", error=error)
+        message = add_to_tags(title, descr, conn)
+        if message[0] == "success":
+            return tags(message)
+    return render_template("tag_form.html", page="tags", message=message)
 
 
 @app.route("/tag/<int:id>/delete", methods=("POST",))
 def delete_tag(id):
     tag = get_tag_by_id(id, conn)
     if tag is None:
-        flash("Error: Tag not found.")
-        return redirect(url_for("tags"))
+        message = ("error", "Tag not found")
     else:
         delete_tag_by_id(id, conn)
-        flash("Tag deleted successfully!")
-        return redirect(url_for("tags"))
+        message = ("success", "Tag deleted")
+    return tags(message)
 
 
 @app.route("/edit_tag/<int:id>", methods=("GET", "POST"))
 def edit_tag(id):
+    message = None
     if request.method == "POST":
         title = escape(request.form["title"])
         descr = escape(request.form["descr"])
 
-        update_tag(id, title, descr, conn)
+        message = update_tag(id, title, descr, conn)
+        if message[0] == "success":
+            return tags(message)
 
-        return redirect(url_for("tags"))
-    else:
-        tag = get_tag_by_id(id, conn)
-        return render_template(
-            "edit_tag.html",
-            tag=tag,
-            page="tags",
-        )
+    tag = get_tag_by_id(id, conn)
+    return render_template(
+        "edit_tag.html", tag=tag, page="tags", message=message
+    )
 
 
 @app.errorhandler(404)

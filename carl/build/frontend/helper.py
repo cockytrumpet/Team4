@@ -89,10 +89,31 @@ def get_db_connection():
 
 
 def add_to_resources(title, link, descr, conn):
+    message = None
+
+    # Check for empty fields
+    if title == "":
+        message = ("error", "Title cannot be empty")
+        return message
+
+    if link == "":
+        message = ("error", "Link cannot be empty")
+        return message
+
     if link[:5].lower() != "http":
         link = "http://" + link
-    # Open a cursor to perform database operations
+
+    # Check if resource already exists
     cur = conn.cursor()
+    cur.execute("SELECT * FROM resources WHERE title = %s", (title,))
+    resource_exists = cur.fetchone()
+
+    if resource_exists:
+        cur.close()
+        message = ("error", "Resource already exists")
+        return message
+
+    # Open a cursor to perform database operations
     cur.execute(
         "CREATE TABLE IF NOT EXISTS resources (id serial PRIMARY KEY,"
         "create_date DATE DEFAULT (CURRENT_DATE),"
@@ -101,12 +122,20 @@ def add_to_resources(title, link, descr, conn):
         "descr text);"
     )
     cur.execute(
-        "INSERT INTO resources (title, link, descr)"
-        "VALUES (%s, %s, %s) RETURNING id",
+        "INSERT INTO resources (title, link, descr)" "VALUES (%s, %s, %s)",
         (title, link, descr),
     )
-    resource_id = cur.fetchone()[0]
     conn.commit()
+    cur.close()
+
+    message = ("success", f"Resource {title.unescape()} added")
+    return message
+
+
+def get_rescource_id_by_title(title, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM resources WHERE title = %s", (title,))
+    resource_id = cur.fetchone()
     cur.close()
     return resource_id
 
@@ -150,8 +179,37 @@ def get_resource(id, conn):
 
 
 def update_resource(id, title, link, descr, tags, conn):
+    message = None
+
+    # Check for empty fields
+    if title == "":
+        message = ("error", "Title cannot be empty")
+        return message
+
+    if link == "":
+        message = ("error", "Link cannot be empty")
+        return message
+
     if link[:5].lower() != "http":
         link = "http://" + link
+
+    # If they change the title, check if the new title already exists.
+    cur = conn.cursor()
+    cur.execute("SELECT title FROM resources WHERE id = %s", (id,))
+    current_title = cur.fetchone()[0]
+
+    resource_exists = False
+    if current_title != title:
+        cur.execute(
+            "SELECT COUNT(*) FROM resources WHERE title = %s", (title,)
+        )
+        resource_exists = cur.fetchone()[0]
+
+    if resource_exists:
+        cur.close()
+        message = ("error", "Resource already exists")
+        return message
+
     with conn.cursor() as cur:
         cur.execute(
             "UPDATE resources SET title=%s, link=%s, descr=%s WHERE id=%s",
@@ -165,12 +223,19 @@ def update_resource(id, title, link, descr, tags, conn):
                 (id, tag),
             )
     conn.commit()
+    message = ("success", f"Resource {title.unescape()} updated")
+    return message
 
 
 def add_to_tags(title, descr, conn):
-    cur = conn.cursor()
+    message = None
+
+    if title == "":
+        message = ("error", "Title cannot be empty")
+        return message
 
     # Create table if it does not exist.
+    cur = conn.cursor()
     cur.execute(
         "CREATE TABLE IF NOT EXISTS tags (id serial PRIMARY KEY,"
         "title varchar (150) NOT NULL,"
@@ -184,17 +249,18 @@ def add_to_tags(title, descr, conn):
     if tag_exists:
         # If the tag already exists, close the cursor and return False.
         cur.close()
-        return False
+        message = ("error", "Tag already exists")
+        return message
 
-    # If the tag does not exist, create it and return True.
+    # If the tag does not exist, create it
     cur.execute(
         "INSERT INTO tags (title, descr) VALUES (%s, %s)",
         (title, descr),
     )
     conn.commit()
     cur.close()
-    return True
-    # conn.close()
+    message = ("success", f"Tag {title.unescape()} added")
+    return message
 
 
 def get_tag_by_id(id, conn):
@@ -217,30 +283,67 @@ def delete_tag_by_id(id, conn):
 
 
 def update_tag(id, title, descr, conn):
+    if title == "":
+        message = ("error", "Title cannot be empty")
+        return message
+
+    # If they change the title, check if the new title already exists.
+    cur = conn.cursor()
+    cur.execute("SELECT title FROM tags WHERE id = %s", (id,))
+    current_title = cur.fetchone()[0]
+
+    tag_exists = False
+    if current_title != title:
+        cur.execute("SELECT COUNT(*) FROM tags WHERE title = %s", (title,))
+        tag_exists = cur.fetchone()[0]
+
+    if tag_exists:
+        cur.close()
+        message = ("error", "Tag already exists")
+        return message
+
     with conn.cursor() as cur:
         cur.execute(
             "UPDATE tags SET title=%s, descr=%s WHERE id=%s",
             (title, descr, id),
         )
     conn.commit()
+    message = ("success", f"Tag {title.unescape()} updated")
+    return message
 
 
 def add_to_projects(title, descr, conn):
-    # conn = get_db_connection()
-    # Open a cursor to perform database operations
+    message = None
+
+    if title == "":
+        message = ("error", "Title cannot be empty")
+        return message
+
+    # create table if it does not exist
     cur = conn.cursor()
     cur.execute(
         "CREATE TABLE IF NOT EXISTS projects (id serial PRIMARY KEY,"
         "title varchar (150) NOT NULL,"
         "descr text);"
     )
+
+    # check if project exists
+    cur.execute("SELECT COUNT(*) FROM projects WHERE title = %s", (title,))
+    project_exists = cur.fetchone()[0]
+
+    if project_exists:
+        cur.close()
+        message = ("error", "Project already exists")
+        return message
+
     cur.execute(
         "INSERT INTO projects (title, descr)" "VALUES (%s, %s)",
         (title, descr),
     )
     conn.commit()
     cur.close()
-    # conn.close()
+    message = ("success", f"Project {title.unescape()} added")
+    return message
 
 
 def get_tags(conn):

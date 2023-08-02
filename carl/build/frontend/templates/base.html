@@ -5,7 +5,7 @@
   <title>CARL</title>
 </head>
 <body>
-
+    <script src="{{ url_for('static', filename='notifications.js') }}"></script>
     <div class="sidebar">
         <div class="logo">
         </div>
@@ -14,7 +14,13 @@
         <a href="{{ url_for('resources')}}"{% if page == 'resources' %}class="active"{% endif %}>Resources</a>
         <a href="{{ url_for('tags')}}"{% if page == 'tags' %}class="active"{% endif %}>Tags</a>
     </div>
-
+    <div id="notification-area">
+    </div>
+    {% if message and message[0] %}
+    <script>
+        notify("{{ message[0] }}", "{{ message[1] }}");
+    </script>
+    {% endif %}
     <div class="content">
         {% block content %}
         <!-- Content of each page goes here -->
