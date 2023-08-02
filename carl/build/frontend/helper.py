@@ -397,10 +397,11 @@ def get_project_by_id(id, conn):
 def delete_project_by_id(id, conn):
     cur = conn.cursor()
     ############  implement once resources can be assinged to projects #########
-    # cur.execute(
-    #     "DELETE FROM project_resources WHERE project_id = %s",
-    #     (id,),  # delete tag relations first
-    # )
+    cur.execute(
+         "DELETE FROM project_resources WHERE project_id = %s",
+         (id,),  # delete tag relations first
+     )
+
     cur.execute("DELETE FROM projects WHERE id = %s", (id,))  # then delete tag
     conn.commit()
     cur.close()
@@ -408,8 +409,9 @@ def delete_project_by_id(id, conn):
 
 def get_resources(conn):
     cur = conn.cursor()
+    
     cur.execute(
-        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags, array_agg(projects.title) as projects "
+        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(DISTINCT tags.title) as tags, array_agg(DISTINCT projects.title) as projects "
         "FROM resources "
         "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
         "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
@@ -460,22 +462,33 @@ def get_tagged_resources(tag_id, conn):
     # SQL query to select all rows from the resource table where the tag_id is in the resource_tags table
     # note from TE - technically joins are faster than nested queries (not super important but just for fun)
     curr.execute(
-        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
-        "FROM resources "
-        "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
-        "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
-        f"WHERE tags.id = {tag_id} "
-        "GROUP BY resources.id "
-        "ORDER BY create_date DESC;"
-        # f"""
-        # SELECT
-        # *
-        # FROM resources AS r
-        # LEFT JOIN resource_tags AS rt ON rt.resource_id = r.id
-        # INNER JOIN tags AS t ON t.id = rt.tag_id
-        # WHERE t.id = {tag_id}
-        # ORDER BY r.id DESC
-        # """
+        f'''
+        WITH tagged_resources AS (
+        SELECT DISTINCT resources.id 
+        FROM resources
+        LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id
+        LEFT JOIN tags ON resource_tags.tag_id = tags.id
+        WHERE tags.id = {tag_id}
+        )
+
+        SELECT DISTINCT
+        resources.id
+        ,resources.create_date
+        ,resources.title
+        ,resources.link
+        ,resources.descr
+        ,array_agg(DISTINCT tags.title) AS tags
+        ,array_agg(DISTINCT projects.title) AS projects
+        FROM resources 
+        LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id
+        LEFT JOIN tags ON resource_tags.tag_id = tags.id
+        LEFT JOIN project_resources ON resources.id = project_resources.resource_id
+        LEFT JOIN projects ON project_resources.project_id = projects.id
+        WHERE resources.id IN (SELECT * FROM tagged_resources)
+        GROUP BY resources.id
+        ORDER BY create_date DESC;
+        '''
+
     )
     # SELECT * FROM resources AS r WHERE id IN (SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id}
     resources = curr.fetchall()
@@ -487,7 +500,7 @@ def search_resources(tags, conn):
     tag_search = format_search(tags)
     cur = conn.cursor()
     cur.execute(
-        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(tags.title) as tags "
+        "SELECT resources.id, create_date, resources.title, resources.link, resources.descr, array_agg(DISTINCT tags.title) as tags "
         "FROM resources "
         "LEFT JOIN resource_tags ON resources.id = resource_tags.resource_id "
         "LEFT JOIN tags ON resource_tags.tag_id = tags.id "
