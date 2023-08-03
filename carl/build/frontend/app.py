@@ -71,7 +71,7 @@ def resourceform():
     return render_template(
         "resource_form.html",
         tags=get_tags(conn),
-        projects = get_projects(conn),
+        projects=get_projects(conn),
         page="resources",
         message=message,
     )
@@ -123,7 +123,7 @@ def projects(message=None):
         return render_template(
             "notable.html", error="Projects", page="projects"
         )
-    #return get_projects_with_resources(conn)
+
     return render_template(
         "projects.html",
         projects=get_projects_with_resources(conn),
@@ -138,10 +138,7 @@ def project(id):
     if project is None:
         message = ("error", "Project not found")
     else:
-        # TODO: get resources assigned to project
-        # resources = get_resources_by_project_id(id, conn)
-        resources = None  # placeholder
-
+        resources = get_resources_by_project_id(id, conn)
         return render_template(
             "project.html",
             project=project,
