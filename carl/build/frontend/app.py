@@ -173,22 +173,24 @@ def delete_project(id):
     return projects(message=message)
 
 
-# @app.route("/edit_project/<int:id>", methods=("GET", "POST"))
-# def edit_project(id):
-#     if request.method == "POST":
-#         title = escape(request.form["title"])
-#         descr = escape(request.form["descr"])
+@app.route("/edit_project/<int:id>", methods=("GET", "POST"))
+def edit_project(id):
+    message = None
+    if request.method == "POST":
+        title = escape(request.form["title"])
+        descr = escape(request.form["descr"])
 
-#         update_project(id, title, descr, conn)
+        message = update_project(id, title, descr, conn)
+        if message[0] == "success":
+            return projects(message=message)
 
-#         return redirect(url_for("projects"))
-#     else:
-#         tag = get_project_by_id(id, conn)
-#         return render_template(
-#             "edit_project.html",
-#             project=project,
-#             page="projects",
-#         )
+    project = get_project_by_id(id, conn)
+    return render_template(
+        "edit_project.html",
+        project=project,
+        page="projects",
+        message=message,
+    )
 
 
 @app.route("/tags")

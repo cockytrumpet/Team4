@@ -410,6 +410,38 @@ def delete_project_by_id(id, conn):
     cur.close()
 
 
+def update_project(id, title, descr, conn):
+    message = None
+
+    if title == "":
+        message = ("error", "Title cannot be empty")
+        return message
+
+    # If they change the title, check if the new title already exists.
+    cur = conn.cursor()
+    cur.execute("SELECT title FROM projects WHERE id = %s", (id,))
+    current_title = cur.fetchone()[0]
+
+    project_exists = False
+    if current_title != title:
+        cur.execute("SELECT COUNT(*) FROM projects WHERE title = %s", (title,))
+        project_exists = cur.fetchone()[0]
+
+    if project_exists:
+        cur.close()
+        message = ("error", "Project already exists")
+        return message
+
+    cur.execute(
+        "UPDATE projects SET title=%s, descr=%s WHERE id=%s",
+        (title, descr, id),
+    )
+    conn.commit()
+    cur.close()
+    message = ("success", f"Project {title.unescape()} added")
+    return message
+
+
 def get_resources(conn):
     cur = conn.cursor()
 

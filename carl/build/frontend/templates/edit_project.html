@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{% block title %} Edit Project {% endblock %}</h1>
+    <form method="post">
+        <label for="title">Project Title</label>
+        <br>
+        <input type="text" name="title" class="input-field"
+               placeholder="Project title"
+               value="{{ project[1] }}">
+        <br>
+        <label for="descr">Project Description</label>
+        <br>
+        <textarea name="descr" class="textarea-field"
+                  placeholder="Description of your project"
+                  rows="8"
+                  cols="40"
+                  >{{ project[2] }}</textarea>
+        <br>
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+    <a href="{{ url_for('projects') }}"><button class="cancel-button">Cancel</button></a>
+{% endblock %}
+
