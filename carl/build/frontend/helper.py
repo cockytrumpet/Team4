@@ -100,7 +100,7 @@ def add_to_resources(title, link, descr, conn):
         message = ("error", "Link cannot be empty")
         return message
 
-    if link[:5].lower() != "http":
+    if link[:4].lower() != "http":
         link = "http://" + link
 
     # Check if resource already exists
@@ -196,7 +196,7 @@ def update_resource(id, title, link, descr, tags, conn, projects):
         message = ("error", "Link cannot be empty")
         return message
 
-    if link[:5].lower() != "http":
+    if link[:4].lower() != "http":
         link = "http://" + link
 
     # If they change the title, check if the new title already exists.
@@ -438,7 +438,7 @@ def update_project(id, title, descr, conn):
     )
     conn.commit()
     cur.close()
-    message = ("success", f"Project {title.unescape()} added")
+    message = ("success", f"Project {title.unescape()} updated")
     return message
 
 
