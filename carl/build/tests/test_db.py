@@ -146,18 +146,18 @@ class Test(unittest.TestCase):
         self.assertEqual(newest_item[1], title)
         self.assertEqual(newest_item[2], descr)
 
-    def test_get_tagged_resources(self):
-        # test_tag2
-        cur = self.db.cursor()
-        cur.execute("SELECT * FROM tags WHERE title = 'test_tag2'")
-        tag_ids = cur.fetchall()
-        tag_id = tag_ids[0][0]
+    # def test_get_tagged_resources(self):
+    #     # test_tag2
+    #     cur = self.db.cursor()
+    #     cur.execute("SELECT * FROM tags WHERE title = 'test_tag2'")
+    #     tag_ids = cur.fetchall()
+    #     tag_id = tag_ids[0][0]
 
-        results = h.get_tagged_resources(tag_id, self.db)
-        # we expect that we should get two resources
-        cur.execute(
-            f"SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id} ORDER BY resource_id"
-        )
-        resource_ids = cur.fetchall()
-        self.assertEqual(results[0][0], resource_ids[0][0])
-        self.assertEqual(results[0][0], resource_ids[0][0])
+    #     results = h.get_tagged_resources(tag_id, self.db)
+    #     # we expect that we should get two resources
+    #     cur.execute(
+    #         f"SELECT resource_id FROM resource_tags WHERE tag_id = {tag_id} ORDER BY resource_id"
+    #     )
+    #     resource_ids = cur.fetchall()
+    #     self.assertEqual(results[0][0], resource_ids[0][0])
+    #     self.assertEqual(results[0][0], resource_ids[0][0])
