@@ -15,10 +15,12 @@ class Test(unittest.TestCase):
 
     def test_update_resource(self):
         # empty title
-        message = update_resource(1, "", "this_is_example", None, None, None)
+        message = update_resource(
+            1, "", "this_is_example", None, None, None, None
+        )
         self.assertEqual(message[0], "error")
         # empty link
-        message = update_resource(1, "Test", "", None, None, None)
+        message = update_resource(1, "Test", "", None, None, None, None)
         self.assertEqual(message[0], "error")
 
     def test_add_to_tags(self):
@@ -34,4 +36,9 @@ class Test(unittest.TestCase):
     def test_add_to_projects(self):
         # empty title
         message = add_to_projects("", "TestDescr", None)
+        self.assertEqual(message[0], "error")
+
+    def test_update_project(self):
+        # empty title
+        message = update_project(1, "", "TestDescr", None)
         self.assertEqual(message[0], "error")
