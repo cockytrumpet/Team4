@@ -169,7 +169,8 @@
 
 .logo {
     text-align: center;
-    
+    padding-top: 1pc;
+    padding-bottom: 1pc;
 }
 
 .content {

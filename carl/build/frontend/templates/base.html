@@ -8,7 +8,7 @@
     <script src="{{ url_for('static', filename='notifications.js') }}"></script>
     <div class="sidebar">
         <div class="logo">
-            <img src="../static/carl_logo.png" alt="CARL logo">
+            <img src="../static/carl_logo.png" alt="CARL logo" width="200px" height="55px">
         </div>
         <a href="{{ url_for('projects')}}" {% if page == 'projects' %}class="active"{% endif %}>Projects</a>
         <a href="{{ url_for('resources')}}"{% if page == 'resources' %}class="active"{% endif %}>Resources</a>
