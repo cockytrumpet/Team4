@@ -186,6 +186,30 @@ Taylor Erickson:
 
 ### Week 10 (July 24 - July 30)
 
+![Alt text](static_assets/Week10.png)
+
+| Task          | Status             |  Developer(s)   | Trello Link   |
+|---------------|--------------------|-----------------|---------------|
+| Notifications for editing projects | Completed | Adam Fowler | https://trello.com/c/WQA28qdX |
+| Implement functionality/interface to edit projects | Completed | Adam Fowler| https://trello.com/c/wNf9iVL4|
+| Implement functionality to edit tags and delete tags | Completed | Adam Fowler | https://trello.com/c/DSnsCDLD| 
+| Notifications | Completed | Adam Fowler |https://trello.com/c/yMKe8Pga |
+| Unit tests for valid inputs | Completed | Adam Fowler | https://trello.com/c/3hf6mmrn| 
+| Remove ability to create duplicate resources (duplicate titles) | Completed | Nolan Ollada | https://trello.com/c/euaRVSlR |
+| Added CSS to all pages | Completed | Emily White | https://trello.com/c/8gnK3FzF|
+| Design interface to tag resources | Completed | Emily White |https://trello.com/c/9sj2ZqtC |
+| CSS design and rendering tests | Completed | Emily White | https://trello.com/c/44KYG8re|
+| Adding current projects to homepage | In progress | Robert Gunn | https://trello.com/c/TCLUexo1|
+| Load passwords and usernames into a document | In progress | Robert Gunn | https://trello.com/c/Xf0QJqOB | 
+| Add functionality to add resource(s) to a project | Completed | Taylor Erickson | https://trello.com/c/Ibo5igoC|
+| BUG: get_tagged_resources() | Completed | Taylor Erickson | https://trello.com/c/MbCMu4g0|
+| Updating editing resource and deleting resource | Completed | Taylor Erickson | https://trello.com/c/cpOPyEtb|
+| Visualization changes to highlight project details (including resources) | Completed | Taylor Erickson |https://trello.com/c/psr9iKVG |
+
+
+For our remaining sprint, our goals are to make any final bug fixes and edits and start preparing our presentation and demo. 
+
+
 ### Week 11 (July 31 - August 6)
 
 ### Week 12 (August 7 - August 13)
