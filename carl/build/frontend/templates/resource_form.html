@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">{% block title %} Add a New Resource {% endblock %}</h1>
+    <h1 class="page_title">{% block title %} Add a New Resource {% endblock %}</h1>
     <form method="post">
-        <label for="title">Resource Title</label>
+        <label for="title" class="subtitle">Resource Title</label>
         <br>
         <input type="text" name="title" class="input-field"
                placeholder="Resource title"
                value="{{ request.form['title'] }}"></input>
         <br>
 
-        <label for="link">Resource Link</label>
+        <label for="link" class="subtitle">Resource Link</label>
         <br>
         <input type="text" name="link" class="input-field"
                placeholder="Resource link"
                value="{{ request.form['link'] }}"></input>
         <br>
 
-        <label for="descr">Resource Description</label>
+        <label for="descr" class="subtitle">Resource Description</label>
         <br>
         <textarea name="descr" class="textarea-field"
                   placeholder="Description of your resource"
@@ -34,11 +34,11 @@
         <br>
 
         <!-- Add the multiple select dropdown for tags -->
-        <label for="tags">Add Tags</label>
+        <label for="tags" class="tag_title">Add Tags</label>
         <br>
         {% for tag in tags %}
             <input type="checkbox" id="{{ tag[0] }}" name="tags" value="{{ tag[0] }}">
-            <label class="tags" for="{{ tag[0] }}">{{ tag[1] }}</label><br> <!-- {{ tag[1] }} represents the tag title -->
+            <label for="{{ tag[0] }}" class="tags">{{ tag[1] }}</label><br> <!--{{ tag[1] }} represents the tag title -->
         {% endfor %}
 
         <button type="submit" class="submit-button">Submit</button>

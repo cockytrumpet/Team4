@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{% block title %} Add a New Tag {% endblock %}</h1>
+    <h1 class="page_title">{% block title %} Add a New Tag {% endblock %}</h1>
     <form method="post">
-        <label for="title">Tag Title</label>
+        <label for="title" class="subtitle">Tag Title</label>
         <br>
         <input type="text" name="title" class="input-field"
                placeholder="Tag title"
                value="{{ request.form['title'] }}"></input>
         <br>
-        <label for="descr">Tag Description</label>
+        <label for="descr" class="subtitle">Tag Description</label>
         <br>
         <textarea name="descr", class="textarea-field"
                   placeholder="Description of your tag"

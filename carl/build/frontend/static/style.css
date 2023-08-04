@@ -38,18 +38,27 @@
     pointer-events:none;
 }
 
+.page_title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.subtitle {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .tags {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     border-radius: 15px;
     border-width: 3px;
-    border-color: rgba(232, 27, 27, 1.0);
+    border-color: #70d8ef;
     background: #ebebeba9;
     cursor: pointer;
     display: inline-block;
     margin: 0px 0px 4px 0px;
     padding: 7px; 
 }
+
 
 .resources {
     font-family: Arial, Helvetica, sans-serif;
@@ -95,14 +104,14 @@
 }
 
 .cancel-button {
-    font-family: 'Times New Roman', Times, serif;
+    font-family:Arial, Helvetica, sans-serif;
     padding: 10px 20px;
     background-color: #b9611d;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    background: linear-gradient(to right, #f71212, #df8e14);
+    background: linear-gradient(to right, #df8e14, #f71212);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     float: left;
     margin: 4px;
