@@ -58,6 +58,9 @@
           height: auto;
           margin: 20px auto;
         }
+        .sidebar a {
+          display: none;
+        }
       </style>
     
     <body>
@@ -70,10 +73,10 @@
         <main>
             <img src="{{ url_for('static', filename='bizznets.jpg') }}" alt="CARL Image">
             <div class="login-form">
-            <form action="login.php" method="post"> <!-- Replace 'login.php' with your server-side login script -->
+            <form method="post">
                 <input type="text" name="username" placeholder="Username" required>
                 <br>
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Password">
                 <br>
                 <input type="submit" value="Log In">
             </form>

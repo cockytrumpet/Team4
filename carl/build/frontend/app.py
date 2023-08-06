@@ -19,8 +19,19 @@ conn = get_db_connection()
 # routes
 
 
-@app.route("/")
-def index():
+@app.route("/", methods=("GET", "POST"))
+def index(message=None):
+    message = None
+    if request.method == "POST":
+        username = escape(request.form["username"])
+        password = escape(request.form["password"])
+
+        if username == "":
+            message = ("error", "Username cannot be blank")
+        else:
+            message = ("info", f"Welcome, {username}!")
+        return projects(message=message)
+
     return render_template("index.html", page="home")
 
 
