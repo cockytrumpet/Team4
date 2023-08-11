@@ -25,7 +25,7 @@ https://docs.google.com/presentation/d/1mAnvYWieblmOfWmxqwguX_d_EKZ9ERrulIQkOUcv
 - Log-in demo functionality to hide information from the user until authenticated
 - Intuitive resource management tool with easy access to create, edit, and delete resources, tags, and projects
 - Custom HTML and CSS formatting to create beautiful, high speed rendering of custom UI
-### What you were in the middle of implementing
+### What we were in the middle of implementing
 - We were in the middle of developing additional unit tests to improve code coverage
 - Intuitive search capability for 'fuzzy text' searching, beyond just searching by exact tag or resource title
 ### What we had planned for the future
