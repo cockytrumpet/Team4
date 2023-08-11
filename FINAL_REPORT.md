@@ -10,6 +10,9 @@ https://trello.com/b/A1kGyYeM/carl-project
 https://github.com/cockytrumpet/Team4/tree/main/DEMO
 
 ## Version control repository link:
+https://github.com/cockytrumpet/Team4
+
+## Public hosted site:
 https://carl.impunit.us/
 
 ## Project Pitch Presentation
